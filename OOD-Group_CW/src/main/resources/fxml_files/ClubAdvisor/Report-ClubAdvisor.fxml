@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.Avatar?>
+<?import com.gluonhq.charm.glisten.control.Icon?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="550.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SceneControlers.MenuStudents">
+    <children>
+        <AnchorPane layoutX="7.0" layoutY="5.0" prefHeight="540.0" prefWidth="200.0" style="-fx-background-color: #D5D6F2;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+            <Avatar layoutX="82.0" layoutY="38.0" />
+            <Group layoutX="22.0" layoutY="112.0">
+               <children>
+                  <Button layoutX="4.0999755859375" layoutY="3.100006103515625" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #D5D6F2; -fx-font-weight: Bold;" />
+                  <Label layoutX="39.0" layoutY="21.0" prefHeight="18.0" prefWidth="101.0" text="HOME">
+                     <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Icon content="HOME" layoutX="14.0" layoutY="11.0" prefHeight="34.0" prefWidth="22.0" />
+               </children>
+            </Group>
+            <Group layoutX="21.0" layoutY="186.0">
+               <children>
+                  <Button layoutX="4.0999755859375" layoutY="3.100006103515625" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #D5D6F2; -fx-font-weight: Bold;" />
+                  <Label layoutX="39.0" layoutY="21.0" prefHeight="18.0" prefWidth="101.0" text="CLUBS">
+                     <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Icon content="CARD_MEMBERSHIP" layoutX="14.0" layoutY="11.0" prefHeight="34.0" prefWidth="22.0" />
+               </children>
+            </Group>
+            <Group layoutX="21.0" layoutY="255.0">
+               <children>
+                  <Button layoutX="4.0999755859375" layoutY="3.100006103515625" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #D5D6F2; -fx-font-weight: Bold;" />
+                  <Label layoutX="39.0" layoutY="21.0" prefHeight="18.0" prefWidth="101.0" text="EVENTS">
+                     <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Icon content="SCHEDULE" layoutX="14.0" layoutY="11.0" prefHeight="34.0" prefWidth="22.0" />
+               </children>
+            </Group>
+            <Group layoutX="20.0" layoutY="400.0">
+               <children>
+                  <Button layoutX="4.0999755859375" layoutY="3.100006103515625" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #D5D6F2; -fx-font-weight: Bold;" />
+                  <Label layoutX="39.0" layoutY="21.0" prefHeight="18.0" prefWidth="101.0" text="ACCOUNT">
+                     <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Icon content="PERSON" layoutX="14.0" layoutY="11.0" prefHeight="34.0" prefWidth="22.0" />
+               </children>
+            </Group>
+            <Group layoutX="21.0" layoutY="331.0">
+               <children>
+                  <Button layoutX="4.0999755859375" layoutY="3.100006103515625" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #D5D6F2; -fx-font-weight: Bold;" />
+                  <Label layoutX="39.0" layoutY="21.0" prefHeight="18.0" prefWidth="101.0" text="Report Generation">
+                     <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Icon content="DATA_USAGE" layoutX="14.0" layoutY="11.0" prefHeight="34.0" prefWidth="22.0" />
+               </children>
+            </Group>
+            </children>
+        </AnchorPane>
+      <AnchorPane layoutX="200.0" prefHeight="550.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;">
+         <children>
+            <TabPane prefHeight="550.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Membership Report">
+                  <content>
+                    <AnchorPane layoutX="4.0" layoutY="6.0" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Group layoutX="194.0" layoutY="76.0">
+                                 <children>
+                                    <ComboBox layoutX="46.0" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
+                                    <Label layoutY="5.0" prefHeight="18.0" prefWidth="45.0" text="Club: " />
+                                    <Label layoutX="46.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
+                                 </children>
+                              </Group>
+                              <TableView layoutX="74.0" layoutY="173.0" prefHeight="200.0" prefWidth="535.0">
+                                 <columns>
+                                    <TableColumn prefWidth="116.0" text="Student ID" />
+                                    <TableColumn minWidth="0.0" prefWidth="196.800048828125" text="Stdent Name" />
+                                    <TableColumn minWidth="0.0" prefWidth="112.0" text="Mobile" />
+                                    <TableColumn minWidth="0.0" prefWidth="112.0" text="Email" />
+                                 </columns>
+                              </TableView>
+                              <Group layoutX="538.0" layoutY="402.0">
+                                 <children>
+                                    <Button layoutX="4.0999755859375" layoutY="3.100006103515625" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0" style="-fx-background-color: #D5D6F2; -fx-font-weight: Bold;" />
+                                    <Label layoutX="39.0" layoutY="21.0" prefHeight="18.0" prefWidth="101.0" text="PRINT">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Icon content="PRINT" layoutX="14.0" layoutY="11.0" prefHeight="34.0" prefWidth="22.0" />
+                                 </children>
+                              </Group>
+                              <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Generate Club Membership Report" textAlignment="RIGHT">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Club Activity Report">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="371.0">
+                           <children>
+                              <Label prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Generate Club Activity Report" textAlignment="RIGHT">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font></Label>
+                              <Group layoutX="65.0" layoutY="85.0">
+                                 <children>
+                                    <ComboBox layoutX="37.0" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
+                                    <Label layoutY="5.0" prefHeight="18.0" prefWidth="36.0" text="Club: " />
+                                    <Label layoutX="37.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutX="594.0" layoutY="416.0">
+                                 <children>
+                                    <Button layoutX="4.0999755859375" layoutY="3.100006103515625" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0" style="-fx-background-color: #D5D6F2; -fx-font-weight: Bold;" />
+                                    <Label layoutX="39.0" layoutY="21.0" prefHeight="18.0" prefWidth="101.0" text="PRINT">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Icon content="PRINT" layoutX="14.0" layoutY="11.0" prefHeight="34.0" prefWidth="22.0" />
+                                 </children>
+                              </Group>
+                              <TableView layoutX="99.0" layoutY="146.0" prefHeight="200.0" prefWidth="535.0">
+                                 <columns>
+                                    <TableColumn prefWidth="116.0" text="Events" />
+                                    <TableColumn minWidth="0.0" prefWidth="196.800048828125" text="Date" />
+                                    <TableColumn minWidth="0.0" prefWidth="112.0" text="Venue" />
+                                    <TableColumn minWidth="0.0" prefWidth="112.0" text="Description" />
+                                 </columns>
+                              </TableView>
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab text="Event Attendance report">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="371.0">
+                           <children>
+                              <Label prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Generate the Student-Event attendance report" textAlignment="RIGHT">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Group layoutX="593.0" layoutY="418.0">
+                                 <children>
+                                    <Button layoutX="4.0999755859375" layoutY="3.100006103515625" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0" style="-fx-background-color: #D5D6F2; -fx-font-weight: Bold;" />
+                                    <Label layoutX="39.0" layoutY="21.0" prefHeight="18.0" prefWidth="101.0" text="PRINT">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Icon content="PRINT" layoutX="14.0" layoutY="11.0" prefHeight="34.0" prefWidth="22.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutX="41.0" layoutY="83.0">
+                                 <children>
+                                    <ComboBox layoutX="103.0" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
+                                    <Label layoutY="5.0" text="Organizing club: " />
+                                    <Label layoutX="103.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutX="41.0" layoutY="130.0">
+                                 <children>
+                                    <ComboBox layoutX="103.0" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
+                                    <Label layoutY="5.0" text="Event:" />
+                                    <Label layoutX="103.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
+                                 </children>
+                              </Group>
+                              <TableView layoutX="128.0" layoutY="199.0" prefHeight="200.0" prefWidth="425.0">
+                                <columns>
+                                  <TableColumn prefWidth="116.0" text="Student ID" />
+                                  <TableColumn minWidth="0.0" prefWidth="196.800048828125" text="Stdent Name" />
+                                    <TableColumn minWidth="0.0" prefWidth="112.0" text="Attendance" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+         </children>
+      </AnchorPane>
+    </children>
+</AnchorPane>
