@@ -90,7 +90,7 @@
                                  <children>
                                     <AnchorPane prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #DCDCDC;">
                                        <children>
-                                          <Label prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="View Club Details" textAlignment="RIGHT">
+                                          <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Update Club Details" textAlignment="RIGHT">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
@@ -131,7 +131,7 @@
                                     </AnchorPane>
                                     <AnchorPane prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #DCDCDC;">
                                        <children>
-                                          <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Update Club Details" textAlignment="RIGHT">
+                                          <Label prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="View Club Details" textAlignment="RIGHT">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
@@ -147,7 +147,7 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="371.0">
                            <children>
-                              <Label layoutX="61.0" layoutY="35.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Enter the details of the new club" textAlignment="RIGHT">
+                              <Label prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Enter the details of the new club" textAlignment="RIGHT">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font></Label>
