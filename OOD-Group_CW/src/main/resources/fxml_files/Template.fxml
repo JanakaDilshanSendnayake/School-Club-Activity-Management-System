@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="950.0" stylesheets="@../css/Template.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane fx:id="sidebar" prefHeight="600.0" prefWidth="200.0">
+         <children>
+            <Button layoutX="25.0" layoutY="173.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0">
+               <graphic>
+                  <Group>
+                     <children>
+                        <Label layoutX="36.0" prefHeight="30.0" prefWidth="72.0" text="HOME">
+                           <font>
+                              <Font name="Times New Roman Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="23.0" fitWidth="22.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Icons/home.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </graphic>
+            </Button>
+            <Button layoutX="25.0" layoutY="224.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0">
+               <graphic>
+                  <Group>
+                     <children>
+                        <Label layoutX="36.0" prefHeight="30.0" prefWidth="72.0" text="HOME">
+                           <font>
+                              <Font name="Times New Roman Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="23.0" fitWidth="22.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Icons/home.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </graphic>
+            </Button>
+            <Button layoutX="25.0" layoutY="275.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0">
+               <graphic>
+                  <Group>
+                     <children>
+                        <Label layoutX="36.0" prefHeight="30.0" prefWidth="72.0" text="HOME">
+                           <font>
+                              <Font name="Times New Roman Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="23.0" fitWidth="22.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Icons/home.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="359.0" layoutY="164.0" prefHeight="600.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;" AnchorPane.leftAnchor="199.60000000000002" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TabPane fx:id="Tabs" maxHeight="600.0" maxWidth="750.0" prefHeight="600.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Untitled Tab 1">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Group layoutX="125.0" layoutY="216.0">
+                                 <children>
+                                    <Label layoutX="36.0" prefHeight="30.0" prefWidth="72.0" text="HOME">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fitHeight="23.0" fitWidth="22.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Icons/home.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </Group>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Untitled Tab 2">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

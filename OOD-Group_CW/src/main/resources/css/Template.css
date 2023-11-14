@@ -1,0 +1,29 @@
+.tab:selected {
+    -fx-background-color: lightblue;
+}
+.tab {
+    -fx-background-color: white;
+    -fx-pref-width: 220;
+    -fx-pref-height: 40;
+}
+.button {
+    -fx-background-color :  #D5D6F2;
+}
+.button:hover{
+    -fx-background-color :  #7476a6;
+}
+.button:selected {
+    -fx-background-color :  #7476a6;
+}
+#sidebar{
+    -fx-background-color :  #D5D6F2
+}
+.text-field{
+    -fx-background-color : white;
+}
+.text-area{
+    -fx-background-color: white;
+}
+.combo-box{
+    -fx-background-color: white;
+}
