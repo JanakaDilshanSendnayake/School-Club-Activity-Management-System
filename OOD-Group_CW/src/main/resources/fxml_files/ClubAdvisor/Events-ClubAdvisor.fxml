@@ -247,7 +247,7 @@
                               </Label>
                               <Group layoutX="41.0" layoutY="83.0">
                                  <children>
-                                    <ComboBox fx:id="ClubSelectionChoiceBox" layoutX="103.0" prefHeight="26.0" prefWidth="250.0" promptText="Select Club" style="-fx-background-color: white;" />
+                                    <ComboBox fx:id="ClubSelectionChoiceBox" layoutX="103.0" onAction="#EditTableview" prefHeight="26.0" prefWidth="250.0" promptText="Select Club" style="-fx-background-color: white;" />
                                     <Label layoutY="5.0" text="Organizing club: " />
                                     <Label layoutX="103.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
                                  </children>
@@ -277,7 +277,13 @@
                                     </Group>
                                  </graphic>
                               </Button>
-                              <AnchorPane fx:id="namesAnchorpane" layoutX="81.0" layoutY="197.0" prefHeight="308.0" prefWidth="399.0" style="-fx-background-color: #FFB52E;" />
+                              <TableView fx:id="Tableview" layoutX="117.0" layoutY="206.0" prefHeight="262.0" prefWidth="325.0">
+                                <columns>
+                                  <TableColumn fx:id="StudentIDcol" prefWidth="75.0" text="Studen ID" />
+                                  <TableColumn fx:id="SturdentNamecol" prefWidth="121.0" text="Student Name" />
+                                    <TableColumn fx:id="Attendencecol" prefWidth="126.0" text="Attendence" />
+                                </columns>
+                              </TableView>
                            </children>
                         </AnchorPane>
                      </content>
