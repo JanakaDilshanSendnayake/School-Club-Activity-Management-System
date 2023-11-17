@@ -9,7 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 
@@ -18,7 +17,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class CAClubs implements Initializable {
+public class CAEvents implements Initializable {
 
     //Buttons - SideBar
     @FXML private Button caHomeButton;
@@ -29,22 +28,22 @@ public class CAClubs implements Initializable {
 
     //Buttons
     @FXML private Button viewButton;
-    @FXML private Button updateClubButton;
-    @FXML private Button updateClubCancelButton;
-    @FXML private Button editClubButton;
-    @FXML private Button suspendClubButton;
-    @FXML private Button leaveClubButton;
+    @FXML private Button updateEventButton;
+    @FXML private Button updateEventCancelButton;
+    @FXML private Button editEventButton;
+    @FXML private Button suspendEventButton;
+    //@FXML private Button leaveClubButton;
     @FXML private Button backToClubNaviButton;
 
 
     //Panes
-    @FXML private TabPane caClubsTabPane;
-    @FXML private Tab clubNaviTab;
-    @FXML private Tab createNewClubTab;
-    @FXML private AnchorPane caNaviClubs;
-    @FXML private AnchorPane caViewClubs;
-    @FXML private AnchorPane caUpdateClubs;
-    @FXML private AnchorPane caCreateNewClubs;
+    @FXML private TabPane caEventsTabPane;
+    @FXML private Tab eventNaviTab;
+    @FXML private Tab createNewEventTab;
+    @FXML private AnchorPane caNaviEvents;
+    @FXML private AnchorPane caViewEvents;
+    @FXML private AnchorPane caUpdateEvents;
+    @FXML private AnchorPane caCreateNewEvents;
 
     //====
     private Stage stage;
@@ -54,15 +53,15 @@ public class CAClubs implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateStatus=false;
-        caNaviClubs.toFront();
+        caNaviEvents.toFront();
 
 
-        caClubsTabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
-            if (updateStatus && newTab == createNewClubTab) {
+        caEventsTabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
+            if (updateStatus && newTab == createNewEventTab) {
                 if(showConfirmationAlert("There's an ongoing update. Do you want to cancel it?")){
-                    caClubsTabPane.getSelectionModel().select(newTab);
+                    caEventsTabPane.getSelectionModel().select(newTab);
                 }else{
-                    caClubsTabPane.getSelectionModel().select(oldTab);
+                    caEventsTabPane.getSelectionModel().select(oldTab);
                 }
 
             }
@@ -113,47 +112,40 @@ public class CAClubs implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-//    When user selects a club from the table in club navigation page and press view button,
-//    data of that club will be loaded in the view club details page
+    //    When user selects a event from the table in event navigation page and press view button,
+//    data of that event will be loaded in the view event details page
     @FXML
     public void viewClubDetails(){
-        caViewClubs.toFront();
+        caViewEvents.toFront();
         //Rest of the function
     }
-//  When the user want to edit the current details of the club and click edit button,
-//  current data should be loaded in the editable text fields in update club details
+//  When the user want to edit the current details of the event and click edit button,
+//  current data should be loaded in the editable text fields in update edit details
 
     private boolean updateStatus; // this variable is used to check whether if there is an ongoing detail update.
     @FXML
-    public void editClubDetails(){
+    public void editEventDetails(){
         updateStatus=true;
-        caUpdateClubs.toFront();
+        caUpdateEvents.toFront();
         //Rest of the function
     }
-//  When user click suspend button the club and all the relevant information should be deleted
+    //  When user click suspend button the club and all the relevant information should be deleted
     @FXML
-    public void suspendClub(){
-        if (showConfirmationAlert("Are you sure you want to delete this club and all of the relevant details")){
+    public void suspendEvent(){
+        if (showConfirmationAlert("Are you sure you want to suspend event.")){
             //Implement the rest of the function
-            showInfoAlert("Club and all of the relevant details Succesfully deleted.");
+            showInfoAlert("Event and all of the relevant details Successfully deleted.");
         }else{}
     }
-    @FXML
-    public void leaveClub(){
 
-        if (showConfirmationAlert("Are you sure that you want to leave the club?")){
-            //Implement the rest of the function
-            showInfoAlert("You succesfully left the club.");
-        }else{}
-    }
-//  When user inputs updated data and press update button, data should be validated and saved
+    //  When user inputs updated data and press update button, data should be validated and saved
     @FXML
-    public void updateClubDetails(){
+    public void updateEventDetails(){
 
         //Rest of the function
         updateStatus=false;
-        showInfoAlert("Club details updated succesfully");
-        caViewClubs.toFront();
+        showInfoAlert("Event details updated successfully");
+        caViewEvents.toFront();
     }
     @FXML
     public void updateCancel(){
@@ -161,8 +153,9 @@ public class CAClubs implements Initializable {
         // Rest of the function
         updateStatus=false;
         showErrorAlert("Update cancelled");
-        caViewClubs.toFront();
+        caViewEvents.toFront();
     }
 
 
 }
+
