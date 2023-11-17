@@ -1,12 +1,10 @@
 package main;
 
-import com.gluonhq.charm.glisten.visual.Swatch;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import com.gluonhq.charm.glisten.application.MobileApplication;
 
 
 import java.util.Objects;
