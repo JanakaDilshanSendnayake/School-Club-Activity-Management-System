@@ -5,11 +5,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import stake_holders.Clubs;
 
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Main extends Application {
+
+    public static ArrayList<Clubs> clubs;
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Clubs-ClubAdvisor.fxml"));

@@ -1,5 +1,6 @@
 package SceneControlersClubAdvisors;
 
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,13 +10,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import main.Main;
+import stake_holders.Clubs;
 
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class CAEvents implements Initializable {
 
@@ -65,6 +68,19 @@ public class CAEvents implements Initializable {
                 }
 
             }
+        });
+        // initializing the event listener to validate the user input in "newClubNameField" text-field
+        newClubFieldListener=((observable, oldValue, newValue) -> {
+            String message=isClubNameValid(newValue, Main.clubs);
+            if(Objects.equals(message,"set to the old value")){
+                newClubNameField.setText(oldValue);
+            }else{
+                newClubLabel.setText(message);
+                if (Objects.equals(message,"Valid")){
+                    newClubLabel.setTextFill(Color.GREEN);
+                }else{newClubLabel.setTextFill(Color.RED);}
+            }
+
         });
     }
 
@@ -155,6 +171,50 @@ public class CAEvents implements Initializable {
         showErrorAlert("Update cancelled");
         caViewEvents.toFront();
     }
+
+    //To validate the data inputs in Create new club tab
+    @FXML
+    private TextField newClubNameField;
+    @FXML
+    private Label newClubLabel;
+    @FXML
+    private ComboBox<String> newClubTypeComboBox;
+    @FXML
+    private Label newClubTypeLabel;
+    @FXML
+    private TextArea newClubDescriptionTextArea;
+    @FXML
+    private Label newClubDescriptionLabel;
+
+    private ChangeListener<String> newClubFieldListener;
+    private ChangeListener<String> newClubTypeListener;
+    private ChangeListener<String> newClubDescriptionListener;
+
+    public String isClubNameValid(String newValue, ArrayList<Clubs> obj){
+        if (!newValue.matches("\\D*")) { // Only allow non-digit characters
+            return "Only strings are allowed here";
+        } else if (newValue.trim().isEmpty()) {
+            return "This field is mandatory";
+        } else if (newValue.trim().length() > 30) {
+            return "set to the old value";
+        } else {
+            boolean nameExists = false;
+            for (Clubs object : obj) {
+                if (Objects.equals(object.getClubName().toLowerCase(), newValue.trim().toLowerCase())) {
+                    nameExists = true;
+                    break;
+                }
+            }
+            if (nameExists) {
+                return "This name is already taken";
+
+            } else {
+                return "Valid";
+            }
+        }
+    }
+
+
 
 
 }

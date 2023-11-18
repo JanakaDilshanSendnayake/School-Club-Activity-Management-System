@@ -21,6 +21,10 @@ public class Clubs {
         this.clubAdmin = clubAdmin;
     }
 
+    public String getClubName() {
+        return clubName;
+    }
+
     public void setClubAdmin(ClubAdvisor clubAdmin){
         if(clubAdvisorMembers.contains(clubAdmin)){
             this.clubAdmin=clubAdmin;
