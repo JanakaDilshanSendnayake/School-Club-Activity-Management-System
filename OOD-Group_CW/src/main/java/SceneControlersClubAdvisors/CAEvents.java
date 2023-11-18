@@ -12,6 +12,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
+
+
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,7 +22,8 @@ import java.util.ResourceBundle;
 
 public class CAEvents implements Initializable {
 
-
+    //mySqlConnector ConnectNow = new mySqlConnector();
+    //Connection ConnectDB = ConnectNow.getDatabaseLink();
     @FXML
     private TableColumn<NameAttendence, CheckBox> Attendencecol;
 
