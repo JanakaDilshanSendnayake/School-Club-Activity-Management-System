@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="950.0" stylesheets="@../../css/Template.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SceneControlersClubAdvisors.CAClubs">
+<AnchorPane prefHeight="780.0" prefWidth="1520.0" stylesheets="@../../css/Template.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SceneControlersClubAdvisors.CAClubs">
     <children>
       <AnchorPane layoutX="200.0" prefHeight="600.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;">
          <children>
@@ -152,7 +152,7 @@
                                           </Button>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="caUpdateClubs" prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #DCDCDC;">
+                                    <AnchorPane fx:id="caUpdateClubs" prefHeight="639.0" prefWidth="919.0" style="-fx-background-color: #DCDCDC;">
                                        <children>
                                           <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Update Club Details" textAlignment="RIGHT">
                                              <font>
