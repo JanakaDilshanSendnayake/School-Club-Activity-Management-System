@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="950.0" stylesheets="@../../css/Template.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SceneControlersClubAdvisors.CAClubs">
+<AnchorPane prefHeight="600.0" prefWidth="950.0" stylesheets="@../../css/Template.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SceneControlersClubAdvisors.CAClubs">
     <children>
       <AnchorPane layoutX="200.0" prefHeight="600.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;">
          <children>
@@ -368,10 +368,6 @@
             </Button>
          </children>
       </AnchorPane>
-      <StackPane prefHeight="150.0" prefWidth="200.0">
-         <children>
-            <AnchorPane prefHeight="200.0" prefWidth="750.0" style="-fx-background-color: white;" />
-         </children>
-      </StackPane>
+      <StackPane prefHeight="150.0" prefWidth="200.0" />
     </children>
 </AnchorPane>
