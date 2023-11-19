@@ -26,17 +26,20 @@
         <dependency>
             <groupId>com.gluonhq</groupId>
             <artifactId>charm-glisten</artifactId>
-            <version>5.0.0</version> <!-- Use the specific version you need -->
+            <version>5.0.0</version>
+            <scope>compile</scope> <!-- Use the specific version you need -->
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>19</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>19</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
