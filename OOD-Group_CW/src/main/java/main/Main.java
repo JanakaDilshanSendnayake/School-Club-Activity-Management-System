@@ -9,14 +9,13 @@ import stake_holders.Clubs;
 
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Main extends Application {
 
     public static ArrayList<Clubs> clubs;
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml_files/Common/Register.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/CARegister.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("SACMS");

@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="550.0" prefWidth="950.0" style="-fx-background-color: #D3D3D3;" stylesheets="@../../css/Template.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="600.0" prefWidth="950.0" style="-fx-background-color: #D3D3D3;" stylesheets="@../../css/Template.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <AnchorPane layoutX="200.0" prefHeight="550.0" prefWidth="550.0" style="-fx-background-color: #D5D6F2;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="199.60000000000002" AnchorPane.topAnchor="0.0">
+        <AnchorPane layoutX="200.0" prefHeight="600.0" prefWidth="650.0" style="-fx-background-color: #D5D6F2;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="0.0">
             <children>
             <PasswordField layoutX="266.0" layoutY="275.0" prefHeight="27.0" prefWidth="250.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="149.99999999999997" />
             <Label layoutX="82.0" layoutY="219.0" text="Student ID:" />
@@ -54,7 +54,7 @@
                   </Group>
                </graphic>
             </Button>
-            <Button layoutX="417.0" layoutY="277.0" minHeight="18.0" minWidth="22.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="22.0" style="-fx-background-color: #D5D6F2; -fx-font-weight: Bold;">
+            <Button layoutX="489.0" layoutY="386.0" minHeight="18.0" minWidth="22.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="22.0" style="-fx-background-color: #D5D6F2; -fx-font-weight: Bold;">
                <graphic>
                   <ImageView fitHeight="18.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -63,7 +63,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="447.0" layoutY="277.0" minHeight="18.0" minWidth="22.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="22.0" style="-fx-background-color: #D5D6F2; -fx-font-weight: Bold;">
+            <Button layoutX="546.0" layoutY="386.0" minHeight="18.0" minWidth="22.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="22.0" style="-fx-background-color: #D5D6F2; -fx-font-weight: Bold;">
                <graphic>
                   <ImageView fitHeight="18.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
