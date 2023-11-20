@@ -1,3 +1,4 @@
+//check and delete if necessary
 package SceneControlersClubAdvisors;
 
 import javafx.application.Platform;
