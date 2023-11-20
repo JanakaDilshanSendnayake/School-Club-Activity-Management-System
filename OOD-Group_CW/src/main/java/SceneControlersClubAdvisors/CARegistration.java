@@ -1,3 +1,4 @@
+//check and delete if necessary
 package SceneControlersClubAdvisors;
 
 import javafx.application.Platform;
@@ -14,16 +15,25 @@ import java.util.ResourceBundle;
 public class CARegistration implements Initializable {
 
     //REGEX
+    //Username should be a combination letters and numbers
     private static final String CLUB_ADVISOR_ID_REGEX = "^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z0-9]{1,10}$";
+    //Inputs for first name should be always letters. And there's a character limit of 10
     private static final String FIRST_NAME_REGEX = "^[a-zA-Z]{1,10}$";
+    //Inputs for last name should be always letters. And there's a character limit of 20
     private static final String LAST_NAME_REGEX = "^[a-zA-Z]{1,20}$";
+    //Inputs for email should end with "@iit.ac.lk". Example- janaka@iit.ac.lk
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@iit\\.ac\\.lk$";
+    //Inputs for mobile number should follow ten digit format. Ex- 0712304501
     private static final String MOBILE_NUMBER_REGEX = "^\\d{10}$";
+    //Inputs for password should contain at least one letter, number and special character. And the inputs should be at-
+    //-least 8 characters long
     private static final String PASSWORD_REGEX = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=]).{8,}$";
+
+    //The main anchor pain holding all other elements of user registration page
     @FXML
     private AnchorPane clubAdvisorRegistrationPane;
 
-    //Text fields to get the details from new club advisor who are joining the system
+    //Text fields to get the details from new users who are joining the system
     @FXML
     private TextField newClubAdvisorIdField;
     @FXML
@@ -54,6 +64,11 @@ public class CARegistration implements Initializable {
     private Label newClubAdvisorPasswordField1Label;
     @FXML
     private Label newClubAdvisorPasswordField2Label;
+
+    //event listeners to validate and show the users messages about their inputs in realtime.
+    //For example if user enters a invalid input to the username field, it will show a message saying that the input is-
+    //-wrong in the text label which is under the username field. these will be initialized in the initialize method and-
+    //-will be later assigned to the fields
     private ChangeListener<String> newClubAdvisorIdFieldListener;
     private ChangeListener<String> newClubAdvisorFirstNameFieldListener;
     private ChangeListener<String> newClubAdvisorLastNameFieldListener;
@@ -69,7 +84,7 @@ public class CARegistration implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Platform.runLater(() -> clubAdvisorRegistrationPane.requestFocus());
 
-        // Event listener for Club Advisor ID
+        // Initializing Event listener for Club Advisor ID
         newClubAdvisorIdFieldListener=((observable, oldValue, newValue) -> {
             String validationMessage = validateTextField(newValue, CLUB_ADVISOR_ID_REGEX,
                     "Club Advisor ID should be a combination letters and numbers.",10);
@@ -77,7 +92,7 @@ public class CARegistration implements Initializable {
             setLabelStyle(validationMessage, newClubAdvisorIdLabel);
         });
 
-        // Event listener for Club Advisor First Name
+        // Initializing Event listener for Club Advisor First Name
         newClubAdvisorFirstNameFieldListener=((observable, oldValue, newValue) -> {
             String validationMessage = validateTextField(newValue, FIRST_NAME_REGEX,
                     "Name can only contain letters.",10);
@@ -85,7 +100,7 @@ public class CARegistration implements Initializable {
             setLabelStyle(validationMessage, newClubAdvisorFirstNameLabel);
         });
 
-        // Event listener for Club Advisor Last Name
+        // Initializing Event listener for Club Advisor Last Name
         newClubAdvisorLastNameFieldListener=((observable, oldValue, newValue) -> {
             String validationMessage = validateTextField(newValue, LAST_NAME_REGEX,
                     "Name can only contain letters.",20);
@@ -93,7 +108,7 @@ public class CARegistration implements Initializable {
             setLabelStyle(validationMessage, newClubAdvisorLastNameLabel);
         });
 
-        // Event listener for Club Advisor Email
+        // Initializing Event listener for Club Advisor Email
         newClubAdvisorEmailFieldListener=((observable, oldValue, newValue) -> {
             String validationMessage = validateTextField(newValue,
                     EMAIL_REGEX, "Invalid email format.");
@@ -101,7 +116,7 @@ public class CARegistration implements Initializable {
             setLabelStyle(validationMessage, newClubAdvisorEmailLabel);
         });
 
-        // Event listener for Club Advisor Telephone
+        // Initializing Event listener for Club Advisor Telephone
         newClubAdvisorTeleFieldListener=((observable, oldValue, newValue) -> {
             String validationMessage = validateTextField(newValue, MOBILE_NUMBER_REGEX,
                     "Invalid mobile number format.");
@@ -109,7 +124,7 @@ public class CARegistration implements Initializable {
             setLabelStyle(validationMessage, newClubAdvisorTeleLabel);
         });
 
-        // Event listener for Password Field 1
+        // Initializing Event listener for Password Field 1
         newClubAdvisorPassword1Listener=((observable, oldValue, newValue) -> {
             String validationMessage = validatePasswordField(newValue, PASSWORD_REGEX);
             newClubAdvisorPasswordField1Label.setText(validationMessage);
@@ -117,13 +132,13 @@ public class CARegistration implements Initializable {
             validatePasswordMatch();
         });
 
-        // Event listener for Password Field 2
+        // Initializing Event listener for Password Field 2
         newClubAdvisorPassword2Listener=((observable, oldValue, newValue) -> {
             validatePasswordMatch();
         });
     }
 
-    //Method to validate string inputs
+    //Method to validate string inputs with a character limit
     private String validateTextField(String value, String regex, String invalidMessage,int maximumCharacterLim) {
         if (value.matches(regex)) {
             return "Valid";
@@ -134,7 +149,7 @@ public class CARegistration implements Initializable {
             return invalidMessage;}
         }
     }
-
+    //Overriding the above method. This method is to validate String inputs that doesn't have any character limit
     private String validateTextField(String value, String regex, String invalidMessage) {
         if (value.matches(regex)) {
             return "Valid";
@@ -153,7 +168,7 @@ public class CARegistration implements Initializable {
             return "Password must be at least 8 characters long and include letters, numbers, and special characters.";
         }
     }
-    //Method to check if the passwords in both fields matches
+    //Method to check if the passwords in both password and Re enter password fields matches
     private void validatePasswordMatch() {
         if (newClubAdvisorPasswordField1.getText().equals(newClubAdvisorPasswordField2.getText())) {
             newClubAdvisorPasswordField2Label.setText("Passwords match");
@@ -200,8 +215,8 @@ public class CARegistration implements Initializable {
     private void handleNewClubAdvisorPassword2Change() {
         newClubAdvisorPasswordField2.textProperty().addListener(newClubAdvisorPassword2Listener);
     }
-
-    public void register(){
+    @FXML
+    private void register(){
 
         try{
             String newId=newClubAdvisorIdField.getText();
