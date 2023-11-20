@@ -3,37 +3,37 @@ package SceneControlersClubAdvisors;
 import javafx.scene.control.CheckBox;
 
 public class NameAttendence {
-    private String StudentID;
-    private String StudentName;
-    private CheckBox checkBox;
+    private String studentID;
+    private String studentName;
+    private Boolean Attendence;
 
-    public NameAttendence(String StudentID,String StudentName,CheckBox checkBox) {
-        this.StudentID = StudentID;
-        this.StudentName = StudentName;
-        this.checkBox = checkBox;
+    public NameAttendence(String studentID, String studentName, Boolean Attendence) {
+        this.studentID = studentID;
+        this.studentName = studentName;
+        this.Attendence = Attendence;
     }
 
-    public CheckBox getCheckBox() {
-        return checkBox;
+    public Boolean getAttendence() {
+        return Attendence;
     }
 
-    public void setCheckBox(CheckBox checkBox) {
-        this.checkBox = checkBox;
+    public void setAttendence(Boolean attendence) {
+        Attendence = attendence;
     }
 
     public String getStudentName() {
-        return StudentName;
+        return studentName;
     }
 
     public void setStudentName(String studentName) {
-        StudentName = studentName;
+        this.studentName = studentName;
     }
 
     public String getStudentID() {
-        return StudentID;
+        return studentID;
     }
 
     public void setStudentID(String studentID) {
-        StudentID = studentID;
+        this.studentID = studentID;
     }
 }

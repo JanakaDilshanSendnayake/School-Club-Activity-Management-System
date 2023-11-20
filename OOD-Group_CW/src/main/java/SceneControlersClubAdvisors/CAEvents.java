@@ -26,7 +26,7 @@ public class CAEvents implements Initializable {
     Connection ConnectDB = ConnectNow.getDatabaseLink();
 
     @FXML
-    private TableColumn<NameAttendence, CheckBox> Attendencecol;
+    private TableColumn<EventMarking, CheckBox> Attendencecol;
 
     @FXML
     private ComboBox<String> ClubSelectionChoiceBox;
@@ -35,18 +35,18 @@ public class CAEvents implements Initializable {
     private ComboBox<String> EventSelectionChoiceBox;
 
     @FXML
-    private TableColumn<NameAttendence, String> StudentIDcol;
+    private TableColumn<EventMarking, String> StudentIDcol;
 
     @FXML
-    private TableColumn<NameAttendence, String> SturdentNamecol;
+    private TableColumn<EventMarking, String> SturdentNamecol;
 
     @FXML
-    private TableView<NameAttendence> Tableview;
+    private TableView<EventMarking> Tableview;
 
     @FXML
     private AnchorPane sidebar;
     //public Connection databaseLink;
-    ObservableList<NameAttendence> events;
+    ObservableList<EventMarking> events;
 
     @FXML
     void EditTableview(ActionEvent event)  {
@@ -66,16 +66,16 @@ public class CAEvents implements Initializable {
             ResultSet rs1 = ps1.executeQuery();
             while(rs1.next()){
                 CheckBox test = new CheckBox();
-                events.add(new NameAttendence(rs1.getString("userID"),rs1.getString("name1"),test));
+                events.add(new EventMarking(rs1.getString("userID"),rs1.getString("name1"),test));
                 //checkBoxes.add(test);
             }
         }catch (Exception e){
             e.printStackTrace();}
 
 
-        StudentIDcol.setCellValueFactory(new PropertyValueFactory<NameAttendence,String>("StudentID"));
-        SturdentNamecol.setCellValueFactory(new PropertyValueFactory<NameAttendence,String>("StudentName"));
-        Attendencecol.setCellValueFactory(new PropertyValueFactory<NameAttendence,CheckBox>("checkBox"));
+        StudentIDcol.setCellValueFactory(new PropertyValueFactory<EventMarking,String>("StudentID"));
+        SturdentNamecol.setCellValueFactory(new PropertyValueFactory<EventMarking,String>("StudentName"));
+        Attendencecol.setCellValueFactory(new PropertyValueFactory<EventMarking,CheckBox>("checkBox"));
         Tableview.setItems(events);
     }
 
@@ -88,13 +88,14 @@ public class CAEvents implements Initializable {
         ps.executeUpdate();
 
         List<String> presentStudents = new ArrayList<>();
-        for (NameAttendence student:events) {
+        for (EventMarking student:events) {
             if(student.getCheckBox().isSelected()){
                 PreparedStatement ps1 = ConnectDB.prepareStatement("insert into event_names ( club_name,event_name,name1, studentID) values ('"+(clubname)+"','"+(eventname)+"','"+(student.getStudentName())+"','"+(student.getStudentID())+"');");
-                ps1.executeUpdate();
+                ps1.executeUpdate();// insert bool = True
 
                 //presentStudents.add(student.getStudentName()+" "+student.getStudentID());
-            }
+            }PreparedStatement ps1 = ConnectDB.prepareStatement("insert into event_names ( club_name,event_name,name1, studentID) values ('"+(clubname)+"','"+(eventname)+"','"+(student.getStudentName())+"','"+(student.getStudentID())+"');");
+            ps1.executeUpdate();// insert bool = False
         }
     }
 
