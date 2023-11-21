@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="950.0" stylesheets="@../../css/Template.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="600.0" prefWidth="950.0" stylesheets="@../../css/Template.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SceneControlersClubAdvisors.CAReport">
     <children>
       <AnchorPane layoutX="200.0" prefHeight="600.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;">
          <children>
@@ -119,23 +119,23 @@
                               </Label>
                               <Group layoutX="41.0" layoutY="83.0">
                                  <children>
-                                    <ComboBox layoutX="103.0" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
+                                    <ComboBox fx:id="clubSelection" layoutX="103.0" onAction="#onClubChange" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
                                     <Label layoutY="5.0" text="Organizing club: " />
                                     <Label layoutX="103.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
                                  </children>
                               </Group>
                               <Group layoutX="41.0" layoutY="130.0">
                                  <children>
-                                    <ComboBox layoutX="103.0" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
+                                    <ComboBox fx:id="eventSelection" layoutX="103.0" onAction="#onEventClick" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
                                     <Label layoutY="5.0" text="Event:" />
                                     <Label layoutX="103.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
                                  </children>
                               </Group>
-                              <TableView layoutX="128.0" layoutY="199.0" prefHeight="200.0" prefWidth="425.0">
+                              <TableView fx:id="tableview" layoutX="128.0" layoutY="199.0" prefHeight="200.0" prefWidth="425.0">
                                 <columns>
-                                  <TableColumn prefWidth="116.0" text="Student ID" />
-                                  <TableColumn minWidth="0.0" prefWidth="196.800048828125" text="Stdent Name" />
-                                    <TableColumn minWidth="0.0" prefWidth="112.0" text="Attendance" />
+                                  <TableColumn fx:id="stuIDcol" prefWidth="116.0" text="Student ID" />
+                                  <TableColumn fx:id="stuNamecol" minWidth="0.0" prefWidth="196.800048828125" text="Stdent Name" />
+                                    <TableColumn fx:id="Attendencecol" minWidth="0.0" prefWidth="112.0" text="Attendance" />
                                 </columns>
                               </TableView>
                               <Button layoutX="490.0" layoutY="425.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0">
