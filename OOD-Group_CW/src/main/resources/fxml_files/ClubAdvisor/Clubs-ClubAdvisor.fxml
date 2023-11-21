@@ -152,7 +152,7 @@
                                           </Button>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="caUpdateClubs" prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #DCDCDC;">
+                                    <AnchorPane fx:id="caUpdateClubs" prefHeight="639.0" prefWidth="919.0" style="-fx-background-color: #DCDCDC;">
                                        <children>
                                           <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Update Club Details" textAlignment="RIGHT">
                                              <font>
@@ -368,10 +368,6 @@
             </Button>
          </children>
       </AnchorPane>
-      <StackPane prefHeight="150.0" prefWidth="200.0">
-         <children>
-            <AnchorPane prefHeight="200.0" prefWidth="750.0" style="-fx-background-color: white;" />
-         </children>
-      </StackPane>
+      <StackPane prefHeight="150.0" prefWidth="200.0" />
     </children>
 </AnchorPane>

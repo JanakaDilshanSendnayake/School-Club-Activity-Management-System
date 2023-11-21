@@ -121,7 +121,7 @@ public class CAClubs implements Initializable {
         //Rest of the function
     }
 //  When the user want to edit the current details of the club and click edit button,
-//  current data should be loaded in the editable text fileds in update club details
+//  current data should be loaded in the editable text fields in update club details
 
     private boolean updateStatus; // this variable is used to check whether if there is an ongoing detail update.
     @FXML
@@ -130,7 +130,7 @@ public class CAClubs implements Initializable {
         caUpdateClubs.toFront();
         //Rest of the function
     }
-//  When user click suspend button the club and all of the relevant infromation should be deleted
+//  When user click suspend button the club and all the relevant information should be deleted
     @FXML
     public void suspendClub(){
         if (showConfirmationAlert("Are you sure you want to delete this club and all of the relevant details")){
@@ -154,11 +154,11 @@ public class CAClubs implements Initializable {
         updateStatus=false;
         showInfoAlert("Club details updated succesfully");
         caViewClubs.toFront();
-
-        //Rest of the function
     }
     @FXML
     public void updateCancel(){
+
+        // Rest of the function
         updateStatus=false;
         showErrorAlert("Update cancelled");
         caViewClubs.toFront();
