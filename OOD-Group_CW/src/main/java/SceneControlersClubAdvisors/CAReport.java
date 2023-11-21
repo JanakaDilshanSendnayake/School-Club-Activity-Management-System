@@ -5,23 +5,21 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import utils.mySqlConnect;
+import utils.MySqlConnect;
 
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class CAReport implements Initializable {
-    mySqlConnect ConnectNow = new mySqlConnect();
+    MySqlConnect ConnectNow = new MySqlConnect();
     Connection ConnectDB = ConnectNow.getDatabaseLink();
 
     @FXML

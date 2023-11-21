@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 
-public class mySqlConnect {
+public class MySqlConnect {
     public Connection databaseLink;
     public Connection getDatabaseLink(){
         try {

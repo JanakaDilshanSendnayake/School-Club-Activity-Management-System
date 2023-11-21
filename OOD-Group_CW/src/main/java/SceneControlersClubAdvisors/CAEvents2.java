@@ -11,7 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import utils.mySqlConnect;
+import utils.MySqlConnect;
 
 import java.net.URL;
 import java.sql.*;
@@ -20,9 +20,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 
-public class CAEvents implements Initializable {
+public class CAEvents2 implements Initializable {
 
-    mySqlConnect ConnectNow = new mySqlConnect();
+    MySqlConnect ConnectNow = new MySqlConnect();
     Connection ConnectDB = ConnectNow.getDatabaseLink();
 
     @FXML
