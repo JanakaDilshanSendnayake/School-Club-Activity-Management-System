@@ -17,19 +17,46 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="950.0" stylesheets="@../../css/Template.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SceneControlersClubAdvisors.CAEvents">
+<AnchorPane prefHeight="600.0" prefWidth="950.0" stylesheets="@../../css/Template.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SceneControlersClubAdvisors.CAEvents2">
     <children>
       <AnchorPane layoutX="200.0" prefHeight="600.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;">
          <children>
-            <TabPane fx:id="caEventsTabPane" prefHeight="600.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane prefHeight="600.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab fx:id="eventNaviTab" text="Navigate and manage the Events">
+                <Tab text="Navigate and manage the Events">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <StackPane prefHeight="555.0" prefWidth="750.0">
                                  <children>
-                                    <AnchorPane fx:id="caNaviEvents" prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #DCDCDC;">
+                                    <AnchorPane prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #DCDCDC;">
+                                       <children>
+                                          <Label prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Update Event Details" textAlignment="RIGHT">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Button layoutX="295.0" layoutY="160.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0">
+                                             <graphic>
+                                                <Group>
+                                                   <children>
+                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="UPDATE">
+                                                         <font>
+                                                            <Font name="Times New Roman Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../Icons/floppy-disk-pen.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children>
+                                                </Group>
+                                             </graphic>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #DCDCDC;">
                                        <children>
                                           <TableView layoutX="20.0" layoutY="146.0" prefHeight="200.0" prefWidth="714.0">
                                              <columns>
@@ -62,7 +89,7 @@
                                                 </Button>
                                              </children>
                                           </Group>
-                                          <Button fx:id="viewButton" layoutX="507.0" layoutY="417.0" mnemonicParsing="false" onAction="#viewClubDetails" prefHeight="44.0" prefWidth="126.0">
+                                          <Button layoutX="507.0" layoutY="417.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0">
                                              <graphic>
                                                 <Group>
                                                    <children>
@@ -82,14 +109,14 @@
                                           </Button>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="caViewEvents" prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #DCDCDC;">
+                                    <AnchorPane prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #DCDCDC;">
                                        <children>
                                           <Label prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="View Event Details" textAlignment="RIGHT">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
                                           </Label>
-                                          <Button fx:id="suspendEventButton" layoutX="361.0" layoutY="226.0" mnemonicParsing="false" onAction="#suspendEvent" prefHeight="44.0" prefWidth="126.0">
+                                          <Button layoutX="361.0" layoutY="226.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0">
                                              <graphic>
                                                 <Group>
                                                    <children>
@@ -107,7 +134,7 @@
                                                 </Group>
                                              </graphic>
                                           </Button>
-                                          <Button fx:id="editEventButton" layoutX="361.0" layoutY="298.0" mnemonicParsing="false" onAction="#editEventDetails" prefHeight="44.0" prefWidth="126.0">
+                                          <Button layoutX="361.0" layoutY="298.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0">
                                              <graphic>
                                                 <Group>
                                                    <children>
@@ -127,57 +154,12 @@
                                           </Button>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="caUpdateEvents" prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #DCDCDC;">
-                                       <children>
-                                          <Label prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Update Event Details" textAlignment="RIGHT">
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Button layoutX="295.0" layoutY="160.0" mnemonicParsing="false" onAction="#updateEventDetails" prefHeight="44.0" prefWidth="126.0">
-                                             <graphic>
-                                                <Group>
-                                                   <children>
-                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="UPDATE">
-                                                         <font>
-                                                            <Font name="Times New Roman Bold" size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@../../Icons/floppy-disk-pen.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                </Group>
-                                             </graphic>
-                                          </Button>
-                                          <Button layoutX="295.0" layoutY="223.0" mnemonicParsing="false" onAction="#updateCancel" prefHeight="44.0" prefWidth="126.0">
-                                             <graphic>
-                                                <Group>
-                                                   <children>
-                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="CANCEl">
-                                                         <font>
-                                                            <Font name="Times New Roman Bold" size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@../../Icons/cross.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                </Group>
-                                             </graphic>
-                                          </Button>
-                                       </children>
-                                    </AnchorPane>
                                  </children>
                               </StackPane>
                            </children></AnchorPane>
                   </content>
                 </Tab>
-                <Tab fx:id="createNewEventTab" text="Create a new Event">
+                <Tab text="Create a new Event">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="371.0">
                            <children>
@@ -237,7 +219,7 @@
                                  <graphic>
                                     <Group>
                                        <children>
-                                          <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="SAVE">
+                                          <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="SAVW">
                                              <font>
                                                 <Font name="Times New Roman Bold" size="12.0" />
                                              </font>
@@ -265,26 +247,19 @@
                               </Label>
                               <Group layoutX="41.0" layoutY="83.0">
                                  <children>
-                                    <ComboBox layoutX="103.0" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
+                                    <ComboBox fx:id="ClubSelectionChoiceBox" layoutX="103.0" onAction="#EditTableview" prefHeight="26.0" prefWidth="250.0" promptText="Select Club" style="-fx-background-color: white;" />
                                     <Label layoutY="5.0" text="Organizing club: " />
                                     <Label layoutX="103.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
                                  </children>
                               </Group>
                               <Group layoutX="41.0" layoutY="130.0">
                                  <children>
-                                    <ComboBox layoutX="103.0" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
+                                    <ComboBox fx:id="EventSelectionChoiceBox" layoutX="103.0" prefHeight="26.0" prefWidth="250.0" promptText="Select Event" style="-fx-background-color: white;" />
                                     <Label layoutY="5.0" text="Event:" />
                                     <Label layoutX="103.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
                                  </children>
                               </Group>
-                              <TableView layoutX="128.0" layoutY="199.0" prefHeight="200.0" prefWidth="425.0">
-                                <columns>
-                                  <TableColumn prefWidth="116.0" text="Student ID" />
-                                  <TableColumn minWidth="0.0" prefWidth="196.800048828125" text="Stdent Name" />
-                                    <TableColumn minWidth="0.0" prefWidth="112.0" text="Attendance" />
-                                </columns>
-                              </TableView>
-                              <Button layoutX="602.0" layoutY="299.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0">
+                              <Button layoutX="602.0" layoutY="299.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="44.0" prefWidth="126.0">
                                  <graphic>
                                     <Group>
                                        <children>
@@ -302,6 +277,13 @@
                                     </Group>
                                  </graphic>
                               </Button>
+                              <TableView fx:id="Tableview" layoutX="117.0" layoutY="206.0" prefHeight="262.0" prefWidth="325.0">
+                                <columns>
+                                  <TableColumn fx:id="StudentIDcol" prefWidth="75.0" text="Studen ID" />
+                                  <TableColumn fx:id="SturdentNamecol" prefWidth="121.0" text="Student Name" />
+                                    <TableColumn fx:id="Attendencecol" prefWidth="126.0" text="Attendence" />
+                                </columns>
+                              </TableView>
                            </children>
                         </AnchorPane>
                      </content>
