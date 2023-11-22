@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class ClubDataHandling {
 
-    public void saveNewClubToDatabase(ClubAdvisor creatorCA,Clubs clubs) {
+    public void saveNewClubToDatabase(Clubs clubs) {
         String sql = "INSERT INTO Clubs (club_name, club_type, club_description) VALUES (?, ?, ?)";
 
         MySqlConnect databaseLink= new MySqlConnect();
@@ -28,7 +28,7 @@ public class ClubDataHandling {
             // Execute the SQL query
             preparedStatement.executeUpdate();
             //to set the original creator as admin automaticaly
-            addANewCAMember(creatorCA,clubs);
+            addANewCAMember(clubs.getClubAdmin(),clubs);
 
             System.out.println("Club data saved successfully.");
 

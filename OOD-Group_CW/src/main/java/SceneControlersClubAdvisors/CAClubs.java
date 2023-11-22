@@ -12,6 +12,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import main.Main;
+import stake_holders.Clubs;
+import utils.ClubDataHandling;
 
 
 import java.io.IOException;
@@ -54,11 +57,11 @@ public class CAClubs implements Initializable {
 
     //Text fields
     @FXML
-    private TextField newClubIdField;
-    @FXML
     private TextField newClubNameField;
     @FXML
-    private TextArea newClubDescription;
+    private TextArea newClubDescriptionField;
+    @FXML
+    private ComboBox newClubTypeComboBox;
     @FXML
     private Label newClubIdLabel;
     @FXML
@@ -179,6 +182,30 @@ public class CAClubs implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    @FXML
+    private void handleNewClubNameChange() {
+        newClubNameField.textProperty().addListener(newClubNameFieldListener);
+    }
+    @FXML
+    private void handleNewClubDescriptionChange(){
+        newClubDescriptionField.textProperty().addListener(newClubDescriptionFieldListener);
+    }
+
+    @FXML
+    private void createNewClub(){
+        String newClubname=newClubNameField.getText();
+        String newClubType= newClubTypeComboBox.getTypeSelector();
+        String newClubdescription=newClubDescriptionField.getText();
+
+        try{
+            Clubs newClub=new Clubs(newClubname,newClubType,newClubdescription,Main.currentUser);
+            ClubDataHandling object=new ClubDataHandling();
+            object.saveNewClubToDatabase(newClub);
+        }catch (IllegalArgumentException e){
+            showErrorAlert(e.toString());
+        }
+    }
+
 //    When user selects a club from the table in club navigation page and press view button,
 //    data of that club will be loaded in the view club details page
     @FXML

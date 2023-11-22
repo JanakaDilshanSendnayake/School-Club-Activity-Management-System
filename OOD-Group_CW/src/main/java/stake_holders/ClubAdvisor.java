@@ -1,5 +1,7 @@
 package stake_holders;
 
+import utils.CADataHandling;
+
 import java.util.ArrayList;
 
 public class ClubAdvisor {
@@ -18,6 +20,8 @@ public class ClubAdvisor {
     private ArrayList<Clubs> clubsWithoutAdminAccess;
     private ArrayList<Clubs> clubsWithAdminAccess;
 
+    //This constructor will be used to validate the user inputs when registering a new club advisor
+
     public ClubAdvisor(String clubAdvisorId, String name, String email, String mobileNum, String password) {
         validateClubAdvisorId(clubAdvisorId);
         validateName(name);
@@ -32,17 +36,46 @@ public class ClubAdvisor {
         this.password=password;
     }
 
+    //This constructor will be used alone side with ClubAdvisorId when loading data from database to system
+    public ClubAdvisor(String name, String email, String mobileNum, String password) {
+        this.name = name;
+        this.email = email;
+        this.mobileNum = mobileNum;
+        this.password=password;
+    }
+    //This setter will be used only
+    public void setClubAdvisorId(String clubAdvisorId) {
+        this.clubAdvisorId = clubAdvisorId;
+    }
+
+
     //Validator methods
     //These methods will be used in constructor to check if the arguments given to constructor, follow the REGEX
     private void validateClubAdvisorId(String clubAdvisorId) {
-        if (!clubAdvisorId.matches(CLUB_ADVISOR_ID_REGEX)) {
-            throw new IllegalArgumentException("Invalid Club Advisor ID format: " + clubAdvisorId);
+        CADataHandling clubAdvisor=new CADataHandling();
+//        if (!clubAdvisorId.matches(CLUB_ADVISOR_ID_REGEX)&&clubAdvisor.clubAdvisorUserNameValidation(clubAdvisorId)) {
+//            throw new IllegalArgumentException("Invalid Club Advisor ID format: " + clubAdvisorId);
+//        }
+        if(clubAdvisorId.equals("")){
+            throw new IllegalArgumentException("You haven't filled club advisor id. It's mandatory");
+        }else{
+            if(clubAdvisorId.matches(CLUB_ADVISOR_ID_REGEX)){
+                if(clubAdvisor.clubAdvisorUserNameValidation(clubAdvisorId)){
+                    throw new IllegalArgumentException("This username is already being used.");
+                }
+            }else{
+                throw new IllegalArgumentException("Invalid Club Advisor ID format: " + clubAdvisorId);
+            }
         }
     }
 
     private void validateName(String name) {
-        if (!name.matches(NAME_REGEX)) {
-            throw new IllegalArgumentException("Invalid name format: " + name);
+        if(name.equals("_")){
+            throw new IllegalArgumentException("You haven't filled club advisor name. It's mandatory");
+        }else{
+            if(!name.matches(NAME_REGEX)){
+                throw new IllegalArgumentException("Invalid name format: " + name);
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 package utils;
 
+import main.Main;
 import stake_holders.ClubAdvisor;
 import stake_holders.Student;
 
@@ -7,12 +8,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class CADataHandling {
 
     public boolean clubAdvisorLogin(String clubAdvisorId, String password){
         boolean isAuthenticated = false;
-        String sql = "SELECT * FROM Club_Advisor WHERE Student_id = ? AND Student_password = ?";
+        //ClubAdvisor loggedInClubAdvisor=null;
+        String sql = "SELECT * FROM Club_Advisor WHERE Club_advisor_id = ? AND Club_advisor_password = ?";
 
         MySqlConnect databaseLink= new MySqlConnect();
 
@@ -26,7 +29,21 @@ public class CADataHandling {
                 if (resultSet.next()) {
                     // Student ID and password match
                     isAuthenticated = true;
+                    String clubAdvisorName=resultSet.getString("Club_advisor_name");
+                    String clubAdvisorEmail=resultSet.getString("Club_advisor_email");
+                    String clibAdvisorTele=resultSet.getString("Club_advisor_telephone");
+
+                    //for testing
+                    System.out.println(clubAdvisorName);
+                    System.out.println(clubAdvisorEmail);
+                    System.out.println(clibAdvisorTele);
+
+                    ClubAdvisor loggedInClubAdvisor=new ClubAdvisor(clubAdvisorName,clubAdvisorEmail,clibAdvisorTele,password);
+                    loggedInClubAdvisor.setClubAdvisorId(clubAdvisorId);
+                    Main.currentUser=loggedInClubAdvisor;
                 }
+            }catch (Exception e){
+                System.out.println(e.getMessage());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -34,7 +51,35 @@ public class CADataHandling {
         }
 
         return isAuthenticated;
+        //return loggedInClubAdvisor;
     }
+
+    //To check if the username is already being used by someone. This method is use for both student and club advisor validation
+    public boolean clubAdvisorUserNameValidation(String userIdToBeValidated){
+        boolean userIdAlreadyExists=false;
+        String sql ="SELECT * FROM club_advisor WHERE Club_advisor_id= ?";
+        MySqlConnect databaseLink= new MySqlConnect();
+
+        try (Connection connection = databaseLink.getDatabaseLink();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, userIdToBeValidated);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    //User Id already exists
+                    userIdAlreadyExists = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle database connection or query errors
+        }
+
+        return userIdAlreadyExists;
+
+    }
+
 
     public static void saveNewCAToDatabase(ClubAdvisor clubAdvisor) {
         String sql = "INSERT INTO club_advisor (club_advisor_id, club_advisor_name, club_advisor_email, club_advisor_telephone, club_advisor_password) VALUES (?, ?, ?, ?, ?)";
