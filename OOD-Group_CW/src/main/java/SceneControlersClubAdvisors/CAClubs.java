@@ -1,5 +1,6 @@
 package SceneControlersClubAdvisors;
 
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,6 +52,26 @@ public class CAClubs implements Initializable {
     private Scene scene;
     private Parent root;
 
+    //Text fields
+    @FXML
+    private TextField newClubIdField;
+    @FXML
+    private TextField newClubNameField;
+    @FXML
+    private TextArea newClubDescription;
+    @FXML
+    private Label newClubIdLabel;
+    @FXML
+    private Label newClubNameLabel;
+    @FXML
+    private Label newClubDescriptionLabel;
+    private ChangeListener<String> newClubIdFieldListener;
+    private ChangeListener<String> newClubNameFieldListener;
+    private ChangeListener<String> newClubDescriptionFieldListener;
+
+
+    private static final String CLUB_NAME_REGEX = "^[a-zA-Z_]{1,31}$";
+    private static final String CLUB_DESCRIPTION_REGEX = "^.{1,200}$";
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateStatus=false;
@@ -67,6 +88,51 @@ public class CAClubs implements Initializable {
 
             }
         });
+
+//        // Initializing Event listener for Club Advisor ID
+//        newClubIdFieldListener=((observable, oldValue, newValue) -> {
+//            String validationMessage = validateTextField(newValue, USER_ID_REGEX,
+//                    "User ID should be a combination letters and numbers.",10);
+//            newClubIdLabel.setText(validationMessage);
+//            setLabelStyle(validationMessage, newUserIdLabel);
+//        });
+
+        // Initializing Event listener for Club Advisor First Name
+        newClubNameFieldListener=((observable, oldValue, newValue) -> {
+            String validationMessage = validateTextField(newValue, CLUB_NAME_REGEX,
+                    "Name can only contain letters and Underscores.",30);
+            newClubNameLabel.setText(validationMessage);
+            setLabelStyle(validationMessage, newClubNameLabel);
+        });
+
+        // Initializing Event listener for Club Advisor First Name
+        newClubDescriptionFieldListener=((observable, oldValue, newValue) -> {
+            String validationMessage = validateTextField(newValue, CLUB_DESCRIPTION_REGEX,
+                    "Name can only contain letters and Underscores.",150);
+            newClubDescriptionLabel.setText(validationMessage);
+            setLabelStyle(validationMessage, newClubDescriptionLabel);
+        });
+    }
+
+    private String validateTextField(String value, String regex, String invalidMessage,int maximumCharacterLim) {
+        if (value.matches(regex)) {
+            return "Valid";
+        } else {
+            if (value.length()>maximumCharacterLim){
+                return "Maximum character limit exceeded";
+            }else{
+                return invalidMessage;}
+        }
+    }
+
+
+    //Method to handle the color changes of the messages that's shown the text labels
+    private void setLabelStyle(String validationMessage, Label label) {
+        if (validationMessage.equals("Valid")) {
+            label.setStyle("-fx-text-fill: green;");
+        } else {
+            label.setStyle("-fx-text-fill: red;");
+        }
     }
 
     private void showInfoAlert( String message) {
@@ -94,7 +160,7 @@ public class CAClubs implements Initializable {
     }
 
     @FXML
-    public void clickSidebar(ActionEvent actionEvent) throws IOException {
+    private void clickSidebar(ActionEvent actionEvent) throws IOException {
 
         if(actionEvent.getSource()==caHomeButton){
             root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Menu-ClubAdvisor.fxml"));
@@ -116,7 +182,7 @@ public class CAClubs implements Initializable {
 //    When user selects a club from the table in club navigation page and press view button,
 //    data of that club will be loaded in the view club details page
     @FXML
-    public void viewClubDetails(){
+    private void viewClubDetails(){
         caViewClubs.toFront();
         //Rest of the function
     }
@@ -125,21 +191,21 @@ public class CAClubs implements Initializable {
 
     private boolean updateStatus; // this variable is used to check whether if there is an ongoing detail update.
     @FXML
-    public void editClubDetails(){
+    private void editClubDetails(){
         updateStatus=true;
         caUpdateClubs.toFront();
         //Rest of the function
     }
 //  When user click suspend button the club and all the relevant information should be deleted
     @FXML
-    public void suspendClub(){
+    private void suspendClub(){
         if (showConfirmationAlert("Are you sure you want to delete this club and all of the relevant details")){
             //Implement the rest of the function
             showInfoAlert("Club and all of the relevant details Succesfully deleted.");
         }else{}
     }
     @FXML
-    public void leaveClub(){
+    private void leaveClub(){
 
         if (showConfirmationAlert("Are you sure that you want to leave the club?")){
             //Implement the rest of the function
@@ -148,7 +214,7 @@ public class CAClubs implements Initializable {
     }
 //  When user inputs updated data and press update button, data should be validated and saved
     @FXML
-    public void updateClubDetails(){
+    private void updateClubDetails(){
 
         //Rest of the function
         updateStatus=false;
@@ -156,7 +222,7 @@ public class CAClubs implements Initializable {
         caViewClubs.toFront();
     }
     @FXML
-    public void updateCancel(){
+    private void updateCancel(){
 
         // Rest of the function
         updateStatus=false;

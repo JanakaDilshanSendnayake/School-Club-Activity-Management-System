@@ -15,7 +15,8 @@ public class ClubAdvisor {
     private String email ;
     private String mobileNum;
     private String password;
-    private ArrayList<Clubs> advisedClubs;
+    private ArrayList<Clubs> clubsWithoutAdminAccess;
+    private ArrayList<Clubs> clubsWithAdminAccess;
 
     public ClubAdvisor(String clubAdvisorId, String name, String email, String mobileNum, String password) {
         validateClubAdvisorId(clubAdvisorId);
@@ -63,10 +64,10 @@ public class ClubAdvisor {
         }
     }
     public void joinORCreateClub(Clubs club) { //Do not call this method in driver seperately
-        this.advisedClubs.add(club);
+        this.clubsWithAdminAccess.add(club);
     }
     public void leaveClub(Clubs club){ //Do not call this method in driver seperately
-        this.advisedClubs.remove(club);
+        this.clubsWithoutAdminAccess.remove(club);
     }
 
     public String getClubAdvisorId() {
@@ -89,7 +90,11 @@ public class ClubAdvisor {
         return password;
     }
 
-    public ArrayList<Clubs> getAdvisedClubs() {
-        return advisedClubs;
+    public ArrayList<Clubs> getClubsWithoutAdminAccess() {
+        return clubsWithoutAdminAccess;
+    }
+
+    public ArrayList<Clubs> getClubsWithAdminAccess() {
+        return clubsWithAdminAccess;
     }
 }

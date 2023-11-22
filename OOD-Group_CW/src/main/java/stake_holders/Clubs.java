@@ -7,32 +7,55 @@ public class Clubs {
 
     private String clubName;
     private String clubId;
+    private String clubType;
+    private String clubDescription;
     private ClubAdvisor clubAdmin;
     private ArrayList<ClubAdvisor> clubAdvisorMembers;
     private ArrayList<Student> studentMembers;
     private ArrayList<Events> clubEvents;
 
-    public Clubs(String clubName, String clubId, ClubAdvisor clubAdmin) {
+    public Clubs(String clubName, String clubId, ClubAdvisor creatorCA) {
         clubAdvisorMembers=new ArrayList<>();
         this.clubName = clubName;
         this.clubId = clubId;
         this.clubAdvisorMembers.add(clubAdmin);
-        clubAdmin.joinORCreateClub(this);
-        this.clubAdmin = clubAdmin;
+        creatorCA.joinORCreateClub(this);
+        this.clubAdmin=creatorCA;
+    }
+    //Constructor 2
+    public Clubs(String clubId, String clubName, String clubType, String clubDescription) {
+        this.clubName = clubName;
+        this.clubId = clubId;
+        this.clubType = clubType;
+        this.clubDescription = clubDescription;
+    }
+
+    //Getters
+    public String getClubId() {
+        return clubId;
     }
 
     public String getClubName() {
         return clubName;
     }
 
-    public void setClubAdmin(ClubAdvisor clubAdmin){
-        if(clubAdvisorMembers.contains(clubAdmin)){
-            this.clubAdmin=clubAdmin;
-        }
+    public String getClubType() {
+        return clubType;
+    }
+
+    public String getClubDescription() {
+        return clubDescription;
     }
 
     public ClubAdvisor getClubAdmin(){
         return clubAdmin;
+    }
+
+    public void setClubAdmin(ClubAdvisor clubAdmin){
+        if(clubAdvisorMembers.contains(clubAdmin)){
+            this.clubAdmin=clubAdmin;
+            clubAdmin.getClubsWithAdminAccess().add(this);
+        }
     }
 
     public void addClubAdvisor(ClubAdvisor clubAdvisor) { //****
