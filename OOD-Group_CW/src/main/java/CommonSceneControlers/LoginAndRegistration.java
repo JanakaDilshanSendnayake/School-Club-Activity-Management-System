@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import stake_holders.ClubAdvisor;
+import utils.CADataHandling;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -229,6 +230,7 @@ public class LoginAndRegistration implements Initializable {
         if(validatePasswordMatch()){newPassword=newUserPasswordField1.getText();}else{newPassword="invalid";}
         try{
             ClubAdvisor newUser=new ClubAdvisor(newId,newName,newEmail,newTele,newPassword);
+            CADataHandling.saveNewCAToDatabase(newUser);
 
             //Should implement a method that takes above object as an argument and save the data in relevent table fields
 
