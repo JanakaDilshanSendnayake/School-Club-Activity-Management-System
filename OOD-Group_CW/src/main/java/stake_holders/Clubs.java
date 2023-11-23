@@ -3,6 +3,9 @@ package stake_holders;
 import java.security.PublicKey;
 import java.util.ArrayList;
 
+/**
+ * Class which holds the variables and methods of club
+ */
 public class Clubs {
 
     private String clubName;
@@ -13,6 +16,7 @@ public class Clubs {
     private ArrayList<ClubAdvisor> clubAdvisorMembers;
     private ArrayList<Student> studentMembers;
     private ArrayList<Events> clubEvents;
+
 
     public Clubs(String clubName, String clubId, ClubAdvisor creatorCA) {
         clubAdvisorMembers=new ArrayList<>();
@@ -51,6 +55,14 @@ public class Clubs {
         return clubAdmin;
     }
 
+    public ArrayList<ClubAdvisor> getClubAdvisorMembers(){
+        return clubAdvisorMembers;
+    }
+
+    /**
+     * Setting the club administrator of the club
+     * @param clubAdmin Object of a ClubAdvisor class as
+     */
     public void setClubAdmin(ClubAdvisor clubAdmin){
         if(clubAdvisorMembers.contains(clubAdmin)){
             this.clubAdmin=clubAdmin;
@@ -58,28 +70,53 @@ public class Clubs {
         }
     }
 
-    public void addClubAdvisor(ClubAdvisor clubAdvisor) { //****
+    /**
+     * Adding the club advisor to the club
+     * @param clubAdvisor Object of a ClubAdvisor class as
+     */
+    public void addClubAdvisor(ClubAdvisor clubAdvisor) {
         this.clubAdvisorMembers.add(clubAdvisor);
         clubAdvisor.joinORCreateClub(this);
     }
 
-    public void removeClubAdvisor(ClubAdvisor clubAdvisor){ //****
-        if (clubAdvisor!=null && !clubAdvisor.equals(this.clubAdmin)){
+    /**
+     * Removing the club advisor from the club
+     * @param clubAdvisor Object of a  ClubAdvisor class as
+     */
+    public void removeClubAdvisor(ClubAdvisor clubAdvisor){
             this.clubAdvisorMembers.remove(clubAdvisor);
             clubAdvisor.leaveClub(this);
         }
-    }
-    public ArrayList<ClubAdvisor> getClubAdvisorMembers(){ return clubAdvisorMembers; }
+
+    /**
+     * Creating an event of a club
+     * @param name Name of the club advisor who is going to organize the event : type String
+     * @param eventName Name of the event going to organize : type String
+     * @param eventDate Date of the event going to organize : type String
+     * @param eventLocation Location of the event going to organize : type String
+     * @param clubAdvisor Object of a ClubAdvisor class as
+     */
     public void createEvent(String name, String eventName, String eventDate, String eventLocation, ClubAdvisor clubAdvisor){
         if (clubAdvisor!=null && clubAdvisor.equals(this.clubAdmin)){
             Events event=new Events(eventName,eventDate,eventLocation,this);
             this.clubEvents.add(event);
         }
     }
+
+    /**
+     * Suspending the selected event from the club
+     * @param event Object of an Event class as
+     */
     public void suspendEvent(Events event){
         this.clubEvents.remove(event);
     }
 
+
+    /**
+     * Marking the attendance of a student who attended an event
+     * @param event Object of an Events class as
+     * @param student Object of a Student class as
+     */
     public void markAttendance(Events event, Student student){
         event.getAttendance().add(student);
     }

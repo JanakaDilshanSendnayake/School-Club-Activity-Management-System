@@ -2,6 +2,9 @@ package stake_holders;
 
 import java.util.ArrayList;
 
+/**
+ * Class which holds variables and methods of club advisor
+ */
 public class ClubAdvisor {
 
     //REGEX
@@ -32,44 +35,6 @@ public class ClubAdvisor {
         this.password=password;
     }
 
-    //Validator methods
-    //These methods will be used in constructor to check if the arguments given to constructor, follow the REGEX
-    private void validateClubAdvisorId(String clubAdvisorId) {
-        if (!clubAdvisorId.matches(CLUB_ADVISOR_ID_REGEX)) {
-            throw new IllegalArgumentException("Invalid Club Advisor ID format: " + clubAdvisorId);
-        }
-    }
-
-    private void validateName(String name) {
-        if (!name.matches(NAME_REGEX)) {
-            throw new IllegalArgumentException("Invalid name format: " + name);
-        }
-    }
-
-    private void validateEmail(String email) {
-        if (!email.matches(EMAIL_REGEX)) {
-            throw new IllegalArgumentException("Invalid email format: " + email);
-        }
-    }
-
-    private void validateMobileNumber(String mobileNum) {
-        if (!mobileNum.matches(MOBILE_NUMBER_REGEX)) {
-            throw new IllegalArgumentException("Invalid mobile number format: " + mobileNum);
-        }
-    }
-
-    private void validatePassword(String password) {
-        if (!password.matches(PASSWORD_REGEX)) {
-            throw new IllegalArgumentException("Invalid password format: " + password);
-        }
-    }
-    public void joinORCreateClub(Clubs club) { //Do not call this method in driver seperately
-        this.clubsWithAdminAccess.add(club);
-    }
-    public void leaveClub(Clubs club){ //Do not call this method in driver seperately
-        this.clubsWithoutAdminAccess.remove(club);
-    }
-
     public String getClubAdvisorId() {
         return clubAdvisorId;
     }
@@ -97,4 +62,83 @@ public class ClubAdvisor {
     public ArrayList<Clubs> getClubsWithAdminAccess() {
         return clubsWithAdminAccess;
     }
+
+
+    // Below methods will be used in constructor to check if the arguments given to constructor, follow the REGEX
+
+
+    /**
+     * Validator method to validate the clubAdvisorID
+     * @param clubAdvisorId Unique identifier used to identify the club advisor : type String
+     */
+    private void validateClubAdvisorId(String clubAdvisorId) {
+        if (!clubAdvisorId.matches(CLUB_ADVISOR_ID_REGEX)) {
+            throw new IllegalArgumentException("Invalid Club Advisor ID format: " + clubAdvisorId);
+        }
+    }
+
+
+    /**
+     * Validator method to validate the name of the club advisor
+     * @param name Name of the club advisor : type String
+     */
+    private void validateName(String name) {
+        if (!name.matches(NAME_REGEX)) {
+            throw new IllegalArgumentException("Invalid name format: " + name);
+        }
+    }
+
+
+    /**
+     * Validator method to validate the email of the club advisor
+     * @param email Email of the club advisor : type String
+     */
+    private void validateEmail(String email) {
+        if (!email.matches(EMAIL_REGEX)) {
+            throw new IllegalArgumentException("Invalid email format: " + email);
+        }
+    }
+
+
+    /**
+     * Validator method to validate the mobile number of the club advisor
+     * @param mobileNum Mobile number of the club advisor : type String
+     */
+    private void validateMobileNumber(String mobileNum) {
+        if (!mobileNum.matches(MOBILE_NUMBER_REGEX)) {
+            throw new IllegalArgumentException("Invalid mobile number format: " + mobileNum);
+        }
+    }
+
+
+    /**
+     * Validator method to validate the password of the club advisor account
+     * @param password Password of the club advisor account : type String
+     */
+    private void validatePassword(String password) {
+        if (!password.matches(PASSWORD_REGEX)) {
+            throw new IllegalArgumentException("Invalid password format: " + password);
+        }
+    }
+
+
+    /**
+     * Club advisor joining or creating club method
+     * @param club Object of Club class as
+     * Do not call this method in driver separately
+     */
+    public void joinORCreateClub(Clubs club) {
+        this.clubsWithAdminAccess.add(club);
+    }
+
+
+    /**
+     * Club advisor leaving the club method
+     * @param club Object of Club class as
+     * Do not call this method in driver separately
+     */
+    public void leaveClub(Clubs club){
+        this.clubsWithoutAdminAccess.remove(club);
+    }
+
 }

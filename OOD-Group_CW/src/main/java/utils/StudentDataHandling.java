@@ -5,6 +5,9 @@ import stake_holders.Student;
 
 import java.sql.*;
 
+/**
+ * Class which is for handling data of student in the database
+ */
 public class StudentDataHandling {
 
     public boolean studentLogin(String studentId, String password){

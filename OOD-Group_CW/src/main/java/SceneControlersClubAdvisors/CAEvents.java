@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+/**
+ * Controller class which is used to manage events for club advisors
+ */
 public class CAEvents implements Initializable {
 
     //Buttons - SideBar

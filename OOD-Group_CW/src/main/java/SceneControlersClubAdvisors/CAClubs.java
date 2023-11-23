@@ -19,6 +19,9 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/***
+ * Controller class which creation of clubs, update of clubs, search club
+ */
 public class CAClubs implements Initializable {
 
     //Buttons - SideBar
@@ -72,6 +75,13 @@ public class CAClubs implements Initializable {
 
     private static final String CLUB_NAME_REGEX = "^[a-zA-Z_]{1,31}$";
     private static final String CLUB_DESCRIPTION_REGEX = "^.{1,200}$";
+
+
+    /**
+     * Starting method of the controlller class
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateStatus=false;
@@ -114,6 +124,14 @@ public class CAClubs implements Initializable {
         });
     }
 
+    /**
+     *
+     * @param value
+     * @param regex
+     * @param invalidMessage
+     * @param maximumCharacterLim
+     * @return
+     */
     private String validateTextField(String value, String regex, String invalidMessage,int maximumCharacterLim) {
         if (value.matches(regex)) {
             return "Valid";
@@ -125,8 +143,11 @@ public class CAClubs implements Initializable {
         }
     }
 
-
-    //Method to handle the color changes of the messages that's shown the text labels
+    /**
+     * Method to handle the color changes of the messages that's shown the text labels
+     * @param validationMessage
+     * @param label
+     */
     private void setLabelStyle(String validationMessage, Label label) {
         if (validationMessage.equals("Valid")) {
             label.setStyle("-fx-text-fill: green;");
@@ -135,6 +156,11 @@ public class CAClubs implements Initializable {
         }
     }
 
+
+    /**
+     *
+     * @param message
+     */
     private void showInfoAlert( String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
@@ -143,6 +169,11 @@ public class CAClubs implements Initializable {
         alert.showAndWait();
     }
 
+
+    /**
+     *
+     * @param message
+     */
     private void showErrorAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -150,6 +181,12 @@ public class CAClubs implements Initializable {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    /**
+     *
+     * @param message
+     * @return
+     */
     private boolean showConfirmationAlert(String message){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
@@ -159,6 +196,12 @@ public class CAClubs implements Initializable {
         return result.isPresent() && result.get() == ButtonType.OK;
     }
 
+
+    /**
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     @FXML
     private void clickSidebar(ActionEvent actionEvent) throws IOException {
 
@@ -189,7 +232,16 @@ public class CAClubs implements Initializable {
 //  When the user want to edit the current details of the club and click edit button,
 //  current data should be loaded in the editable text fields in update club details
 
-    private boolean updateStatus; // this variable is used to check whether if there is an ongoing detail update.
+
+    /**
+     * this variable is used to check whether if there is an ongoing detail update.
+     */
+    private boolean updateStatus;
+
+
+    /**
+     *
+     */
     @FXML
     private void editClubDetails(){
         updateStatus=true;

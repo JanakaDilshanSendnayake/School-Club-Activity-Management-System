@@ -10,6 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+
+/**
+ * CLass which is handling the data related to club to the database
+ */
 public class ClubDataHandling {
 
     public void saveNewClubToDatabase(ClubAdvisor creatorCA,Clubs clubs) {

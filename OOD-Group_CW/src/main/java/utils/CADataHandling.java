@@ -8,6 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Class which is for handling the data club advisor to the database
+ */
 public class CADataHandling {
 
     public boolean clubAdvisorLogin(String clubAdvisorId, String password){
@@ -88,7 +91,5 @@ public class CADataHandling {
             e.printStackTrace();
         }
     }
-
-
 
 }

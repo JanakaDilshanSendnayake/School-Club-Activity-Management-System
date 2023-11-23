@@ -2,6 +2,9 @@ package SceneControlersClubAdvisors;
 
 import javafx.scene.control.CheckBox;
 
+/**
+ * Controller class for
+ */
 public class EventMarking {
     private String StudentID;
     private String StudentName;

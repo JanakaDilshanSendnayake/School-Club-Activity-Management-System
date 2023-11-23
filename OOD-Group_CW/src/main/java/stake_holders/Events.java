@@ -2,7 +2,11 @@ package stake_holders;
 
 import java.util.ArrayList;
 
+/**
+ * Class which holds variables and methods of an events
+ */
 public class Events {
+
     private String eventName;
     private String eventDate;
     private String eventLocation;

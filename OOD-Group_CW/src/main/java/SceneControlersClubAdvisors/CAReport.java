@@ -18,6 +18,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for club advisor to generate reports
+ */
 public class CAReport implements Initializable {
     MySqlConnect ConnectNow = new MySqlConnect();
     Connection ConnectDB = ConnectNow.getDatabaseLink();

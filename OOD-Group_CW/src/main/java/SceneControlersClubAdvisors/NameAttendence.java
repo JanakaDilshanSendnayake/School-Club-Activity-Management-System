@@ -2,6 +2,9 @@ package SceneControlersClubAdvisors;
 
 import javafx.scene.control.CheckBox;
 
+/**
+ * Controller class for
+ */
 public class NameAttendence {
     private String studentID;
     private String studentName;

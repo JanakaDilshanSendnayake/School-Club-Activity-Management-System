@@ -14,6 +14,9 @@ import utils.CADataHandling;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class is for both club advisor and student ; registration and login
+ */
 public class LoginAndRegistration implements Initializable {
 
     //REGEX
@@ -81,7 +84,11 @@ public class LoginAndRegistration implements Initializable {
 
     //Button
 
-
+    /**
+     * Starting method of the application
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         startPage.toFront();
