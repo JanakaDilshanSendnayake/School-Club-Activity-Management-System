@@ -1,6 +1,10 @@
 package SceneControlersClubAdvisors;
 
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,8 +13,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import main.Main;
 import stake_holders.Clubs;
@@ -19,8 +23,11 @@ import utils.ClubDataHandling;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Random;
 
 public class CAClubs implements Initializable {
 
@@ -56,30 +63,61 @@ public class CAClubs implements Initializable {
     private Parent root;
 
     //Text fields
-    @FXML
-    private TextField newClubNameField;
-    @FXML
-    private TextArea newClubDescriptionField;
-    @FXML
-    private ComboBox newClubTypeComboBox;
-    @FXML
-    private Label newClubIdLabel;
-    @FXML
-    private Label newClubNameLabel;
-    @FXML
-    private Label newClubDescriptionLabel;
+    @FXML private TextField newClubNameField;
+    @FXML private TextArea newClubDescriptionField;
+    @FXML private ComboBox<String> newClubTypeComboBox=new ComboBox<>();
+    ObservableList<String> newClubTypeComboBoxData = FXCollections.observableArrayList(
+            "Sports",
+            "Astronomy",
+            "Welfare",
+            "Entertainment",
+            "Art",
+            "Chess",
+            "Science",
+            "Mathematics",
+            "Literary",
+            "Music",
+            "Drama",
+            "Debate",
+            "Robotics",
+            "Environment",
+            "History",
+            "Coding",
+            "Language",
+            "Photography"
+    );
+
+    @FXML private Label newClubIdLabel;
+    @FXML private Label newClubNameLabel;
+    @FXML private Label newClubDescriptionLabel;
     private ChangeListener<String> newClubIdFieldListener;
     private ChangeListener<String> newClubNameFieldListener;
     private ChangeListener<String> newClubDescriptionFieldListener;
 
 
     private static final String CLUB_NAME_REGEX = "^[a-zA-Z_]{1,31}$";
-    private static final String CLUB_DESCRIPTION_REGEX = "^.{1,200}$";
+    private static final String CLUB_DESCRIPTION_REGEX = "^(?s).{1,200}$";
+
+    //Tables in club navigator pane
+    @FXML private TextField clubNavigateSearchbar;
+    @FXML private ComboBox<String> clubNavigateClubsSorter;
+    ObservableList<String> clubNavigateClubsSorterData = FXCollections.observableArrayList(
+            "All Clubs",
+            "My Clubs With Admin Privileges",
+            "My Clubs Without Admin Privileges"
+    );
+    @FXML private TableView<Clubs> clubNavigateTable;
+    @FXML private TableColumn<Clubs,String> clubIdColumn;
+    @FXML private TableColumn<Clubs,String> clubNameColumn;
+    @FXML private TableColumn<Clubs,String> clubTypeColumn;
+    ObservableList<Clubs> clubsToDisplayInNaviTable=FXCollections.observableArrayList();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateStatus=false;
         caNaviClubs.toFront();
-
+        newClubTypeComboBox.setItems(newClubTypeComboBoxData);
+        clubNavigateClubsSorter.setItems(clubNavigateClubsSorterData);
+        newClubDescriptionField.setWrapText(true);
 
         caClubsTabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             if (updateStatus && newTab == createNewClubTab) {
@@ -92,13 +130,55 @@ public class CAClubs implements Initializable {
             }
         });
 
-//        // Initializing Event listener for Club Advisor ID
-//        newClubIdFieldListener=((observable, oldValue, newValue) -> {
-//            String validationMessage = validateTextField(newValue, USER_ID_REGEX,
-//                    "User ID should be a combination letters and numbers.",10);
-//            newClubIdLabel.setText(validationMessage);
-//            setLabelStyle(validationMessage, newUserIdLabel);
+//        //Setting up the table in club navigation pane
+//        clubIdColumn.setCellValueFactory(new PropertyValueFactory<>("clubId"));
+//        clubNameColumn.setCellValueFactory(new PropertyValueFactory<>("clubName"));
+//        clubTypeColumn.setCellValueFactory(new PropertyValueFactory<>("clubType"));
+
+
+        clubNavigateClubsSorter.setOnAction(event->{
+            String selectedOption = clubNavigateClubsSorter.getSelectionModel().getSelectedItem();
+            ClubDataHandling object=new ClubDataHandling();
+            object.loadClubDataRelevantToCA(Main.currentUser);
+
+            if (selectedOption.equals("All Clubs")){
+                try {
+                    clubsToDisplayInNaviTable.clear();
+                    setUpClubNaviTable(clubsToDisplayInNaviTable,object.loadAllClubs());
+                    //clubsToDisplayInNaviTable.addAll(object.loadAllClubs());
+                } catch (SQLException e) {
+                    showErrorAlert(e.getMessage());
+                }
+            } else if (selectedOption.equals("My Clubs With Admin Privileges")) {
+                clubsToDisplayInNaviTable.clear();
+                setUpClubNaviTable(clubsToDisplayInNaviTable,Main.currentUser.getClubsWithAdminAccess());
+                //clubsToDisplayInNaviTable.addAll(Main.currentUser.getClubsWithAdminAccess());
+            } else if (selectedOption.equals("My Clubs Without Admin Privileges")) {
+                clubsToDisplayInNaviTable.clear();
+                setUpClubNaviTable(clubsToDisplayInNaviTable,Main.currentUser.getClubsWithoutAdminAccess());
+                //clubsToDisplayInNaviTable.addAll(Main.currentUser.getClubsWithoutAdminAccess());
+            }
+        });
+
+//        //filtering the table according to user's searches
+//        FilteredList<Clubs> filteredData=new FilteredList<>(clubsToDisplayInNaviTable, b -> true);
+//
+//        clubNavigateSearchbar.textProperty().addListener((observable, oldValue, newValue) -> {
+//            filteredData.setPredicate(club -> {
+//                // If filter text is empty, display all persons.
+//                if (newValue == null || newValue.isEmpty()) {
+//                    return true;
+//                }
+//                String lowerCaseFilter = newValue.toLowerCase();
+//                return club.getClubName().toLowerCase().startsWith(lowerCaseFilter);
+//            });
 //        });
+//        //Wrap the FilteredList in a SortedList.
+//        SortedList<Clubs> sortedData = new SortedList<>(filteredData);
+//        // Bind the SortedList comparator to the TableView comparator.
+//        sortedData.comparatorProperty().bind(clubNavigateTable.comparatorProperty());
+//        clubNavigateTable.setItems(sortedData);
+
 
         // Initializing Event listener for Club Advisor First Name
         newClubNameFieldListener=((observable, oldValue, newValue) -> {
@@ -111,10 +191,37 @@ public class CAClubs implements Initializable {
         // Initializing Event listener for Club Advisor First Name
         newClubDescriptionFieldListener=((observable, oldValue, newValue) -> {
             String validationMessage = validateTextField(newValue, CLUB_DESCRIPTION_REGEX,
-                    "Name can only contain letters and Underscores.",150);
+                    "",500);
             newClubDescriptionLabel.setText(validationMessage);
             setLabelStyle(validationMessage, newClubDescriptionLabel);
         });
+    }
+
+    private void setUpClubNaviTable(ObservableList<Clubs> observableList, ArrayList<Clubs> arrayList){
+        clubIdColumn.setCellValueFactory(new PropertyValueFactory<>("clubId"));
+        clubNameColumn.setCellValueFactory(new PropertyValueFactory<>("clubName"));
+        clubTypeColumn.setCellValueFactory(new PropertyValueFactory<>("clubType"));
+
+        observableList.addAll(arrayList);
+
+        FilteredList<Clubs> filteredData=new FilteredList<>(observableList, b -> true);
+
+        clubNavigateSearchbar.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(club -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+                return club.getClubName().toLowerCase().startsWith(lowerCaseFilter);
+            });
+        });
+        //Wrap the FilteredList in a SortedList.
+        SortedList<Clubs> sortedData = new SortedList<>(filteredData);
+        // Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(clubNavigateTable.comparatorProperty());
+        clubNavigateTable.setItems(sortedData);
+
     }
 
     private String validateTextField(String value, String regex, String invalidMessage,int maximumCharacterLim) {
@@ -190,21 +297,42 @@ public class CAClubs implements Initializable {
     private void handleNewClubDescriptionChange(){
         newClubDescriptionField.textProperty().addListener(newClubDescriptionFieldListener);
     }
+    //A method to automaticaly generate clubId
+    private String generateClubId() {
+        String prefix = "C";
+        int randomNumber;
+        ClubDataHandling object=new ClubDataHandling();
+
+        do {
+            randomNumber = new Random().nextInt(1000);
+        } while (object.clubIdValidation(prefix + randomNumber));
+
+        return prefix + randomNumber;
+    }
 
     @FXML
     private void createNewClub(){
-        String newClubname=newClubNameField.getText();
-        String newClubType= newClubTypeComboBox.getTypeSelector();
-        String newClubdescription=newClubDescriptionField.getText();
+        String newClubId=generateClubId();
+        String newClubName=newClubNameField.getText();
+        String newClubType= newClubTypeComboBox.getSelectionModel().getSelectedItem();
+        String newClubDescription=newClubDescriptionField.getText();
 
         try{
-            Clubs newClub=new Clubs(newClubname,newClubType,newClubdescription,Main.currentUser);
+            //to validate the user inputs, a club object is made by passing those inputs as arguments.
+            // Those arguments will be validated inside the Clubs class constructor. If inputs are invalid, an
+            // IllegalArgumentException will be thrown.
+            Clubs newClub=new Clubs(newClubId, newClubName,newClubType,newClubDescription,Main.currentUser);
+            System.out.println(newClub.getClubAdmin().getName());
+            //Adding the created club to current user
+            Main.currentUser.getClubsWithAdminAccess().add(newClub);
+            //saving the created club to the club table and club-advisor_club table
             ClubDataHandling object=new ClubDataHandling();
             object.saveNewClubToDatabase(newClub);
         }catch (IllegalArgumentException e){
             showErrorAlert(e.toString());
         }
     }
+
 
 //    When user selects a club from the table in club navigation page and press view button,
 //    data of that club will be loaded in the view club details page
@@ -228,7 +356,7 @@ public class CAClubs implements Initializable {
     private void suspendClub(){
         if (showConfirmationAlert("Are you sure you want to delete this club and all of the relevant details")){
             //Implement the rest of the function
-            showInfoAlert("Club and all of the relevant details Succesfully deleted.");
+            showInfoAlert("Club and all of the relevant details Successfully deleted.");
         }else{}
     }
     @FXML

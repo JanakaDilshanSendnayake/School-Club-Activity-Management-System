@@ -29,11 +29,12 @@ public class Clubs {
     //Constructor 2. This will be used to create a club object when registering a new club, and then that-
     // -object will be passed into database. Here club id won't be taken as an argument because-
     //-club id is automatically generated using auto increment in the database.
-    public Clubs(String clubName, String clubType, String clubDescription,ClubAdvisor creator) {
+    public Clubs(String clubId, String clubName, String clubType, String clubDescription,ClubAdvisor creator) {
         validateClubName(clubName);
         validateClubType(clubType);
         validateClubDescription(clubDescription);
 
+        this.clubId=clubId;
         this.clubName = clubName;
         this.clubType = clubType;
         this.clubDescription = clubDescription;
@@ -59,7 +60,7 @@ public class Clubs {
     }
     private void validateClubDescription(String description){
         if(description.equals("")){
-
+            throw new IllegalArgumentException("You haven't filled club description. It's mandatory");
         }else{
             if(!description.matches(CLUB_DESCRIPTION_REGEX)){
                 throw new IllegalArgumentException("You have exceeded the maximum character limit.");

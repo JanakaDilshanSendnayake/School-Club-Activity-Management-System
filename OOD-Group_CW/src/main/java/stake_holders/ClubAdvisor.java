@@ -34,6 +34,9 @@ public class ClubAdvisor {
         this.email = email;
         this.mobileNum = mobileNum;
         this.password=password;
+
+        clubsWithoutAdminAccess=new ArrayList<>();
+        clubsWithAdminAccess=new ArrayList<>();
     }
 
     //This constructor will be used alone side with ClubAdvisorId when loading data from database to system
@@ -42,6 +45,9 @@ public class ClubAdvisor {
         this.email = email;
         this.mobileNum = mobileNum;
         this.password=password;
+
+        clubsWithoutAdminAccess=new ArrayList<>();
+        clubsWithAdminAccess=new ArrayList<>();
     }
     //This setter will be used only
     public void setClubAdvisorId(String clubAdvisorId) {
@@ -129,5 +135,29 @@ public class ClubAdvisor {
 
     public ArrayList<Clubs> getClubsWithAdminAccess() {
         return clubsWithAdminAccess;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setMobileNum(String mobileNum) {
+        this.mobileNum = mobileNum;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setClubsWithoutAdminAccess(ArrayList<Clubs> clubsWithoutAdminAccess) {
+        this.clubsWithoutAdminAccess = clubsWithoutAdminAccess;
+    }
+
+    public void setClubsWithAdminAccess(ArrayList<Clubs> clubsWithAdminAccess) {
+        this.clubsWithAdminAccess = clubsWithAdminAccess;
     }
 }
