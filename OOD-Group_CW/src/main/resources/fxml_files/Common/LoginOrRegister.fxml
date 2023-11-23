@@ -235,11 +235,11 @@
                      <children>
                         <Pane layoutX="149.0" layoutY="225.0" AnchorPane.bottomAnchor="109.39999999999998" AnchorPane.leftAnchor="149.0" AnchorPane.rightAnchor="182.60000000000002" AnchorPane.topAnchor="225.0">
                            <children>
-                              <PasswordField layoutX="68.0" layoutY="61.0" prefHeight="27.0" prefWidth="250.0" style="-fx-background-color: white;" />
+                              <PasswordField fx:id="loginPasswordField" layoutX="68.0" layoutY="61.0" prefHeight="27.0" prefWidth="250.0" style="-fx-background-color: white;" />
                               <Label layoutY="5.0" text="Student ID:" />
                               <Label layoutX="1.0" layoutY="65.0" prefHeight="18.0" prefWidth="66.0" text="Password:" />
                               <Label layoutX="68.0" layoutY="191.0" prefHeight="18.0" prefWidth="250.0" text="------------------------OR-----------------------" />
-                              <Button layoutX="130.0" layoutY="128.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0">
+                              <Button layoutX="130.0" layoutY="128.0" mnemonicParsing="false" onAction="#login" prefHeight="44.0" prefWidth="126.0">
                                  <graphic>
                                     <Group>
                                        <children>
@@ -275,7 +275,7 @@
                                     </Group>
                                  </graphic>
                               </Button>
-                              <TextField layoutX="68.0" prefHeight="26.0" prefWidth="250.0" />
+                              <TextField fx:id="loginUserNameField" layoutX="68.0" prefHeight="26.0" prefWidth="250.0" />
                            </children>
                         </Pane>
                         <Group layoutX="235.0" layoutY="43.0">

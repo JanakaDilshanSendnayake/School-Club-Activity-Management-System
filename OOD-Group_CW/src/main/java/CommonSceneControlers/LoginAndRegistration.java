@@ -2,16 +2,26 @@ package CommonSceneControlers;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import main.Main;
 import stake_holders.ClubAdvisor;
+import stake_holders.Student;
 import utils.CADataHandling;
+import utils.StudentDataHandling;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class LoginAndRegistration implements Initializable {
@@ -89,8 +99,7 @@ public class LoginAndRegistration implements Initializable {
 
         // Initializing Event listener for Club Advisor ID
         newUserIdFieldListener=((observable, oldValue, newValue) -> {
-            String validationMessage = validateTextField(newValue, USER_ID_REGEX,
-                    "User ID should be a combination letters and numbers.",10);
+            String validationMessage = validateUserID(newValue);
             newUserIdLabel.setText(validationMessage);
             setLabelStyle(validationMessage, newUserIdLabel);
         });
@@ -140,6 +149,23 @@ public class LoginAndRegistration implements Initializable {
             validatePasswordMatch();
         });
     }
+    private String validateUserID(String value) {
+        CADataHandling clubAdvisor=new CADataHandling();
+        StudentDataHandling student=new StudentDataHandling();
+        if((Objects.equals(currentUserType, "CLUB-ADVISOR") && clubAdvisor.clubAdvisorUserNameValidation(value))||(Objects.equals(currentUserType, "STUDENT") && student.studentUserNameValidation(value))){
+            return "Sorry this user name is already taken";
+        }else {
+            if (value.matches(USER_ID_REGEX)) {
+                return "Valid";
+            } else {
+                if (value.length() > 10) {
+                    return "Maximum character limit exceeded";
+                } else {
+                    return "User ID should be a combination letters and numbers.";
+                }
+            }
+        }
+    }
 
     //Method to validate string inputs with a character limit
     private String validateTextField(String value, String regex, String invalidMessage,int maximumCharacterLim) {
@@ -149,7 +175,7 @@ public class LoginAndRegistration implements Initializable {
             if (value.length()>maximumCharacterLim){
                 return "Maximum character limit exceeded";
             }else{
-                return invalidMessage;}
+                return "User ID should be a combination letters and numbers.";}
         }
     }
     //Overriding the above method. This method is to validate String inputs that doesn't have any character limit
@@ -229,23 +255,64 @@ public class LoginAndRegistration implements Initializable {
         String newPassword;
         if(validatePasswordMatch()){newPassword=newUserPasswordField1.getText();}else{newPassword="invalid";}
         try{
-            ClubAdvisor newUser=new ClubAdvisor(newId,newName,newEmail,newTele,newPassword);
-            CADataHandling.saveNewCAToDatabase(newUser);
+            //if(currentUserType=="CLUBADVISOR"){
+                ClubAdvisor newUser=new ClubAdvisor(newId,newName,newEmail,newTele,newPassword);
+                CADataHandling.saveNewCAToDatabase(newUser);
 
-            //Should implement a method that takes above object as an argument and save the data in relevent table fields
+                //Only for testing
+                System.out.println(currentUserType);
+                System.out.println(newUser);
+                System.out.println(newUser.getClubAdvisorId());
+                System.out.println(newUser.getName());
+                System.out.println(newUser.getEmail());
+                System.out.println(newUser.getMobileNum());
+                System.out.println(newUser.getPassword());
+            //} else if (currentUserType=="STUDENT") {
+            //Student newUser=new Student(newId,newName,newEmail,newTele,newPassword)
 
-            //Only for testing
-            System.out.println(currentUserType);
-            System.out.println(newUser);
-            System.out.println(newUser.getClubAdvisorId());
-            System.out.println(newUser.getName());
-            System.out.println(newUser.getEmail());
-            System.out.println(newUser.getMobileNum());
-            System.out.println(newUser.getPassword());
-        }catch (Exception e){
-            showErrorAlert("You have entered at least one invalid input");
+            //}
+
+
+        }catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+            showErrorAlert(e.getMessage());
         }
 
+    }
+    @FXML
+    private TextField loginUserNameField;
+    @FXML
+    private PasswordField loginPasswordField;
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+    @FXML
+    private void login(ActionEvent actionEvent){
+        CADataHandling object=new CADataHandling();
+        System.out.println(object.clubAdvisorLogin(loginUserNameField.getText(),loginPasswordField.getText()));
+        if(currentUserType.equals("CLUB-ADVISOR") && object.clubAdvisorLogin(loginUserNameField.getText(),loginPasswordField.getText())){
+            try {
+                root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Clubs-ClubAdvisor.fxml"));
+                scene = new Scene(root);
+                stage =(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            }catch (Exception e){
+                showErrorAlert(e.getMessage());
+            }
+        } else if (currentUserType.equals("STUDENT")) {
+            try {
+                root = FXMLLoader.load(getClass().getResource("/fxml_files/Student/Menu-Students.fxml"));
+                scene = new Scene(root);
+                stage =(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            }catch (Exception e){
+                showErrorAlert(e.getMessage());
+            }
+        }else {
+            showErrorAlert("The login credentials you entered are wrong");
+        }
     }
     private void showErrorAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -272,7 +339,7 @@ public class LoginAndRegistration implements Initializable {
 
     @FXML
     private void selectClubAdvisor(){
-        currentUserType="CLUBADVISOR";
+        currentUserType="CLUB-ADVISOR";
         loginPageTextlabel.setText("CLUB ADVISOR LOGIN");
         registerPageTextLabel.setText("Club Advisor Registration");
         Image clubAdvisorIcon = new Image(getClass().getResourceAsStream("/Icons/club advisor.png"));

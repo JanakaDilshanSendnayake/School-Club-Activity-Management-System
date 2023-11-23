@@ -33,6 +33,31 @@ public class StudentDataHandling {
         return isAuthenticated;
     }
 
+    public boolean studentUserNameValidation(String userIdToBeValidated){
+        boolean userIdAlreadyExists=false;
+        String sql =sql="SELECT * FROM student WHERE Student_id= ?";
+        MySqlConnect databaseLink= new MySqlConnect();
+
+        try (Connection connection = databaseLink.getDatabaseLink();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, userIdToBeValidated);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    //User Id already exists
+                    userIdAlreadyExists = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle database connection or query errors
+        }
+
+        return userIdAlreadyExists;
+
+    }
+
     public void saveStudentToDatabase(Student student) {
         String sql = "INSERT INTO student (student_id, name, email, mobile_number, password) VALUES (?, ?, ?, ?, ?)";
 
