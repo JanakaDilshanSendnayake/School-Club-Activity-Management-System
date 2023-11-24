@@ -366,7 +366,7 @@ public class CAClubs implements Initializable {
         // IllegalArgumentException will be thrown.
         try{
             Clubs newClub=new Clubs(newClubId, newClubName,newClubType,newClubDescription,Main.currentUser);
-            System.out.println(newClub.getClubAdmin().getName());
+            //System.out.println(newClub.getClubAdmin().getName());
             //Adding the created club to current user
             Main.currentUser.getClubsWithAdminAccess().add(newClub);
             //saving the created club to the club table and club-advisor_club table
@@ -415,7 +415,13 @@ public class CAClubs implements Initializable {
         ClubDataHandling obj=new ClubDataHandling();
         obj.loadClubMembershipData(Main.currentClub);
 
-        if(Main.currentClub.getClubAdmin().getClubAdvisorId().equals(Main.currentUser.getClubAdvisorId())){
+        ArrayList<String> array=new ArrayList<>();
+        for(ClubAdvisor ca:Main.currentClub.getClubAdmin()){
+            array.add(ca.getClubAdvisorId());
+        }
+
+        //if(Main.currentClub.getClubAdmin().getClubAdvisorId().equals(Main.currentUser.getClubAdvisorId())){
+        if(array.contains(Main.currentUser.getClubAdvisorId())){
             updateStatus=true;
             updateClubNameField.setText(viewClubNameLabel.getText());
             updateClubTypeComboBox.setValue(viewClubTypeLabel.getText());
@@ -473,7 +479,7 @@ public class CAClubs implements Initializable {
         try{clubsAdvisorMembersToDisplay.addAll(club.getClubAdvisorMembers());}catch (Exception e){
             System.out.println(e.getMessage());
         }
-        clubsAdvisorMembersToDisplay.add(club.getClubAdmin());
+        clubsAdvisorMembersToDisplay.addAll(club.getClubAdmin());
         clubAdvisorMembersNavigateTable.setItems(clubsAdvisorMembersToDisplay);
 
     }

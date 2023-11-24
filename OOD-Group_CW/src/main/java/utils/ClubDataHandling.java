@@ -55,7 +55,7 @@ public class ClubDataHandling {
             // Execute the SQL query
             preparedStatement.executeUpdate();
             //to set the original creator as admin automaticaly(to add the club to club_advisor_club table)
-            addANewCAMember(clubs.getClubAdmin(),clubs);
+            addANewCAMember(clubs.getClubAdmin().get(0),clubs);
 
             System.out.println("Club data saved successfully.");
 
@@ -71,10 +71,15 @@ public class ClubDataHandling {
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, clubAdvisor.getClubAdvisorId());
             preparedStatement.setString(2, clubs.getClubId());
-            preparedStatement.setBoolean(3, Objects.equals(clubs.getClubAdmin().getClubAdvisorId(), clubAdvisor.getClubAdvisorId()));
+
+            ArrayList<String> array=new ArrayList<>();
+            for(ClubAdvisor ca:clubs.getClubAdmin()){
+                array.add(ca.getClubAdvisorId());
+            }
+            preparedStatement.setBoolean(3, array.contains(clubAdvisor.getClubAdvisorId()));
             System.out.println(clubAdvisor.getClubAdvisorId());
             System.out.println(clubs.getClubId());
-            System.out.println(Objects.equals(clubs.getClubAdmin().getClubAdvisorId(), clubAdvisor.getClubAdvisorId()));
+            //System.out.println(Objects.equals(clubs.getClubAdmin().getClubAdvisorId(), clubAdvisor.getClubAdvisorId()));
             preparedStatement.executeUpdate();
             System.out.println("success");
         } catch (SQLException e) {;
@@ -89,7 +94,13 @@ public class ClubDataHandling {
 
         try (Connection connection = databaseLink.getDatabaseLink();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setBoolean(1, clubs.getClubAdmin()==newadmin);
+            //preparedStatement.setBoolean(1, clubs.getClubAdmin()==newadmin);
+
+            ArrayList<String> array=new ArrayList<>();
+            for(ClubAdvisor clubAdvisor:clubs.getClubAdmin()){
+                array.add(clubAdvisor.getClubAdvisorId());
+            }
+            preparedStatement.setBoolean(1, array.contains(newadmin.getClubAdvisorId()));
             preparedStatement.setString(2, newadmin.getClubAdvisorId());
             preparedStatement.setString(3, clubs.getClubId());
 

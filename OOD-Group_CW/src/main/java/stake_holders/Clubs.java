@@ -9,7 +9,7 @@ public class Clubs {
     private String clubId;
     private String clubType;
     private String clubDescription;
-    private ClubAdvisor clubAdmin;
+    private ArrayList<ClubAdvisor> clubAdmin;
     private ArrayList<ClubAdvisor> clubAdvisorMembers;
     private ArrayList<Student> studentMembers;
     private ArrayList<Events> clubEvents;
@@ -36,15 +36,19 @@ public class Clubs {
         validateClubType(clubType);
         validateClubDescription(clubDescription);
 
+        clubAdvisorMembers=new ArrayList<>();
+        studentMembers=new ArrayList<>();
+        clubEvents=new ArrayList<>();
+        //clubAdmin=
+
+
         this.clubId=clubId;
         this.clubName = clubName;
         this.clubType = clubType;
         this.clubDescription = clubDescription;
-        this.clubAdmin=creator;
+        this.clubAdmin.add(creator);
 
-        clubAdvisorMembers=new ArrayList<>();
-        studentMembers=new ArrayList<>();
-        clubEvents=new ArrayList<>();
+
     }
     //This will be used when loading clubs from the database to the system. Data from relevant columns will be given-
     // -as arguments to this constructor and then the created object will be saved in arrays for future uses.
@@ -57,6 +61,7 @@ public class Clubs {
         clubAdvisorMembers=new ArrayList<>();
         studentMembers=new ArrayList<>();
         clubEvents=new ArrayList<>();
+        clubAdmin=new ArrayList<>();
     }
 
     private void validateClubName(String name){
@@ -100,14 +105,14 @@ public class Clubs {
         return clubDescription;
     }
 
-    public ClubAdvisor getClubAdmin(){
+    public ArrayList<ClubAdvisor> getClubAdmin(){
         return clubAdmin;
     }
     public ArrayList<ClubAdvisor> getClubAdvisorMembers(){ return clubAdvisorMembers; }
 
     public void setClubAdmin(ClubAdvisor clubAdmin){
         //if(clubAdvisorMembers.contains(clubAdmin)){
-            this.clubAdmin=clubAdmin;
+            this.clubAdmin.add(clubAdmin);
             //clubAdmin.getClubsWithAdminAccess().add(this);
         //}
     }
