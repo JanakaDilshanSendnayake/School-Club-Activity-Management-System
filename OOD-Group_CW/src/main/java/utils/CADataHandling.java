@@ -39,8 +39,13 @@ public class CADataHandling {
                     System.out.println(clubAdvisorEmail);
                     System.out.println(clibAdvisorTele);
 
+                    //creating new object for logged in club advisor
                     ClubAdvisor loggedInClubAdvisor=new ClubAdvisor(clubAdvisorName,clubAdvisorEmail,clibAdvisorTele,password);
                     loggedInClubAdvisor.setClubAdvisorId(clubAdvisorId);
+//                    //loading the club advisors club data from the database--this might unnecessary
+//                    ClubDataHandling obj=new ClubDataHandling();
+//                    obj.loadClubDataRelevantToCA(loggedInClubAdvisor);
+                    //assigning the above created object to current logged-in user tracker in main
                     Main.currentUser=loggedInClubAdvisor;
                 }
             }catch (Exception e){

@@ -169,14 +169,15 @@ public class ClubDataHandling {
             preparedStatement.setString(1, club.getClubId());
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                    String clubAdvisorIdID=resultSet.getString("club_advisor_id");
+                    String clubAdvisorId=resultSet.getString("club_advisor_id");
                     String clubID=resultSet.getString("club_id");
                     boolean admin=resultSet.getBoolean("is_admin");
+
                     CADataHandling object=new CADataHandling();
                     if(admin){
-                        club.setClubAdmin(object.loadClubAdvisorData(clubAdvisorIdID));
+                        club.setClubAdmin(object.loadClubAdvisorData(clubAdvisorId));
                     }else{
-                        club.getClubAdvisorMembers().add(object.loadClubAdvisorData(clubAdvisorIdID));
+                        club.getClubAdvisorMembers().add(object.loadClubAdvisorData(clubAdvisorId));
                     }
                 }
             }
@@ -198,6 +199,9 @@ public class ClubDataHandling {
              ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 Clubs club = new Clubs(String.valueOf(resultSet.getString("club_id")),resultSet.getString("club_name"),resultSet.getString("club_type"),resultSet.getString("club_description"));
+
+//                //loading the membership details of the club--this might unnecessary
+//                loadClubMembershipData(club);
                 clubs.add(club);
             }
 

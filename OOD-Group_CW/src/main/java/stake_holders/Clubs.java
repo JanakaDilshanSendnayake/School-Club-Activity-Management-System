@@ -41,6 +41,10 @@ public class Clubs {
         this.clubType = clubType;
         this.clubDescription = clubDescription;
         this.clubAdmin=creator;
+
+        clubAdvisorMembers=new ArrayList<>();
+        studentMembers=new ArrayList<>();
+        clubEvents=new ArrayList<>();
     }
     //This will be used when loading clubs from the database to the system. Data from relevant columns will be given-
     // -as arguments to this constructor and then the created object will be saved in arrays for future uses.
@@ -49,6 +53,10 @@ public class Clubs {
         this.clubName = clubName;
         this.clubType = clubType;
         this.clubDescription = clubDescription;
+
+        clubAdvisorMembers=new ArrayList<>();
+        studentMembers=new ArrayList<>();
+        clubEvents=new ArrayList<>();
     }
 
     private void validateClubName(String name){

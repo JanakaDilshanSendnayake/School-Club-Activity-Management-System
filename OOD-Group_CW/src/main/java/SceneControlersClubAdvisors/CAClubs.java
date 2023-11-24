@@ -17,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import main.Main;
+import stake_holders.ClubAdvisor;
 import stake_holders.Clubs;
 import utils.ClubDataHandling;
 
@@ -151,7 +152,6 @@ public class CAClubs implements Initializable {
         When user selects "My Clubs Without Admin Privileges", table shows the clubs user is only a member but not an admin.
         */
         clubNavigateClubsSorter.setOnAction(event->{
-
             ClubDataHandling object=new ClubDataHandling();
             object.loadClubDataRelevantToCA(Main.currentUser);
 
@@ -160,7 +160,7 @@ public class CAClubs implements Initializable {
             if (selectedOption.equals("All Clubs")){
                 try {
                     clubsToDisplayInNaviTable.clear();
-                    setUpClubNaviTable(clubsToDisplayInNaviTable,object.loadAllClubs());
+                    setUpClubNaviTable(clubsToDisplayInNaviTable, object.loadAllClubs());
                 } catch (SQLException e) {
                     showErrorAlert(e.getMessage());
                 }
@@ -182,28 +182,45 @@ public class CAClubs implements Initializable {
 
                 ClubDataHandling obj=new ClubDataHandling();
                 obj.loadClubMembershipData(newSelection);
+                obj.loadClubDataRelevantToCA(Main.currentUser);
                 Main.currentClub=newSelection;
+
+                //System.out.println(newSelection.getClubAdvisorMembers().);
 
 
                 viewClubNameLabel.setText(newSelection.getClubName());
                 viewClubDescriptionTextField.setText(newSelection.getClubDescription());
                 viewClubTypeLabel.setText(newSelection.getClubType());
+                //========================================
+                ArrayList<String> clubsWithAdminAccessClubIds=new ArrayList<>();
+                ArrayList<String> clubsWithoutAdminAccessClubIds=new ArrayList<>();
 
-                if(Main.currentUser.getClubsWithAdminAccess().contains(newSelection)){
+                for(Clubs club:Main.currentUser.getClubsWithAdminAccess()){
+                    clubsWithAdminAccessClubIds.add(club.getClubId());
+                }
+                for(Clubs club:Main.currentUser.getClubsWithoutAdminAccess()){
+                    clubsWithoutAdminAccessClubIds.add(club.getClubId());
+                }
+                //=====================================================
+
+                if(clubsWithAdminAccessClubIds.contains(newSelection.getClubId())){
                     editClubButton.setVisible(true);
                     suspendClubButton.setVisible(true);
                     joinClubButton.setVisible(false);
                     leaveClubButton.setVisible(true);
-                } else if (Main.currentUser.getClubsWithoutAdminAccess().contains(newSelection)) {
+                    appointNewAdminButton.setVisible(true);
+                } else if (clubsWithoutAdminAccessClubIds.contains(newSelection.getClubId())) {
                     editClubButton.setVisible(false);
                     suspendClubButton.setVisible(false);
                     joinClubButton.setVisible(false);
                     leaveClubButton.setVisible(true);
+                    appointNewAdminButton.setVisible(false);
                 }else{
                     editClubButton.setVisible(false);
                     suspendClubButton.setVisible(false);
                     joinClubButton.setVisible(true);
                     leaveClubButton.setVisible(false);
+                    appointNewAdminButton.setVisible(false);
                 }
             }
         });
@@ -428,8 +445,43 @@ public class CAClubs implements Initializable {
     }
     @FXML
     private void joinClub(){
+        ClubDataHandling obj=new ClubDataHandling();
+        obj.addANewCAMember(Main.currentUser,Main.currentClub);
 
     }
+    @FXML
+    private void appointNewAdmin(){
+        setUpClubAdvisorMembersNaviTable(Main.currentClub);
+        adminAppointPane.toFront();
+
+    }
+    private void saveNewAdmin(){
+
+    }
+    @FXML private TableView<ClubAdvisor> clubAdvisorMembersNavigateTable;
+    @FXML private TableColumn<ClubAdvisor,String> clubAdvisorMembersIdColumn;
+    @FXML private TableColumn<ClubAdvisor,String> clubAdvisorMembersNameColumn;
+    @FXML private AnchorPane adminAppointPane;
+    @FXML private Button appointNewAdminButton;
+
+    private void setUpClubAdvisorMembersNaviTable( Clubs club){
+        clubAdvisorMembersIdColumn.setCellValueFactory(new PropertyValueFactory<>("clubAdvisorId"));
+        clubAdvisorMembersNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        ObservableList<ClubAdvisor> clubsAdvisorMembersToDisplay=FXCollections.observableArrayList();
+
+        try{clubsAdvisorMembersToDisplay.addAll(club.getClubAdvisorMembers());}catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        clubsAdvisorMembersToDisplay.add(club.getClubAdmin());
+        clubAdvisorMembersNavigateTable.setItems(clubsAdvisorMembersToDisplay);
+
+    }
+
+
+
+
+    //===================================================================
 //  When user inputs updated data and press update button, data should be validated and saved
     @FXML
     private void saveUpdatedClubDetails(){
