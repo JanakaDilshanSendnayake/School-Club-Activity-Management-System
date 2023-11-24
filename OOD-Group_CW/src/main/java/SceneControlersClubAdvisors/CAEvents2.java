@@ -53,16 +53,26 @@ public class CAEvents2 implements Initializable {
 // start from here: he chooses club ---> display events for that club ----> update tableview
         String club = ClubSelectionChoiceBox.getValue();
         EventSelectionChoiceBox.getItems().clear();
-         events = FXCollections.observableArrayList();
+        events = FXCollections.observableArrayList();
         List<CheckBox> checkBoxes = new ArrayList<>();
         try {
-            PreparedStatement ps = ConnectDB.prepareStatement("Select event_name from events where club_name='" + (club) + "'");
+            PreparedStatement ps = ConnectDB.prepareStatement("select event_name\n" +
+                    "from Event\n" +
+                    "inner join Club\n" +
+                    "on Event.club_id = Club.club_id\n" +
+                    "where club_name = \"club_name\";");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 EventSelectionChoiceBox.getItems().addAll(rs.getString("event_name"));
             }
 
-            PreparedStatement ps1 = ConnectDB.prepareStatement("select userID,name1 from club_names where club_name='"+(club)+"'");
+            PreparedStatement ps1 = ConnectDB.prepareStatement("select student.Student_id, student_name\n" +
+                    "from Student_club\n" +
+                    "inner join student\n" +
+                    "on Student_club.student_id = student.student_id\n" +
+                    "inner join club\n" +
+                    "on student_club.club_id = club.club_id\n" +
+                    "where club_name = \"club_name\";");
             ResultSet rs1 = ps1.executeQuery();
             while(rs1.next()){
                 CheckBox test = new CheckBox();
@@ -83,19 +93,26 @@ public class CAEvents2 implements Initializable {
     void handleSave(ActionEvent event) throws SQLException {
         String clubname = ClubSelectionChoiceBox.getValue();
         String eventname = EventSelectionChoiceBox.getValue();
-
-        PreparedStatement ps = ConnectDB.prepareStatement("delete from event_names where event_name='"+(eventname)+"'");
+//get event id
+        PreparedStatement statement = ConnectDB.prepareStatement("select event_id \n" +
+                "from event\n" +
+                "where event_name = \"event_name\";");
+        ResultSet event_id = statement.executeQuery();
+// clear previos values
+        PreparedStatement ps = ConnectDB.prepareStatement("delete\n" +
+                "from attendance\n" +
+                "where event_id = \"event_id\";");
         ps.executeUpdate();
-
-        List<String> presentStudents = new ArrayList<>();
+// update attendence table
+        //List<String> presentStudents = new ArrayList<>();
         for (EventMarking student:events) {
             if(student.getCheckBox().isSelected()){
-                PreparedStatement ps1 = ConnectDB.prepareStatement("insert into event_names ( club_name,event_name,name1, studentID) values ('"+(clubname)+"','"+(eventname)+"','"+(student.getStudentName())+"','"+(student.getStudentID())+"');");
+                PreparedStatement ps1 = ConnectDB.prepareStatement("insert into attendance(student_id, event_id, attendance_status) values (student_id, event_id, attendance_status);");
                 ps1.executeUpdate();// insert bool = True
 
                 //presentStudents.add(student.getStudentName()+" "+student.getStudentID());
-            }PreparedStatement ps1 = ConnectDB.prepareStatement("insert into event_names ( club_name,event_name,name1, studentID) values ('"+(clubname)+"','"+(eventname)+"','"+(student.getStudentName())+"','"+(student.getStudentID())+"');");
-            ps1.executeUpdate();// insert bool = False
+            }else{PreparedStatement ps1 = ConnectDB.prepareStatement("insert into attendance(student_id, event_id, attendance_status) values (student_id, event_id, attendance_status);");
+            ps1.executeUpdate();}// insert bool = False
         }
     }
 
@@ -104,7 +121,7 @@ public class CAEvents2 implements Initializable {
         try {
             //Class.forName("com.mysql.cj.jdbc.Driver");
             //databaseLink = DriverManager.getConnection("jdbc:mysql://localhost/scams", "root", "#Wolf8me");
-            PreparedStatement ps = ConnectDB.prepareStatement("Select club_name from clubs");
+            PreparedStatement ps = ConnectDB.prepareStatement("select club_name from Club;");
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
             ClubSelectionChoiceBox.getItems().addAll(rs.getString("club_name"));}
