@@ -15,9 +15,10 @@ public class Main extends Application {
 
     public static ArrayList<Clubs> clubs;
     public static ClubAdvisor currentUser;
+    public static Clubs currentClub;
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Events-ClubAdvisor.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml_files/Common/LoginOrRegister.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("SACMS");

@@ -9,7 +9,7 @@ public class StudentDataHandling {
 
     public boolean studentLogin(String studentId, String password){
         boolean isAuthenticated = false;
-        String sql = "SELECT * FROM Student WHERE Student_id = ? AND Student_password = ?";
+        String sql = "SELECT * FROM student WHERE Student_id = ? AND Student_password = ?";
 
         MySqlConnect databaseLink= new MySqlConnect();
 
@@ -35,7 +35,7 @@ public class StudentDataHandling {
 
     public boolean studentUserNameValidation(String userIdToBeValidated){
         boolean userIdAlreadyExists=false;
-        String sql =sql="SELECT * FROM student WHERE Student_id= ?";
+        String sql =sql="SELECT * FROM student WHERE student_id= ?";
         MySqlConnect databaseLink= new MySqlConnect();
 
         try (Connection connection = databaseLink.getDatabaseLink();
@@ -58,8 +58,8 @@ public class StudentDataHandling {
 
     }
 
-    public void saveStudentToDatabase(Student student) {
-        String sql = "INSERT INTO student (student_id, name, email, mobile_number, password) VALUES (?, ?, ?, ?, ?)";
+    public static void saveStudentToDatabase(Student student) {
+        String sql = "INSERT INTO student (student_id, student_name, student_email, student_telephone., student_password) VALUES (?, ?, ?, ?, ?)";
 
         MySqlConnect databaseLink= new MySqlConnect();
 
@@ -84,7 +84,7 @@ public class StudentDataHandling {
     }
 
     public void updateStudentInDatabase(Student updatedStudent) {
-        String sql = "UPDATE student SET name = ?, email = ?, mobile_number = ?, password = ? WHERE username = ?";
+        String sql = "UPDATE student SET student_name = ?, student_email = ?, student_telephone = ?, student_password = ? WHERE student_id = ?";
         MySqlConnect databaseLink= new MySqlConnect();
 
         try (Connection connection = databaseLink.getDatabaseLink();

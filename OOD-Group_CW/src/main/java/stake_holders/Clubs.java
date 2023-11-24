@@ -18,14 +18,16 @@ public class Clubs {
     private static final String CLUB_NAME_REGEX = "^[a-zA-Z_]{1,31}$";
     private static final String CLUB_DESCRIPTION_REGEX = "^.{1,200}$";
 
-    public Clubs(String clubName, String clubId, ClubAdvisor creatorCA) {
-        clubAdvisorMembers=new ArrayList<>();
-        this.clubName = clubName;
-        this.clubId = clubId;
-        this.clubAdvisorMembers.add(clubAdmin);
-        creatorCA.joinORCreateClub(this);
-        this.clubAdmin=creatorCA;
-    }
+//    public Clubs(String clubName, String clubId, ClubAdvisor creatorCA) {
+//        clubAdvisorMembers=new ArrayList<>();
+//        this.clubName = clubName;
+//        this.clubId = clubId;
+//        this.clubAdvisorMembers.add(clubAdmin);
+//        creatorCA.joinORCreateClub(this);
+//        this.clubAdmin=creatorCA;
+//    }
+
+
     //Constructor 2. This will be used to create a club object when registering a new club, and then that-
     // -object will be passed into database. Here club id won't be taken as an argument because-
     //-club id is automatically generated using auto increment in the database.
@@ -96,10 +98,10 @@ public class Clubs {
     public ArrayList<ClubAdvisor> getClubAdvisorMembers(){ return clubAdvisorMembers; }
 
     public void setClubAdmin(ClubAdvisor clubAdmin){
-        if(clubAdvisorMembers.contains(clubAdmin)){
+        //if(clubAdvisorMembers.contains(clubAdmin)){
             this.clubAdmin=clubAdmin;
-            clubAdmin.getClubsWithAdminAccess().add(this);
-        }
+            //clubAdmin.getClubsWithAdminAccess().add(this);
+        //}
     }
 
     public void addClubAdvisor(ClubAdvisor clubAdvisor) { //****

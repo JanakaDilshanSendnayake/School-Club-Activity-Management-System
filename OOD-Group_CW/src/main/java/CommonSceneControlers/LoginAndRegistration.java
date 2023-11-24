@@ -255,7 +255,7 @@ public class LoginAndRegistration implements Initializable {
         String newPassword;
         if(validatePasswordMatch()){newPassword=newUserPasswordField1.getText();}else{newPassword="invalid";}
         try{
-            //if(currentUserType=="CLUBADVISOR"){
+            if(currentUserType=="CLUBADVISOR"){
                 ClubAdvisor newUser=new ClubAdvisor(newId,newName,newEmail,newTele,newPassword);
                 CADataHandling.saveNewCAToDatabase(newUser);
 
@@ -267,10 +267,11 @@ public class LoginAndRegistration implements Initializable {
                 System.out.println(newUser.getEmail());
                 System.out.println(newUser.getMobileNum());
                 System.out.println(newUser.getPassword());
-            //} else if (currentUserType=="STUDENT") {
-            //Student newUser=new Student(newId,newName,newEmail,newTele,newPassword)
+            } else if (currentUserType=="STUDENT") {
+                Student newUser=new Student(newId,newName,newEmail,newTele,newPassword);
+                StudentDataHandling.saveStudentToDatabase(newUser);
 
-            //}
+            }
 
 
         }catch (IllegalArgumentException e){

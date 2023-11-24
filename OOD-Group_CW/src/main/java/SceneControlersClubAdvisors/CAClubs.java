@@ -45,6 +45,7 @@ public class CAClubs implements Initializable {
     @FXML private Button editClubButton;
     @FXML private Button suspendClubButton;
     @FXML private Button leaveClubButton;
+    @FXML private Button joinClubButton;
     @FXML private Button backToClubNaviButton;
 
 
@@ -87,10 +88,8 @@ public class CAClubs implements Initializable {
             "Photography"
     );
 
-    @FXML private Label newClubIdLabel;
     @FXML private Label newClubNameLabel;
     @FXML private Label newClubDescriptionLabel;
-    private ChangeListener<String> newClubIdFieldListener;
     private ChangeListener<String> newClubNameFieldListener;
     private ChangeListener<String> newClubDescriptionFieldListener;
 
@@ -111,13 +110,29 @@ public class CAClubs implements Initializable {
     @FXML private TableColumn<Clubs,String> clubNameColumn;
     @FXML private TableColumn<Clubs,String> clubTypeColumn;
     ObservableList<Clubs> clubsToDisplayInNaviTable=FXCollections.observableArrayList();
+
+    //Textfields in view club details page
+    @FXML private Label viewClubNameLabel;
+    @FXML private TextArea viewClubDescriptionTextField;
+    @FXML private Label viewClubTypeLabel;
+    //Textfileds in edit club details page
+    @FXML private TextField updateClubNameField;
+    @FXML private ComboBox<String> updateClubTypeComboBox;
+    @FXML private TextArea updateClubDescriptionField;
+
+    //To track if the user has selected an item from the table
+    private boolean isItemSelectedFromTable;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateStatus=false;
         caNaviClubs.toFront();
         newClubTypeComboBox.setItems(newClubTypeComboBoxData);
         clubNavigateClubsSorter.setItems(clubNavigateClubsSorterData);
+        clubNavigateClubsSorter.setValue("All Clubs");
         newClubDescriptionField.setWrapText(true);
+        viewClubDescriptionTextField.setWrapText(true);
+        viewClubDescriptionTextField.setEditable(false);
+        isItemSelectedFromTable=false;
 
         caClubsTabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             if (updateStatus && newTab == createNewClubTab) {
@@ -129,56 +144,69 @@ public class CAClubs implements Initializable {
 
             }
         });
-
-//        //Setting up the table in club navigation pane
-//        clubIdColumn.setCellValueFactory(new PropertyValueFactory<>("clubId"));
-//        clubNameColumn.setCellValueFactory(new PropertyValueFactory<>("clubName"));
-//        clubTypeColumn.setCellValueFactory(new PropertyValueFactory<>("clubType"));
-
-
+        /*To handle the combo box in club navigation page
+        This combo box has 3 options-"All Clubs","My Clubs With Admin Privileges" and "My Clubs Without Admin Privileges"
+        When the user selects "All Clubs", all the clubs registered in the system are displayed in the clubsNavigateTable
+        When user selects "My Clubs With Admin Privileges", table shows the clubs user is both a member and an admin.
+        When user selects "My Clubs Without Admin Privileges", table shows the clubs user is only a member but not an admin.
+        */
         clubNavigateClubsSorter.setOnAction(event->{
-            String selectedOption = clubNavigateClubsSorter.getSelectionModel().getSelectedItem();
+
             ClubDataHandling object=new ClubDataHandling();
             object.loadClubDataRelevantToCA(Main.currentUser);
+
+            String selectedOption = clubNavigateClubsSorter.getSelectionModel().getSelectedItem();
 
             if (selectedOption.equals("All Clubs")){
                 try {
                     clubsToDisplayInNaviTable.clear();
                     setUpClubNaviTable(clubsToDisplayInNaviTable,object.loadAllClubs());
-                    //clubsToDisplayInNaviTable.addAll(object.loadAllClubs());
                 } catch (SQLException e) {
                     showErrorAlert(e.getMessage());
                 }
             } else if (selectedOption.equals("My Clubs With Admin Privileges")) {
                 clubsToDisplayInNaviTable.clear();
                 setUpClubNaviTable(clubsToDisplayInNaviTable,Main.currentUser.getClubsWithAdminAccess());
-                //clubsToDisplayInNaviTable.addAll(Main.currentUser.getClubsWithAdminAccess());
             } else if (selectedOption.equals("My Clubs Without Admin Privileges")) {
                 clubsToDisplayInNaviTable.clear();
                 setUpClubNaviTable(clubsToDisplayInNaviTable,Main.currentUser.getClubsWithoutAdminAccess());
-                //clubsToDisplayInNaviTable.addAll(Main.currentUser.getClubsWithoutAdminAccess());
+
+
             }
         });
 
-//        //filtering the table according to user's searches
-//        FilteredList<Clubs> filteredData=new FilteredList<>(clubsToDisplayInNaviTable, b -> true);
-//
-//        clubNavigateSearchbar.textProperty().addListener((observable, oldValue, newValue) -> {
-//            filteredData.setPredicate(club -> {
-//                // If filter text is empty, display all persons.
-//                if (newValue == null || newValue.isEmpty()) {
-//                    return true;
-//                }
-//                String lowerCaseFilter = newValue.toLowerCase();
-//                return club.getClubName().toLowerCase().startsWith(lowerCaseFilter);
-//            });
-//        });
-//        //Wrap the FilteredList in a SortedList.
-//        SortedList<Clubs> sortedData = new SortedList<>(filteredData);
-//        // Bind the SortedList comparator to the TableView comparator.
-//        sortedData.comparatorProperty().bind(clubNavigateTable.comparatorProperty());
-//        clubNavigateTable.setItems(sortedData);
+        //passing the values of the selected row to text fields in the update pane
+        clubNavigateTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                isItemSelectedFromTable=true;
 
+                ClubDataHandling obj=new ClubDataHandling();
+                obj.loadClubMembershipData(newSelection);
+                Main.currentClub=newSelection;
+
+
+                viewClubNameLabel.setText(newSelection.getClubName());
+                viewClubDescriptionTextField.setText(newSelection.getClubDescription());
+                viewClubTypeLabel.setText(newSelection.getClubType());
+
+                if(Main.currentUser.getClubsWithAdminAccess().contains(newSelection)){
+                    editClubButton.setVisible(true);
+                    suspendClubButton.setVisible(true);
+                    joinClubButton.setVisible(false);
+                    leaveClubButton.setVisible(true);
+                } else if (Main.currentUser.getClubsWithoutAdminAccess().contains(newSelection)) {
+                    editClubButton.setVisible(false);
+                    suspendClubButton.setVisible(false);
+                    joinClubButton.setVisible(false);
+                    leaveClubButton.setVisible(true);
+                }else{
+                    editClubButton.setVisible(false);
+                    suspendClubButton.setVisible(false);
+                    joinClubButton.setVisible(true);
+                    leaveClubButton.setVisible(false);
+                }
+            }
+        });
 
         // Initializing Event listener for Club Advisor First Name
         newClubNameFieldListener=((observable, oldValue, newValue) -> {
@@ -309,7 +337,7 @@ public class CAClubs implements Initializable {
 
         return prefix + randomNumber;
     }
-
+//Club Creation=========================================================================================================
     @FXML
     private void createNewClub(){
         String newClubId=generateClubId();
@@ -317,10 +345,9 @@ public class CAClubs implements Initializable {
         String newClubType= newClubTypeComboBox.getSelectionModel().getSelectedItem();
         String newClubDescription=newClubDescriptionField.getText();
 
+        // The user inputs will be validated inside the Clubs class constructor. If inputs are invalid, an
+        // IllegalArgumentException will be thrown.
         try{
-            //to validate the user inputs, a club object is made by passing those inputs as arguments.
-            // Those arguments will be validated inside the Clubs class constructor. If inputs are invalid, an
-            // IllegalArgumentException will be thrown.
             Clubs newClub=new Clubs(newClubId, newClubName,newClubType,newClubDescription,Main.currentUser);
             System.out.println(newClub.getClubAdmin().getName());
             //Adding the created club to current user
@@ -328,27 +355,59 @@ public class CAClubs implements Initializable {
             //saving the created club to the club table and club-advisor_club table
             ClubDataHandling object=new ClubDataHandling();
             object.saveNewClubToDatabase(newClub);
+            //Showing user the success alert.
+            showInfoAlert(newClubName+": Successfully created!.");
+
+            //Removing the current inputs from the text fields.
+            clearUserInputsFieldsInClubCreationPage();
         }catch (IllegalArgumentException e){
             showErrorAlert(e.toString());
         }
     }
-
+    @FXML
+    private void clearUserInputsFieldsInClubCreationPage(){
+        newClubNameField.textProperty().removeListener(newClubNameFieldListener);
+        newClubDescriptionField.textProperty().removeListener(newClubDescriptionFieldListener);
+        newClubNameField.setText("");
+        newClubDescriptionField.setText("");
+        newClubTypeComboBox.setValue(null);
+        newClubNameLabel.setText("");
+        newClubDescriptionLabel.setText("");
+        newClubDescriptionLabel.setText("");
+    }
+//Club Navigation and Updating==========================================================================================
 
 //    When user selects a club from the table in club navigation page and press view button,
 //    data of that club will be loaded in the view club details page
     @FXML
     private void viewClubDetails(){
-        caViewClubs.toFront();
+        if(isItemSelectedFromTable){
+            caViewClubs.toFront();
+        }else{
+            showErrorAlert("Select a club from the table.");
+        }
+
         //Rest of the function
     }
 //  When the user want to edit the current details of the club and click edit button,
 //  current data should be loaded in the editable text fields in update club details
 
-    private boolean updateStatus; // this variable is used to check whether if there is an ongoing detail update.
+    private boolean updateStatus; // this variable is used to check whether if there is an ongoing club detail update.
     @FXML
-    private void editClubDetails(){
-        updateStatus=true;
-        caUpdateClubs.toFront();
+    private void updateClubDetails(){
+        ClubDataHandling obj=new ClubDataHandling();
+        obj.loadClubMembershipData(Main.currentClub);
+
+        if(Main.currentClub.getClubAdmin().getClubAdvisorId().equals(Main.currentUser.getClubAdvisorId())){
+            updateStatus=true;
+            updateClubNameField.setText(viewClubNameLabel.getText());
+            updateClubTypeComboBox.setValue(viewClubTypeLabel.getText());
+            updateClubDescriptionField.setText(viewClubDescriptionTextField.getText());
+            caUpdateClubs.toFront();
+        }else{
+            showErrorAlert("You aren't authorized for this action!");
+        }
+
         //Rest of the function
     }
 //  When user click suspend button the club and all the relevant information should be deleted
@@ -367,17 +426,30 @@ public class CAClubs implements Initializable {
             showInfoAlert("You succesfully left the club.");
         }else{}
     }
+    @FXML
+    private void joinClub(){
+
+    }
 //  When user inputs updated data and press update button, data should be validated and saved
     @FXML
-    private void updateClubDetails(){
+    private void saveUpdatedClubDetails(){
+        String clubId=Main.currentClub.getClubId();
+        String updatedClubName=updateClubNameField.getText();
+        String updatedClubType = updateClubTypeComboBox.getSelectionModel().getSelectedItem();
+        String updatedClubDescription=updateClubDescriptionField.getText();
 
+        Clubs clubObjectWithUpdatedDeatils=new Clubs(clubId,updatedClubName,updatedClubType,updatedClubDescription);
+        ClubDataHandling object=new ClubDataHandling();
+        object.updateClubInDatabase(clubObjectWithUpdatedDeatils);
+
+        //Main.currentClub=clubObjectWithUpdatedDeatils;
         //Rest of the function
         updateStatus=false;
         showInfoAlert("Club details updated succesfully");
-        caViewClubs.toFront();
+        caNaviClubs.toFront();
     }
     @FXML
-    private void updateCancel(){
+    private void cancelUpdate(){
 
         // Rest of the function
         updateStatus=false;
