@@ -103,21 +103,24 @@ public class ClubDataHandling {
     }
 
     //to promote an existing clubAdvisor member to admin
-    public void promoteToClubAdmin(ClubAdvisor newadmin,Clubs clubs){
-        String sql = "UPDATE club_advisor_clubs SET is_admin = ? WHERE club_advisor_id = ? AND club_id=?";
+    public void promoteToClubAdmin(ClubAdvisor newAdmin,Clubs clubs){
+        String sql = "UPDATE club_advisor_clubs SET is_admin = ? WHERE BINARY club_advisor_id = ? AND BINARY club_id=?";
         MySqlConnect databaseLink= new MySqlConnect();
 
         try (Connection connection = databaseLink.getDatabaseLink();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            //preparedStatement.setBoolean(1, clubs.getClubAdmin()==newadmin);
 
-            ArrayList<String> array=new ArrayList<>();
-            for(ClubAdvisor clubAdvisor:clubs.getClubAdmin()){
-                array.add(clubAdvisor.getClubAdvisorId());
-            }
-            preparedStatement.setBoolean(1, array.contains(newadmin.getClubAdvisorId()));
-            preparedStatement.setString(2, newadmin.getClubAdvisorId());
+            preparedStatement.setBoolean(1, true);
+            preparedStatement.setString(2, newAdmin.getClubAdvisorId());
             preparedStatement.setString(3, clubs.getClubId());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Admin promotion successful");
+            } else {
+                System.out.println("Admin promotion failed");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -169,15 +172,19 @@ public class ClubDataHandling {
 
                     if(admin){
                         Clubs clubWithAdminAccess=loadClubData(clubID);
+                        loadClubMembershipData(clubWithAdminAccess);
                         array1.add(clubWithAdminAccess);
-                        clubAdvisor.setClubsWithAdminAccess(array1);
+                        //clubAdvisor.setClubsWithAdminAccess(array1);
 
                     }else{
                         Clubs clubsWithoutAdminAccess=loadClubData(clubID);
+                        loadClubMembershipData(clubsWithoutAdminAccess);
                         array2.add(clubsWithoutAdminAccess);
-                        clubAdvisor.setClubsWithoutAdminAccess(array2);
+                        //clubAdvisor.setClubsWithoutAdminAccess(array2);
                     }
                 }
+                clubAdvisor.setClubsWithAdminAccess(array1);
+                clubAdvisor.setClubsWithoutAdminAccess(array2);
             }
 
         }catch (SQLException e) {
@@ -189,7 +196,7 @@ public class ClubDataHandling {
     public void loadClubMembershipData(Clubs club){
         ArrayList<ClubAdvisor>array1=new ArrayList<>();
         ArrayList<ClubAdvisor>array2=new ArrayList<>();
-        String sql="SELECT * FROM club_advisor_clubs WHERE club_id = ?";
+        String sql="SELECT * FROM club_advisor_clubs WHERE BINARY club_id = ?";
         MySqlConnect databaseLink= new MySqlConnect();
         try (Connection connection = databaseLink.getDatabaseLink();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -209,7 +216,7 @@ public class ClubDataHandling {
                     }else{
                         ClubAdvisor clubAdvisor=object.loadClubAdvisorData(clubAdvisorId);
                         array2.add(clubAdvisor);
-                        club.setClubAdmin(array2);
+                        club.setClubAdvisorMembers(array2);
                     }
                 }
             }

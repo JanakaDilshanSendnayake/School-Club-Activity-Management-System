@@ -118,6 +118,10 @@ public class Clubs {
         //}
     }
 
+    public void setClubAdvisorMembers(ArrayList<ClubAdvisor> clubAdvisorMembers) {
+        this.clubAdvisorMembers = clubAdvisorMembers;
+    }
+
     public void setStudentMembers(ArrayList<Student> studentMembers) {
         this.studentMembers = studentMembers;
     }

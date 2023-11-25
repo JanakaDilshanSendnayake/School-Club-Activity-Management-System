@@ -179,19 +179,17 @@ public class CAClubs implements Initializable {
         clubNavigateTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 isItemSelectedFromTable=true;
-
+                //System.out.println(newSelection.getClubAdvisorMembers().);
+                viewClubNameLabel.setText(newSelection.getClubName());
+                viewClubDescriptionTextField.setText(newSelection.getClubDescription());
+                viewClubTypeLabel.setText(newSelection.getClubType());
+                //========================================
                 ClubDataHandling obj=new ClubDataHandling();
                 obj.loadClubMembershipData(newSelection);
                 obj.loadClubDataRelevantToCA(Main.currentUser);
                 Main.currentClub=newSelection;
 
-                //System.out.println(newSelection.getClubAdvisorMembers().);
 
-
-                viewClubNameLabel.setText(newSelection.getClubName());
-                viewClubDescriptionTextField.setText(newSelection.getClubDescription());
-                viewClubTypeLabel.setText(newSelection.getClubType());
-                //========================================
                 ArrayList<String> clubsWithAdminAccessClubIds=new ArrayList<>();
                 ArrayList<String> clubsWithoutAdminAccessClubIds=new ArrayList<>();
 
@@ -240,6 +238,38 @@ public class CAClubs implements Initializable {
             newClubDescriptionLabel.setText(validationMessage);
             setLabelStyle(validationMessage, newClubDescriptionLabel);
         });
+
+        clubAdvisorMembersNavigateTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                newAdmin=newSelection;
+            }else{
+                showErrorAlert("please select a club advisor");
+            }
+        });
+    }
+    private ClubAdvisor newAdmin;
+
+    @FXML
+    private void saveNewAdmin(){
+        if(!(newAdmin ==null)){
+            ArrayList<String> array=new ArrayList<>();
+            for(ClubAdvisor ca:Main.currentClub.getClubAdmin()){
+                array.add(ca.getClubAdvisorId());
+            }
+
+            if(array.contains(newAdmin.getClubAdvisorId())){
+                showErrorAlert("Already an admin");
+            }else{
+
+                ClubDataHandling obj=new ClubDataHandling();
+                obj.promoteToClubAdmin(newAdmin,Main.currentClub);
+                obj.loadClubMembershipData(Main.currentClub);
+                showInfoAlert("successfully appointed an new admin");
+            }
+        }else{
+            showErrorAlert("please select a club advisor-member from the table");
+        }
+
     }
 
     private void setUpClubNaviTable(ObservableList<Clubs> observableList, ArrayList<Clubs> arrayList){
@@ -412,31 +442,28 @@ public class CAClubs implements Initializable {
     private boolean updateStatus; // this variable is used to check whether if there is an ongoing club detail update.
     @FXML
     private void updateClubDetails(){
-        ClubDataHandling obj=new ClubDataHandling();
-        obj.loadClubMembershipData(Main.currentClub);
-        System.out.println(Main.currentClub.getClubAdmin());
+        if(showConfirmationAlert("Are you sure that you want to update club details?")) {
 
-        ArrayList<String> array=new ArrayList<>();
-        for(ClubAdvisor ca:Main.currentClub.getClubAdmin()){
-            array.add(ca.getClubAdvisorId());
-            System.out.println(ca);
-            System.out.println(ca.getClubAdvisorId());
-        }
-        System.out.println(array);
-        System.out.println(Main.currentUser.getClubAdvisorId());
+//            ClubDataHandling obj = new ClubDataHandling();
+//            obj.loadClubMembershipData(Main.currentClub);
 
-        //if(Main.currentClub.getClubAdmin().getClubAdvisorId().equals(Main.currentUser.getClubAdvisorId())){
-        if(array.contains(Main.currentUser.getClubAdvisorId())){
-            updateStatus=true;
-            updateClubNameField.setText(viewClubNameLabel.getText());
-            updateClubTypeComboBox.setValue(viewClubTypeLabel.getText());
-            updateClubDescriptionField.setText(viewClubDescriptionTextField.getText());
-            caUpdateClubs.toFront();
-        }else{
-            showErrorAlert("You aren't authorized for this action!");
+            ArrayList<String> clubAdminIds = new ArrayList<>();
+
+            for (ClubAdvisor ca : Main.currentClub.getClubAdmin()) {
+                clubAdminIds.add(ca.getClubAdvisorId());
+            }
+
+            if (clubAdminIds.contains(Main.currentUser.getClubAdvisorId())) {
+                updateStatus = true;
+                updateClubNameField.setText(viewClubNameLabel.getText());
+                updateClubTypeComboBox.setValue(viewClubTypeLabel.getText());
+                updateClubDescriptionField.setText(viewClubDescriptionTextField.getText());
+                caUpdateClubs.toFront();
+            } else {
+                showErrorAlert("You aren't authorized for this action!");
+            }
         }
 
-        //Rest of the function
     }
 //  When user click suspend button the club and all the relevant information should be deleted
     @FXML
@@ -448,18 +475,20 @@ public class CAClubs implements Initializable {
     }
     @FXML
     private void leaveClub(){
-
         if (showConfirmationAlert("Are you sure that you want to leave the club?")){
+            ClubDataHandling obj=new ClubDataHandling();
+            obj.loadClubMembershipData(Main.currentClub);
 
-            ArrayList<String> array=new ArrayList<>();
-            for(ClubAdvisor ca:Main.currentClub.getClubAdmin()){
-                array.add(ca.getClubAdvisorId());
+            ArrayList<String> clubAdminIds = new ArrayList<>();
+
+            for (ClubAdvisor ca : Main.currentClub.getClubAdmin()) {
+                clubAdminIds.add(ca.getClubAdvisorId());
             }
 
-            if(array.contains(Main.currentUser.getClubAdvisorId())&&Main.currentClub.getClubAdmin().size()==1){
+            if(clubAdminIds.contains(Main.currentUser.getClubAdvisorId()) && Main.currentClub.getClubAdmin().size()==1){
                 showErrorAlert("you can't leave the club. Please appoint a new admin before leaving");
             }else{
-                ClubDataHandling obj=new ClubDataHandling();
+                ClubDataHandling object=new ClubDataHandling();
                 obj.removeClubAdvisor(Main.currentUser,Main.currentClub);
                 showInfoAlert("You successfully left the club.");
             }
@@ -481,30 +510,7 @@ public class CAClubs implements Initializable {
         adminAppointPane.toFront();
 
     }
-    @FXML
-    private void saveNewAdmin(){
-        System.out.println("sssss");
-        clubAdvisorMembersNavigateTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                ArrayList<String> array=new ArrayList<>();
-                for(ClubAdvisor ca:Main.currentClub.getClubAdmin()){
-                    array.add(ca.getClubAdvisorId());
-                    System.out.println(ca);
-                    System.out.println(ca.getClubAdvisorId());
-                }
-                if(array.contains(newSelection.getClubAdvisorId())){
-                    showErrorAlert("Already an admin");
-                }else{
-                    Main.currentClub.getClubAdmin().add(newSelection);
-                    ClubDataHandling obj=new ClubDataHandling();
-                    obj.promoteToClubAdmin(newSelection,Main.currentClub);
-                    showInfoAlert("successfully appointed an new admin");
-                }
-            }else{
-                showErrorAlert("please select a club advisor");
-            }
-        });
-    }
+
     @FXML private TableView<ClubAdvisor> clubAdvisorMembersNavigateTable;
     @FXML private TableColumn<ClubAdvisor,String> clubAdvisorMembersIdColumn;
     @FXML private TableColumn<ClubAdvisor,String> clubAdvisorMembersNameColumn;
@@ -521,6 +527,7 @@ public class CAClubs implements Initializable {
             System.out.println(e.getMessage());
         }
         clubsAdvisorMembersToDisplay.addAll(club.getClubAdmin());
+        System.out.println(club.getClubAdmin());
         clubAdvisorMembersNavigateTable.setItems(clubsAdvisorMembersToDisplay);
 
     }
@@ -558,7 +565,7 @@ public class CAClubs implements Initializable {
     }
     @FXML
     private void goBack(){
-        caViewClubs.toFront();
+        caNaviClubs.toFront();
     }
 
 
