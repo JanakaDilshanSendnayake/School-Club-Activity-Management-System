@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="950.0" stylesheets="@../../css/Template.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane fx:id="sidebar" prefHeight="600.0" prefWidth="200.0">
+         <children>
+            <Button layoutX="25.0" layoutY="156.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" AnchorPane.bottomAnchor="393.6" AnchorPane.topAnchor="156.0">
+               <graphic>
+                  <Group>
+                     <children>
+                        <Label layoutX="36.0" prefHeight="30.0" prefWidth="72.0" text="HOME">
+                           <font>
+                              <Font name="Times New Roman Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="23.0" fitWidth="22.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/home.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </graphic>
+            </Button>
+            <Button layoutX="25.0" layoutY="216.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0">
+               <graphic>
+                  <Group>
+                     <children>
+                        <Label layoutX="36.0" prefHeight="30.0" prefWidth="72.0" text="CLUBS">
+                           <font>
+                              <Font name="Times New Roman Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="23.0" fitWidth="22.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/school.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </graphic>
+            </Button>
+            <Button layoutX="25.0" layoutY="276.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0">
+               <graphic>
+                  <Group>
+                     <children>
+                        <Label layoutX="36.0" prefHeight="30.0" prefWidth="72.0" text="EVENTS">
+                           <font>
+                              <Font name="Times New Roman Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="23.0" fitWidth="22.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/event.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </graphic>
+            </Button>
+            <Button layoutX="25.0" layoutY="336.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0">
+               <graphic>
+                  <Group>
+                     <children>
+                        <Label layoutX="36.0" prefHeight="30.0" prefWidth="72.0" text="REPORTS">
+                           <font>
+                              <Font name="Times New Roman Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="23.0" fitWidth="22.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/chart-histogram.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </graphic>
+            </Button>
+            <Button layoutX="25.0" layoutY="396.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0">
+               <graphic>
+                  <Group>
+                     <children>
+                        <Label layoutX="36.0" prefHeight="30.0" prefWidth="72.0" text="ACCOUNT">
+                           <font>
+                              <Font name="Times New Roman Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="23.0" fitWidth="22.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/user-gear.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </graphic>
+            </Button>
+            <ImageView fitHeight="125.0" fitWidth="97.0" layoutX="52.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/club%20advisor.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="userRegistrationPane" layoutX="200.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="750.0" style="-fx-background-color: #D3D3D3;" stylesheets="@../../css/Template.css">
+         <children>
+            <Group layoutX="114.0" layoutY="188.0">
+               <children>
+                  <TextField fx:id="newUserFirstNameField" layoutX="101.0" onMouseClicked="#handleNewUserFirstNameChange" prefHeight="26.0" prefWidth="248.0" promptText="Maximun character limit - 10" />
+                  <Label layoutY="3.0" prefHeight="18.0" prefWidth="101.0" text="First Name:" />
+                  <Label fx:id="newUserFirstNameLabel" layoutX="100.0" layoutY="26.0" prefHeight="18.0" prefWidth="250.0" />
+               </children>
+            </Group>
+            <Group layoutX="114.0" layoutY="278.0">
+               <children>
+                  <TextField fx:id="newUserEmailField" layoutX="101.0" onMouseClicked="#handleNewUserEmailChange" prefHeight="26.0" prefWidth="248.0" promptText="example@iit.ac.lk" />
+                  <Label layoutY="3.0" prefHeight="18.0" prefWidth="101.0" text="Email:" />
+                  <Label fx:id="newUserEmailLabel" layoutX="100.0" layoutY="26.0" prefHeight="18.0" prefWidth="250.0" />
+               </children>
+            </Group>
+            <Label fx:id="registerPageTextLabel" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Club Advisor Account Manager" textAlignment="RIGHT">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Group layoutX="114.0" layoutY="439.0">
+               <children>
+                  <Label fx:id="newUserPasswordField1Label" layoutX="138.0" layoutY="29.0" prefHeight="18.0" prefWidth="540.0" />
+                  <Label layoutY="7.0" prefHeight="18.0" prefWidth="138.0" text="Password:" />
+                  <TextField fx:id="newUserPasswordField1" layoutX="139.0" onMouseClicked="#handleNewUserPassword1Change" prefHeight="26.0" prefWidth="248.0" />
+               </children>
+            </Group>
+            <Group layoutX="114.0" layoutY="506.0">
+               <children>
+                  <Label fx:id="newUserPasswordField2Label" layoutX="139.0" layoutY="26.0" prefHeight="18.0" prefWidth="326.0" />
+                  <Label layoutY="4.0" prefHeight="18.0" prefWidth="137.0" text="Re enter Password:" />
+                  <TextField fx:id="newUserPasswordField2" layoutX="139.0" onMouseClicked="#handleNewUserPassword2Change" prefHeight="26.0" prefWidth="248.0" />
+               </children>
+            </Group>
+            <Group layoutX="114.0" layoutY="330.0">
+               <children>
+                  <TextField fx:id="newUserTeleField" layoutX="101.0" onMouseClicked="#handleNewUserTeleChange" prefHeight="26.0" prefWidth="248.0" promptText="10 digit format" />
+                  <Label layoutY="3.0" prefHeight="18.0" prefWidth="101.0" text="Mobile number:" />
+                  <Label fx:id="newUserTeleLabel" layoutX="100.0" layoutY="26.0" prefHeight="18.0" prefWidth="250.0" />
+               </children>
+            </Group>
+            <Group layoutX="113.0" layoutY="91.0">
+               <children>
+                  <TextField fx:id="newUserIdField" layoutX="101.0" onMouseClicked="#handleNewUserIdChange" prefHeight="26.0" prefWidth="248.0" promptText="Maximun character limit - 10" />
+                  <Label layoutY="3.0" prefHeight="18.0" prefWidth="101.0" text="User Name:" />
+                  <Label fx:id="newUserIdLabel" layoutX="100.0" layoutY="26.0" prefHeight="18.0" prefWidth="532.0" />
+               </children>
+            </Group>
+            <Label layoutX="114.0" layoutY="382.0" prefHeight="34.0" prefWidth="512.0" style="-fx-background-color: #D5D6F2;" text="Your password" textAlignment="RIGHT">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="113.0" layoutY="45.0" prefHeight="34.0" prefWidth="512.0" style="-fx-background-color: #D5D6F2;" text="Your User Name" textAlignment="RIGHT">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="113.0" layoutY="135.0" prefHeight="34.0" prefWidth="512.0" style="-fx-background-color: #D5D6F2;" text="Your personel details" textAlignment="RIGHT">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Button layoutX="652.0" layoutY="542.0" mnemonicParsing="false" onAction="#register" prefHeight="44.0" prefWidth="126.0">
+               <graphic>
+                  <Group>
+                     <children>
+                        <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="CHANGE">
+                           <font>
+                              <Font name="Times New Roman Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/pencil.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </graphic>
+            </Button>
+            <ImageView fx:id="registerPageIcon" fitHeight="56.0" fitWidth="76.0" layoutX="652.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/club%20advisor.png" />
+               </image>
+            </ImageView>
+            <Group layoutX="114.0" layoutY="232.0">
+               <children>
+                  <TextField fx:id="newUserLastNameField" layoutX="101.0" onMouseClicked="#handleNewUserLastNameChange" prefHeight="26.0" prefWidth="248.0" promptText="Maximun character limit - 20" />
+                  <Label layoutY="3.0" prefHeight="18.0" prefWidth="101.0" text="Last Name:" />
+                  <Label fx:id="newUserLastNameLabel" layoutX="100.0" layoutY="26.0" prefHeight="18.0" prefWidth="250.0" />
+               </children>
+            </Group>
+            <Button fx:id="updateButton11" layoutX="516.0" layoutY="542.0" mnemonicParsing="false" onAction="#backToLoginFromRegistration" prefHeight="44.0" prefWidth="126.0">
+               <graphic>
+                  <Group>
+                     <children>
+                        <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="CANCEL">
+                           <font>
+                              <Font name="Times New Roman Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/times-hexagon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </graphic>
+            </Button>
+            <Button layoutX="652.0" layoutY="498.0" mnemonicParsing="false" onAction="#register" prefHeight="44.0" prefWidth="126.0">
+               <graphic>
+                  <Group>
+                     <children>
+                        <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="SAVE">
+                           <font>
+                              <Font name="Times New Roman Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/disk.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

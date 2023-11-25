@@ -2,6 +2,7 @@ package utils;
 
 import main.Main;
 import stake_holders.ClubAdvisor;
+import stake_holders.Clubs;
 import stake_holders.Student;
 
 import java.sql.Connection;
@@ -13,9 +14,15 @@ import java.util.Objects;
 public class CADataHandling {
 
     public boolean clubAdvisorLogin(String clubAdvisorId, String password){
+        System.out.println(clubAdvisorId);
+        System.out.println(password);
         boolean isAuthenticated = false;
         //ClubAdvisor loggedInClubAdvisor=null;
-        String sql = "SELECT * FROM Club_Advisor WHERE Club_advisor_id = ? AND Club_advisor_password = ?";
+        //String sql = "SELECT * FROM club_advisor WHERE club_advisor_id = ? AND club_advisor_password = ?";
+        //String sql = "SELECT * FROM club_advisor WHERE club_advisor_id COLLATE latin1_general_cs = ? AND club_advisor_password COLLATE latin1_general_cs = ?";
+        String sql = "SELECT * FROM club_advisor WHERE BINARY club_advisor_id = ? AND BINARY club_advisor_password = ?";
+
+
 
         MySqlConnect databaseLink= new MySqlConnect();
 
@@ -29,17 +36,24 @@ public class CADataHandling {
                 if (resultSet.next()) {
                     // Student ID and password match
                     isAuthenticated = true;
-                    String clubAdvisorName=resultSet.getString("Club_advisor_name");
-                    String clubAdvisorEmail=resultSet.getString("Club_advisor_email");
-                    String clibAdvisorTele=resultSet.getString("Club_advisor_telephone");
+                    String clubadvisorId=resultSet.getString("club_advisor_id");
+                    String clubAdvisorName=resultSet.getString("club_advisor_name");
+                    String clubAdvisorEmail=resultSet.getString("club_advisor_email");
+                    String clubAdvisorTele=resultSet.getString("club_advisor_telephone");
+                    String clubAdvisorPassword=resultSet.getString("club_advisor_password");
 
                     //for testing
+                    System.out.println(clubadvisorId);
                     System.out.println(clubAdvisorName);
                     System.out.println(clubAdvisorEmail);
-                    System.out.println(clibAdvisorTele);
+                    System.out.println(clubAdvisorTele);
+                    System.out.println(clubAdvisorPassword);
 
-                    ClubAdvisor loggedInClubAdvisor=new ClubAdvisor(clubAdvisorName,clubAdvisorEmail,clibAdvisorTele,password);
-                    loggedInClubAdvisor.setClubAdvisorId(clubAdvisorId);
+                    //creating new object for logged in club advisor
+                    ClubAdvisor loggedInClubAdvisor=new ClubAdvisor(clubAdvisorName,clubAdvisorEmail,clubAdvisorTele,clubAdvisorPassword);
+                    loggedInClubAdvisor.setClubAdvisorId(clubadvisorId);
+//
+                    //assigning the above created object to current logged-in user tracker in main
                     Main.currentUser=loggedInClubAdvisor;
                 }
             }catch (Exception e){
@@ -57,7 +71,7 @@ public class CADataHandling {
     //To check if the username is already being used by someone. This method is use for both student and club advisor validation
     public boolean clubAdvisorUserNameValidation(String userIdToBeValidated){
         boolean userIdAlreadyExists=false;
-        String sql ="SELECT * FROM club_advisor WHERE Club_advisor_id= ?";
+        String sql ="SELECT * FROM club_advisor WHERE BINARY club_advisor_id= ?";
         MySqlConnect databaseLink= new MySqlConnect();
 
         try (Connection connection = databaseLink.getDatabaseLink();
@@ -107,7 +121,7 @@ public class CADataHandling {
     }
 
     public void updateClubAdvisorInDatabase(ClubAdvisor updatedClubAdvisor) {
-        String sql = "UPDATE student SET club_advisor_name = ?, club_advisor_email = ?, club_advisor_telephone = ?, club_advisor_password = ? WHERE club_advisor_id = ?";
+        String sql = "UPDATE club_advisor SET club_advisor_name = ?, club_advisor_email = ?, club_advisor_telephone = ?, club_advisor_password = ? WHERE BINARY club_advisor_id = ?";
         MySqlConnect databaseLink= new MySqlConnect();
 
         try (Connection connection = databaseLink.getDatabaseLink();
@@ -134,6 +148,34 @@ public class CADataHandling {
         }
     }
 
+    //to load data of a certain clubadvisor
+    public ClubAdvisor loadClubAdvisorData(String clubAdvisorID){
+        ClubAdvisor clubAdvisor=null;
+        String sql="SELECT * FROM club_advisor WHERE club_advisor_Id = ?";
+        MySqlConnect databaseLink= new MySqlConnect();
+
+        try (Connection connection = databaseLink.getDatabaseLink();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, clubAdvisorID);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    String clubAdvisorIdiD=resultSet.getString("club_advisor_id");
+                    String clubAdvisorName=resultSet.getString("club_advisor_name");
+                    String clubAdvisorEmail=resultSet.getString("club_advisor_email");
+                    String clubAdvisorTele=resultSet.getString("club_advisor_telephone");
+                    String clubAdvisorPassword=resultSet.getString("club_advisor_password");
+                    clubAdvisor=new ClubAdvisor(clubAdvisorName,clubAdvisorEmail,clubAdvisorTele,clubAdvisorPassword);
+                    clubAdvisor.setClubAdvisorId(clubAdvisorID);
+                }
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+            // Handle database connection or query errors
+        }
+        return clubAdvisor;
+    }
 
 
 }

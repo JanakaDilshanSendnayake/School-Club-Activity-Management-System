@@ -7,6 +7,7 @@ module OOD.Group.CW {
 
     opens main;
     opens SceneControlersClubAdvisors;
+    opens SceneControlersStudents;
     opens CommonSceneControlers;
     opens stake_holders;
 

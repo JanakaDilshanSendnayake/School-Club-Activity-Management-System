@@ -107,7 +107,7 @@ public class LoginAndRegistration implements Initializable {
         // Initializing Event listener for Club Advisor First Name
         newUserFirstNameFieldListener=((observable, oldValue, newValue) -> {
             String validationMessage = validateTextField(newValue, FIRST_NAME_REGEX,
-                    "Name can only contain letters.",10);
+                    "Names can only contain letters.",10);
             newUserFirstNameLabel.setText(validationMessage);
             setLabelStyle(validationMessage, newUserFirstNameLabel);
         });
@@ -115,7 +115,7 @@ public class LoginAndRegistration implements Initializable {
         // Initializing Event listener for Club Advisor Last Name
         newUserLastNameFieldListener=((observable, oldValue, newValue) -> {
             String validationMessage = validateTextField(newValue, LAST_NAME_REGEX,
-                    "Name can only contain letters.",20);
+                    "Names can only contain letters.",20);
             newUserLastNameLabel.setText(validationMessage);
             setLabelStyle(validationMessage, newUserLastNameLabel);
         });
@@ -175,7 +175,7 @@ public class LoginAndRegistration implements Initializable {
             if (value.length()>maximumCharacterLim){
                 return "Maximum character limit exceeded";
             }else{
-                return "User ID should be a combination letters and numbers.";}
+                return invalidMessage;}
         }
     }
     //Overriding the above method. This method is to validate String inputs that doesn't have any character limit
@@ -255,7 +255,7 @@ public class LoginAndRegistration implements Initializable {
         String newPassword;
         if(validatePasswordMatch()){newPassword=newUserPasswordField1.getText();}else{newPassword="invalid";}
         try{
-            //if(currentUserType=="CLUBADVISOR"){
+            if(currentUserType.equals("CLUB-ADVISOR")){
                 ClubAdvisor newUser=new ClubAdvisor(newId,newName,newEmail,newTele,newPassword);
                 CADataHandling.saveNewCAToDatabase(newUser);
 
@@ -267,10 +267,11 @@ public class LoginAndRegistration implements Initializable {
                 System.out.println(newUser.getEmail());
                 System.out.println(newUser.getMobileNum());
                 System.out.println(newUser.getPassword());
-            //} else if (currentUserType=="STUDENT") {
-            //Student newUser=new Student(newId,newName,newEmail,newTele,newPassword)
+            } else if (currentUserType.equals("STUDENT")) {
+                Student newUser=new Student(newId,newName,newEmail,newTele,newPassword);
+                StudentDataHandling.saveStudentToDatabase(newUser);
 
-            //}
+            }
 
 
         }catch (IllegalArgumentException e){
@@ -289,7 +290,10 @@ public class LoginAndRegistration implements Initializable {
     @FXML
     private void login(ActionEvent actionEvent){
         CADataHandling object=new CADataHandling();
-        System.out.println(object.clubAdvisorLogin(loginUserNameField.getText(),loginPasswordField.getText()));
+        StudentDataHandling object2=new StudentDataHandling();
+        System.out.println(loginUserNameField.getText());
+        System.out.println(loginPasswordField.getText());
+        //System.out.println(object.clubAdvisorLogin(loginUserNameField.getText(),loginPasswordField.getText()));
         if(currentUserType.equals("CLUB-ADVISOR") && object.clubAdvisorLogin(loginUserNameField.getText(),loginPasswordField.getText())){
             try {
                 root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Clubs-ClubAdvisor.fxml"));
@@ -300,9 +304,9 @@ public class LoginAndRegistration implements Initializable {
             }catch (Exception e){
                 showErrorAlert(e.getMessage());
             }
-        } else if (currentUserType.equals("STUDENT")) {
+        } else if (currentUserType.equals("STUDENT")&&object2.studentLogin(loginUserNameField.getText(),loginPasswordField.getText())) {
             try {
-                root = FXMLLoader.load(getClass().getResource("/fxml_files/Student/Menu-Students.fxml"));
+                root = FXMLLoader.load(getClass().getResource("/fxml_files/Student/Clubs-Students.fxml"));
                 scene = new Scene(root);
                 stage =(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
                 stage.setScene(scene);
@@ -322,7 +326,7 @@ public class LoginAndRegistration implements Initializable {
         alert.showAndWait();
     }
 
-    public String currentUserType;
+    public static String currentUserType;
 
     @FXML
     private ImageView loginPageIcon;

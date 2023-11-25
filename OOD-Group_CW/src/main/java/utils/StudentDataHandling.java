@@ -1,5 +1,6 @@
 package utils;
 
+import main.Main;
 import stake_holders.ClubAdvisor;
 import stake_holders.Student;
 
@@ -9,7 +10,7 @@ public class StudentDataHandling {
 
     public boolean studentLogin(String studentId, String password){
         boolean isAuthenticated = false;
-        String sql = "SELECT * FROM Student WHERE Student_id = ? AND Student_password = ?";
+        String sql = "SELECT * FROM student WHERE student_id = ? AND student_password = ?";
 
         MySqlConnect databaseLink= new MySqlConnect();
 
@@ -23,10 +24,17 @@ public class StudentDataHandling {
                 if (resultSet.next()) {
                     // Student ID and password match
                     isAuthenticated = true;
+                    String studentName=resultSet.getString("student_name");
+                    String studentEmail=resultSet.getString("student_email");
+                    String studentTele=resultSet.getString("student_telephone");
+
+                    Student logggedInStudent=new Student(studentName,studentEmail,studentTele,password);
+                    logggedInStudent.setStudentId(studentId);
+                    Main.currentStudentUser=logggedInStudent;
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             // Handle database connection or query errors
         }
 
@@ -35,7 +43,7 @@ public class StudentDataHandling {
 
     public boolean studentUserNameValidation(String userIdToBeValidated){
         boolean userIdAlreadyExists=false;
-        String sql =sql="SELECT * FROM student WHERE Student_id= ?";
+        String sql =sql="SELECT * FROM student WHERE student_id= ?";
         MySqlConnect databaseLink= new MySqlConnect();
 
         try (Connection connection = databaseLink.getDatabaseLink();
@@ -58,8 +66,8 @@ public class StudentDataHandling {
 
     }
 
-    public void saveStudentToDatabase(Student student) {
-        String sql = "INSERT INTO student (student_id, name, email, mobile_number, password) VALUES (?, ?, ?, ?, ?)";
+    public static void saveStudentToDatabase(Student student) {
+        String sql = "INSERT INTO student (student_id, student_name, student_email, student_telephone, student_password) VALUES (?, ?, ?, ?, ?)";
 
         MySqlConnect databaseLink= new MySqlConnect();
 
@@ -84,7 +92,7 @@ public class StudentDataHandling {
     }
 
     public void updateStudentInDatabase(Student updatedStudent) {
-        String sql = "UPDATE student SET name = ?, email = ?, mobile_number = ?, password = ? WHERE username = ?";
+        String sql = "UPDATE student SET student_name = ?, student_email = ?, student_telephone = ?, student_password = ? WHERE student_id = ?";
         MySqlConnect databaseLink= new MySqlConnect();
 
         try (Connection connection = databaseLink.getDatabaseLink();
@@ -109,6 +117,34 @@ public class StudentDataHandling {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public Student loadStudentData(String studentID){
+        Student student=null;
+        String sql="SELECT * FROM student WHERE student_id = ?";
+        MySqlConnect databaseLink= new MySqlConnect();
+
+        try (Connection connection = databaseLink.getDatabaseLink();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, studentID);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    String studentiD=resultSet.getString("student_id");
+                    String studentName=resultSet.getString("student_name");
+                    String studentEmail=resultSet.getString("student_email");
+                    String studentTele=resultSet.getString("student_telephone");
+                    String studentPassword=resultSet.getString("student_password");
+                    student=new Student(studentName,studentEmail,studentTele,studentPassword);
+                    student.setStudentId(studentID);
+                }
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+            // Handle database connection or query errors
+        }
+        return student;
     }
 
 

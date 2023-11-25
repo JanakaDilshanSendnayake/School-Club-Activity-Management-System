@@ -9,7 +9,7 @@ public class Clubs {
     private String clubId;
     private String clubType;
     private String clubDescription;
-    private ClubAdvisor clubAdmin;
+    private ArrayList<ClubAdvisor> clubAdmin;
     private ArrayList<ClubAdvisor> clubAdvisorMembers;
     private ArrayList<Student> studentMembers;
     private ArrayList<Events> clubEvents;
@@ -18,14 +18,16 @@ public class Clubs {
     private static final String CLUB_NAME_REGEX = "^[a-zA-Z_]{1,31}$";
     private static final String CLUB_DESCRIPTION_REGEX = "^.{1,200}$";
 
-    public Clubs(String clubName, String clubId, ClubAdvisor creatorCA) {
-        clubAdvisorMembers=new ArrayList<>();
-        this.clubName = clubName;
-        this.clubId = clubId;
-        this.clubAdvisorMembers.add(clubAdmin);
-        creatorCA.joinORCreateClub(this);
-        this.clubAdmin=creatorCA;
-    }
+//    public Clubs(String clubName, String clubId, ClubAdvisor creatorCA) {
+//        clubAdvisorMembers=new ArrayList<>();
+//        this.clubName = clubName;
+//        this.clubId = clubId;
+//        this.clubAdvisorMembers.add(clubAdmin);
+//        creatorCA.joinORCreateClub(this);
+//        this.clubAdmin=creatorCA;
+//    }
+
+
     //Constructor 2. This will be used to create a club object when registering a new club, and then that-
     // -object will be passed into database. Here club id won't be taken as an argument because-
     //-club id is automatically generated using auto increment in the database.
@@ -34,11 +36,19 @@ public class Clubs {
         validateClubType(clubType);
         validateClubDescription(clubDescription);
 
+        clubAdvisorMembers=new ArrayList<>();
+        studentMembers=new ArrayList<>();
+        clubEvents=new ArrayList<>();
+        clubAdmin=new ArrayList<>();
+
+
         this.clubId=clubId;
         this.clubName = clubName;
         this.clubType = clubType;
         this.clubDescription = clubDescription;
-        this.clubAdmin=creator;
+        this.clubAdmin.add(creator);
+
+
     }
     //This will be used when loading clubs from the database to the system. Data from relevant columns will be given-
     // -as arguments to this constructor and then the created object will be saved in arrays for future uses.
@@ -47,6 +57,11 @@ public class Clubs {
         this.clubName = clubName;
         this.clubType = clubType;
         this.clubDescription = clubDescription;
+
+        clubAdvisorMembers=new ArrayList<>();
+        studentMembers=new ArrayList<>();
+        clubEvents=new ArrayList<>();
+        clubAdmin=new ArrayList<>();
     }
 
     private void validateClubName(String name){
@@ -90,16 +105,25 @@ public class Clubs {
         return clubDescription;
     }
 
-    public ClubAdvisor getClubAdmin(){
+    public ArrayList<ClubAdvisor> getClubAdmin(){
         return clubAdmin;
     }
     public ArrayList<ClubAdvisor> getClubAdvisorMembers(){ return clubAdvisorMembers; }
+    public ArrayList<Student> getStudentMembers(){return studentMembers;}
 
-    public void setClubAdmin(ClubAdvisor clubAdmin){
-        if(clubAdvisorMembers.contains(clubAdmin)){
+    public void setClubAdmin(ArrayList<ClubAdvisor> clubAdmin){
+        //if(clubAdvisorMembers.contains(clubAdmin)){
             this.clubAdmin=clubAdmin;
-            clubAdmin.getClubsWithAdminAccess().add(this);
-        }
+            //clubAdmin.getClubsWithAdminAccess().add(this);
+        //}
+    }
+
+    public void setClubAdvisorMembers(ArrayList<ClubAdvisor> clubAdvisorMembers) {
+        this.clubAdvisorMembers = clubAdvisorMembers;
+    }
+
+    public void setStudentMembers(ArrayList<Student> studentMembers) {
+        this.studentMembers = studentMembers;
     }
 
     public void addClubAdvisor(ClubAdvisor clubAdvisor) { //****
