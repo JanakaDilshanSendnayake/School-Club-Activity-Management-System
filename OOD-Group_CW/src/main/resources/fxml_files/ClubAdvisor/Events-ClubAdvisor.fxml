@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="950.0" stylesheets="@../../css/Template.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SceneControlersClubAdvisors.CAEvents2">
+<AnchorPane prefHeight="600.0" prefWidth="950.0" stylesheets="@../../css/Template.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SceneControlersClubAdvisors.CAEvents">
     <children>
       <AnchorPane layoutX="200.0" prefHeight="600.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;">
          <children>
@@ -252,7 +252,7 @@
                               </Label>
                               <Group layoutX="41.0" layoutY="83.0">
                                  <children>
-                                    <ComboBox fx:id="ClubSelectionChoiceBox" layoutX="103.0" prefHeight="26.0" prefWidth="250.0" promptText="Select Club" style="-fx-background-color: white;" />
+                                    <ComboBox fx:id="ClubSelectionChoiceBox" layoutX="103.0" onAction="#EditTableview" prefHeight="26.0" prefWidth="250.0" promptText="Select Club" style="-fx-background-color: white;" />
                                     <Label layoutY="5.0" text="Organizing club: " />
                                     <Label layoutX="103.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
                                  </children>
@@ -264,7 +264,7 @@
                                     <Label layoutX="103.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
                                  </children>
                               </Group>
-                              <Button layoutX="602.0" layoutY="299.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0">
+                              <Button layoutX="602.0" layoutY="299.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="44.0" prefWidth="126.0">
                                  <graphic>
                                     <Group>
                                        <children>
@@ -283,11 +283,11 @@
                                  </graphic>
                               </Button>
                               <TableView fx:id="Tableview" layoutX="117.0" layoutY="206.0" prefHeight="262.0" prefWidth="325.0">
-                                <columns>
-                                  <TableColumn fx:id="StudentIDcol" prefWidth="75.0" text="Studen ID" />
-                                  <TableColumn fx:id="SturdentNamecol" prefWidth="121.0" text="Student Name" />
+                                 <columns>
+                                    <TableColumn fx:id="StudentIDcol" prefWidth="75.0" text="Studen ID" />
+                                    <TableColumn fx:id="SturdentNamecol" prefWidth="121.0" text="Student Name" />
                                     <TableColumn fx:id="Attendencecol" prefWidth="126.0" text="Attendence" />
-                                </columns>
+                                 </columns>
                               </TableView>
                            </children>
                         </AnchorPane>
