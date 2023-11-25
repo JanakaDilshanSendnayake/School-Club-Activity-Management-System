@@ -11,46 +11,49 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
-
+import utils.EventDataHandling;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+
+/**
+ *  Controller class for club advisor event fxml file which club advisor is interacting
+ */
 public class CAEvents implements Initializable {
 
-    //Buttons - SideBar
+
+    /**
+     *  Left Side Naviagtion bar buttons
+     */
     @FXML private Button caHomeButton;
     @FXML private Button caClubsButton;
     @FXML private Button caEventsButton;
     @FXML private Button caReportsButton;
     @FXML private Button caAccountButton;
 
-    //Buttons
-    @FXML private Button viewButton;
-    @FXML private Button updateEventButton;
-    @FXML private Button updateEventCancelButton;
-    @FXML private Button editEventButton;
-    @FXML private Button suspendEventButton;
-    //@FXML private Button leaveClubButton;
-    @FXML private Button backToClubNaviButton;
-
-
-    //Panes
+    /**
+     * Tab Pane fxml id
+     */
     @FXML private TabPane caEventsTabPane;
-    @FXML private Tab eventNaviTab;
+    @FXML private Tab eventNavigationTab;
     @FXML private Tab createNewEventTab;
     @FXML private AnchorPane caNaviEvents;
     @FXML private AnchorPane caViewEvents;
     @FXML private AnchorPane caUpdateEvents;
     @FXML private AnchorPane caCreateNewEvents;
 
-    //====
+
     private Stage stage;
     private Scene scene;
     private Parent root;
 
     //To validate the data inputs in Create new event tab
+
+    @FXML
+    private TextField newEventIDField;
+    @FXML
+    private Label newEventIDLabel;
     @FXML
     private TextField newEventNameField;
     @FXML
@@ -72,21 +75,47 @@ public class CAEvents implements Initializable {
     @FXML
     private Label newEventDatePickerLabel;
 
+
+    // Regular Expressions for new event creation filling form
+    private static final String EVENT_NAME_REGEX = "^[a-zA-Z_]{1,31}$";
+    private static final String EVENT_DESCRIPTION_REGEX = "^(?s).{1,200}$";
+    private static final String EVENT_VENUE_REGEX = "^.+$";
+
+
+    //To validate the data inputs in navigation event tab
+    @FXML
+    private TextField newEventNameFieldUpdate;
+    @FXML
+    private Label newEventNameLabelUpdate;
+    @FXML
+    private ComboBox<String> organizingClubComboBoxUpdate;
+    @FXML
+    private Label organizingClubComboBoxLabelUpdate;
+    @FXML
+    private TextArea newEventDescriptionTextAreaUpdate;
+    @FXML
+    private Label newEventDescriptionLabelUpdate;
+    @FXML
+    private TextField newEventVenueFieldUpdate;
+    @FXML
+    private Label newEventVenueFieldLabelUpdate;
+    @FXML
+    private DatePicker newEventDatePickerUpdate;
+    @FXML
+    private Label newEventDatePickerLabelUpdate;
+
+
+    // Event Objects
     private ChangeListener<String> newEventNameFieldListener;
     private ChangeListener<String> newEventDescriptionTextAreaListener;
     private ChangeListener<String> newEventVenueFieldListener;
 
-    private static final String EVENT_NAME_REGEX = "^[a-zA-Z_]{1,31}$";
-    private static final String EVENT_DESCRIPTION_REGEX = "^(?s).{1,200}$";
-
-    private static final String EVENT_VENUE_REGEX = "^.+$";
 
 
-    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        updateStatus=false;
-        //caNaviEvents.toFront();
 
+
+        updateStatus = false;
 
         caEventsTabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             if (updateStatus && newTab == createNewEventTab) {
@@ -98,27 +127,26 @@ public class CAEvents implements Initializable {
 
             }
         });
+
+
         // initializing the event listener to validate the user input in "newClubNameField" text-field
-        newEventNameFieldListener=((observable, oldValue, newValue) -> {
-            String validationMessage = validateTextField(newValue, EVENT_NAME_REGEX,
-                    "Name can only contain letters and Underscores.",30);
+        newEventNameFieldListener = ((observable, oldValue, newValue) -> {
+            String validationMessage = validateTextField(newValue, EVENT_NAME_REGEX, "Name can only contain letters and Underscores.",30);
             newEventNameLabel.setText(validationMessage);
             setLabelStyle(validationMessage, newEventNameLabel);
         });
 
 
-        // initializing the event listener to validate the user input in "newClubNameField" text-field
+        // initializing the event listener to validate the user input in "newEventDescriptionTextArea" text-field
         newEventDescriptionTextAreaListener=((observable, oldValue, newValue) -> {
-            String validationMessage = validateTextField(newValue, EVENT_DESCRIPTION_REGEX,
-                    "",500);
+            String validationMessage = validateTextField(newValue, EVENT_DESCRIPTION_REGEX, "Invalid",500);
             newEventDescriptionLabel.setText(validationMessage);
             setLabelStyle(validationMessage, newEventDescriptionLabel);
         });
 
         // initializing the event listener to validate the user input in "newClubNameField" text-field
         newEventVenueFieldListener=((observable, oldValue, newValue) -> {
-            String validationMessage = validateTextField(newValue, EVENT_VENUE_REGEX,
-                    "This field is mandatory.");
+            String validationMessage = validateTextField(newValue, EVENT_VENUE_REGEX, "This field is mandatory.");
             newEventVenueFieldLabel.setText(validationMessage);
             setLabelStyle(validationMessage, newEventVenueFieldLabel);
         });
@@ -126,15 +154,37 @@ public class CAEvents implements Initializable {
     }
 
     @FXML
+    public void newEventCreation(ActionEvent event){
+
+        System.out.println(newEventNameField.getText());
+
+        EventDataHandling eventDataHandling = new EventDataHandling();
+
+
+        eventDataHandling.newEventCreationToDatabase(newEventIDField.getText(),newEventNameField.getText(),newEventVenueField.getText(),newEventDatePicker.getValue(), organizingClubComboBox.getValue(), newEventDescriptionTextArea.getText());
+
+    }
+
+
+    /**
+     *
+     */
+    @FXML
     private void handleNewEventNameChange(){
         newEventNameField.textProperty().addListener(newEventNameFieldListener);
     }
 
+    /**
+     *
+     */
     @FXML
     private void hanldeNewEventDescription(){
         newEventDescriptionTextArea.textProperty().addListener(newEventDescriptionTextAreaListener);
     }
 
+    /**
+     *
+     */
     @FXML
     private void handleNewEventVenue(){
         newEventVenueField.textProperty().addListener(newEventDescriptionTextAreaListener);
@@ -264,5 +314,8 @@ public class CAEvents implements Initializable {
         caViewEvents.toFront();
     }
 
+
+    public void eventUpdaterAction(ActionEvent event) {
+    }
 }
 
