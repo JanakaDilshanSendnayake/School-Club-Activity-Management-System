@@ -107,7 +107,7 @@ public class LoginAndRegistration implements Initializable {
         // Initializing Event listener for Club Advisor First Name
         newUserFirstNameFieldListener=((observable, oldValue, newValue) -> {
             String validationMessage = validateTextField(newValue, FIRST_NAME_REGEX,
-                    "Name can only contain letters.",10);
+                    "Names can only contain letters.",10);
             newUserFirstNameLabel.setText(validationMessage);
             setLabelStyle(validationMessage, newUserFirstNameLabel);
         });
@@ -115,7 +115,7 @@ public class LoginAndRegistration implements Initializable {
         // Initializing Event listener for Club Advisor Last Name
         newUserLastNameFieldListener=((observable, oldValue, newValue) -> {
             String validationMessage = validateTextField(newValue, LAST_NAME_REGEX,
-                    "Name can only contain letters.",20);
+                    "Names can only contain letters.",20);
             newUserLastNameLabel.setText(validationMessage);
             setLabelStyle(validationMessage, newUserLastNameLabel);
         });
@@ -175,7 +175,7 @@ public class LoginAndRegistration implements Initializable {
             if (value.length()>maximumCharacterLim){
                 return "Maximum character limit exceeded";
             }else{
-                return "User ID should be a combination letters and numbers.";}
+                return invalidMessage;}
         }
     }
     //Overriding the above method. This method is to validate String inputs that doesn't have any character limit
@@ -324,7 +324,7 @@ public class LoginAndRegistration implements Initializable {
         alert.showAndWait();
     }
 
-    public String currentUserType;
+    public static String currentUserType;
 
     @FXML
     private ImageView loginPageIcon;
