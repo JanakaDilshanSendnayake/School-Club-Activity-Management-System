@@ -290,6 +290,7 @@ public class LoginAndRegistration implements Initializable {
     @FXML
     private void login(ActionEvent actionEvent){
         CADataHandling object=new CADataHandling();
+        StudentDataHandling object2=new StudentDataHandling();
         System.out.println(object.clubAdvisorLogin(loginUserNameField.getText(),loginPasswordField.getText()));
         if(currentUserType.equals("CLUB-ADVISOR") && object.clubAdvisorLogin(loginUserNameField.getText(),loginPasswordField.getText())){
             try {
@@ -301,9 +302,9 @@ public class LoginAndRegistration implements Initializable {
             }catch (Exception e){
                 showErrorAlert(e.getMessage());
             }
-        } else if (currentUserType.equals("STUDENT")) {
+        } else if (currentUserType.equals("STUDENT")&&object2.studentLogin(loginUserNameField.getText(),loginPasswordField.getText())) {
             try {
-                root = FXMLLoader.load(getClass().getResource("/fxml_files/Student/Menu-Students.fxml"));
+                root = FXMLLoader.load(getClass().getResource("/fxml_files/Student/Clubs-Students.fxml"));
                 scene = new Scene(root);
                 stage =(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
                 stage.setScene(scene);

@@ -129,7 +129,7 @@ public class CAClubs implements Initializable {
         caNaviClubs.toFront();
         newClubTypeComboBox.setItems(newClubTypeComboBoxData);
         clubNavigateClubsSorter.setItems(clubNavigateClubsSorterData);
-        clubNavigateClubsSorter.setValue("All Clubs");
+        //clubNavigateClubsSorter.setValue("All Clubs");
         newClubDescriptionField.setWrapText(true);
         viewClubDescriptionTextField.setWrapText(true);
         viewClubDescriptionTextField.setEditable(false);
@@ -446,7 +446,7 @@ public class CAClubs implements Initializable {
 
         if (showConfirmationAlert("Are you sure that you want to leave the club?")){
             //Implement the rest of the function
-            showInfoAlert("You succesfully left the club.");
+            showInfoAlert("You successfully left the club.");
         }else{}
     }
     @FXML
@@ -503,7 +503,7 @@ public class CAClubs implements Initializable {
         //Main.currentClub=clubObjectWithUpdatedDeatils;
         //Rest of the function
         updateStatus=false;
-        showInfoAlert("Club details updated succesfully");
+        showInfoAlert("Club details updated successfully");
         caNaviClubs.toFront();
     }
     @FXML

@@ -109,6 +109,7 @@ public class Clubs {
         return clubAdmin;
     }
     public ArrayList<ClubAdvisor> getClubAdvisorMembers(){ return clubAdvisorMembers; }
+    public ArrayList<Student> getStudentMembers(){return studentMembers;}
 
     public void setClubAdmin(ClubAdvisor clubAdmin){
         //if(clubAdvisorMembers.contains(clubAdmin)){

@@ -2,12 +2,15 @@ package stake_holders;
 
 import utils.StudentDataHandling;
 
+import java.util.ArrayList;
+
 public class Student {
     private String studentId;
     private String name;
     private String email;
     private String mobileNumber;
     private String password;
+    private ArrayList<Clubs> joinedClubs;
 
     //REGEX
     private static final String STUDENT_ID_REGEX = "^[a-zA-Z0-9]{1,10}$";
@@ -28,6 +31,24 @@ public class Student {
         this.email = email;
         this.mobileNumber = mobileNumber;
         this.password = password;
+
+        joinedClubs=new ArrayList<>();
+    }
+    //To load data from database
+    public Student(String name, String email, String mobileNumber, String password) {
+
+        validateName(name);
+        validateEmail(email);
+        validateMobileNumber(mobileNumber);
+        validatePassword(password);
+
+        this.studentId = studentId;
+        this.name = name;
+        this.email = email;
+        this.mobileNumber = mobileNumber;
+        this.password = password;
+
+        joinedClubs=new ArrayList<>();
     }
 
     private void validateSTUDENTId(String studentId) {
@@ -78,5 +99,33 @@ public class Student {
 
     public String getPassword() {
         return password;
+    }
+
+    public ArrayList<Clubs> getJoinedClubs() {
+        return joinedClubs;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setJoinedClubs(ArrayList<Clubs> joinedClubs) {
+        this.joinedClubs = joinedClubs;
     }
 }

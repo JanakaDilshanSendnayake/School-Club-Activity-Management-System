@@ -14,7 +14,7 @@ public class ClubAdvisor {
     private static final String PASSWORD_REGEX = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=]).{8,}$";
     private String clubAdvisorId;
     private String name;
-    private String email ;
+    private String email;
     private String mobileNum;
     private String password;
     private ArrayList<Clubs> clubsWithoutAdminAccess;

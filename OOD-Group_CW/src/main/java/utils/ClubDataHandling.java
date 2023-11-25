@@ -186,7 +186,7 @@ public class ClubDataHandling {
 
                     CADataHandling object=new CADataHandling();
                     if(admin){
-                        club.setClubAdmin(object.loadClubAdvisorData(clubAdvisorId));
+                        club.getClubAdmin().add(object.loadClubAdvisorData(clubAdvisorId));
                     }else{
                         club.getClubAdvisorMembers().add(object.loadClubAdvisorData(clubAdvisorId));
                     }
@@ -252,35 +252,86 @@ public class ClubDataHandling {
 
 
 //===========================================================================
-public void loadClubDataRelevantToStudent(Student student){
-    String sql="SELECT * FROM student_clubs WHERE club_id = ?";
-    MySqlConnect databaseLink= new MySqlConnect();
-    try (Connection connection = databaseLink.getDatabaseLink();
-         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+    public void loadClubDataRelevantToStudent(Student student){
+        ArrayList<Clubs>array1=new ArrayList<>();
+        String sql="SELECT * FROM student_clubs WHERE student_id = ?";
+        MySqlConnect databaseLink= new MySqlConnect();
+        try (Connection connection = databaseLink.getDatabaseLink();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-        preparedStatement.setString(1, student.getStudentId());
-        try (ResultSet resultSet = preparedStatement.executeQuery()) {
-            while (resultSet.next()) {
-                String clubAdvisorIdID=resultSet.getString("club_advisor_id");
-                String clubID=resultSet.getString("club_id");
-                Boolean admin=resultSet.getBoolean("is_admin");
+            preparedStatement.setString(1, student.getStudentId());
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    String studentId=resultSet.getString("student_id");
+                    String clubID=resultSet.getString("club_id");
 
-//                    if(admin){
-//                        Clubs clubWithAdminAccess=loadClubData(clubID).get(0);
-//                        student.getClubsWithAdminAccess().add(clubWithAdminAccess);
-//
-//                    }else{
-//                        Clubs clubsWithoutAdminAccess=loadClubData(clubID).get(0);
-//                        student.getClubsWithoutAdminAccess().add(clubsWithoutAdminAccess);
-//                    }
+                    Clubs clubStudentHaveJoined=loadClubData(clubID);
+                    array1.add(clubStudentHaveJoined);
+                    student.setJoinedClubs(array1);
+                }
             }
-        }
 
-    }catch (SQLException e) {
-        e.printStackTrace();
-        // Handle database connection or query errors
+        }catch (SQLException e) {
+            e.printStackTrace();
+            // Handle database connection or query errors
+        }
     }
-}
+    public void loadClubStudentMembershipData(Clubs club){
+        String sql="SELECT * FROM student_clubs WHERE club_id = ?";
+        MySqlConnect databaseLink= new MySqlConnect();
+        try (Connection connection = databaseLink.getDatabaseLink();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, club.getClubId());
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    String StudentId=resultSet.getString("student_id");
+                    String clubID=resultSet.getString("club_id");
+                    //boolean admin=resultSet.getBoolean("is_admin");
+
+                    StudentDataHandling object=new StudentDataHandling();
+                    club.getStudentMembers().add(object.loadStudentData(StudentId));
+
+                }
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+            // Handle database connection or query errors
+        }
+    }
+
+    public void addANewStudentMember(Student student,Clubs clubs){
+        String sql="INSERT INTO student_clubs(student_id,club_id) VALUES (?, ?)";
+        MySqlConnect databaseLink= new MySqlConnect();
+
+        try (Connection connection = databaseLink.getDatabaseLink();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, student.getStudentId());
+            preparedStatement.setString(2, clubs.getClubId());
+
+
+            //System.out.println(Objects.equals(clubs.getClubAdmin().getClubAdvisorId(), clubAdvisor.getClubAdvisorId()));
+            preparedStatement.executeUpdate();
+            System.out.println("You joined the club successfully");
+        } catch (SQLException e) {;
+            System.out.println(e.getMessage());
+        }
+    }
+    public void removeStudentMember(Student student,Clubs clubs){
+        String sql="DELETE FROM student_clubs WHERE student_id = ? AND club_id= ?";
+        MySqlConnect databaseLink= new MySqlConnect();
+
+        try (Connection connection = databaseLink.getDatabaseLink();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, student.getStudentId());
+            preparedStatement.setString(2, clubs.getClubId());;
+            preparedStatement.executeUpdate();
+            System.out.println("You left the club successfully");
+        } catch (SQLException e) {;
+            e.printStackTrace();
+        }
+    }
 
 
 }

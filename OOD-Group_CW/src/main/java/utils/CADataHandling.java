@@ -30,17 +30,17 @@ public class CADataHandling {
                 if (resultSet.next()) {
                     // Student ID and password match
                     isAuthenticated = true;
-                    String clubAdvisorName=resultSet.getString("Club_advisor_name");
-                    String clubAdvisorEmail=resultSet.getString("Club_advisor_email");
-                    String clibAdvisorTele=resultSet.getString("Club_advisor_telephone");
+                    String clubAdvisorName=resultSet.getString("club_advisor_name");
+                    String clubAdvisorEmail=resultSet.getString("club_advisor_email");
+                    String clubAdvisorTele=resultSet.getString("club_advisor_telephone");
 
                     //for testing
                     System.out.println(clubAdvisorName);
                     System.out.println(clubAdvisorEmail);
-                    System.out.println(clibAdvisorTele);
+                    System.out.println(clubAdvisorTele);
 
                     //creating new object for logged in club advisor
-                    ClubAdvisor loggedInClubAdvisor=new ClubAdvisor(clubAdvisorName,clubAdvisorEmail,clibAdvisorTele,password);
+                    ClubAdvisor loggedInClubAdvisor=new ClubAdvisor(clubAdvisorName,clubAdvisorEmail,clubAdvisorTele,password);
                     loggedInClubAdvisor.setClubAdvisorId(clubAdvisorId);
 //                    //loading the club advisors club data from the database--this might unnecessary
 //                    ClubDataHandling obj=new ClubDataHandling();
