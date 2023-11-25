@@ -39,7 +39,7 @@ public class Clubs {
         clubAdvisorMembers=new ArrayList<>();
         studentMembers=new ArrayList<>();
         clubEvents=new ArrayList<>();
-        //clubAdmin=
+        clubAdmin=new ArrayList<>();
 
 
         this.clubId=clubId;
@@ -111,11 +111,15 @@ public class Clubs {
     public ArrayList<ClubAdvisor> getClubAdvisorMembers(){ return clubAdvisorMembers; }
     public ArrayList<Student> getStudentMembers(){return studentMembers;}
 
-    public void setClubAdmin(ClubAdvisor clubAdmin){
+    public void setClubAdmin(ArrayList<ClubAdvisor> clubAdmin){
         //if(clubAdvisorMembers.contains(clubAdmin)){
-            this.clubAdmin.add(clubAdmin);
+            this.clubAdmin=clubAdmin;
             //clubAdmin.getClubsWithAdminAccess().add(this);
         //}
+    }
+
+    public void setStudentMembers(ArrayList<Student> studentMembers) {
+        this.studentMembers = studentMembers;
     }
 
     public void addClubAdvisor(ClubAdvisor clubAdvisor) { //****

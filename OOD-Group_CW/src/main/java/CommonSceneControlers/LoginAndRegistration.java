@@ -255,7 +255,7 @@ public class LoginAndRegistration implements Initializable {
         String newPassword;
         if(validatePasswordMatch()){newPassword=newUserPasswordField1.getText();}else{newPassword="invalid";}
         try{
-            if(currentUserType=="CLUBADVISOR"){
+            if(currentUserType.equals("CLUB-ADVISOR")){
                 ClubAdvisor newUser=new ClubAdvisor(newId,newName,newEmail,newTele,newPassword);
                 CADataHandling.saveNewCAToDatabase(newUser);
 
@@ -267,7 +267,7 @@ public class LoginAndRegistration implements Initializable {
                 System.out.println(newUser.getEmail());
                 System.out.println(newUser.getMobileNum());
                 System.out.println(newUser.getPassword());
-            } else if (currentUserType=="STUDENT") {
+            } else if (currentUserType.equals("STUDENT")) {
                 Student newUser=new Student(newId,newName,newEmail,newTele,newPassword);
                 StudentDataHandling.saveStudentToDatabase(newUser);
 
@@ -291,7 +291,9 @@ public class LoginAndRegistration implements Initializable {
     private void login(ActionEvent actionEvent){
         CADataHandling object=new CADataHandling();
         StudentDataHandling object2=new StudentDataHandling();
-        System.out.println(object.clubAdvisorLogin(loginUserNameField.getText(),loginPasswordField.getText()));
+        System.out.println(loginUserNameField.getText());
+        System.out.println(loginPasswordField.getText());
+        //System.out.println(object.clubAdvisorLogin(loginUserNameField.getText(),loginPasswordField.getText()));
         if(currentUserType.equals("CLUB-ADVISOR") && object.clubAdvisorLogin(loginUserNameField.getText(),loginPasswordField.getText())){
             try {
                 root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Clubs-ClubAdvisor.fxml"));

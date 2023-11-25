@@ -87,6 +87,21 @@ public class ClubDataHandling {
         }
     }
 
+    public void removeClubAdvisor(ClubAdvisor clubAdvisor,Clubs clubs){
+        String sql="DELETE FROM club_advisor_clubs WHERE BINARY club_advisor_id = ? AND BINARY club_id= ?";
+        MySqlConnect databaseLink= new MySqlConnect();
+
+        try (Connection connection = databaseLink.getDatabaseLink();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, clubAdvisor.getClubAdvisorId());
+            preparedStatement.setString(2, clubs.getClubId());;
+            preparedStatement.executeUpdate();
+            System.out.println("You left the club successfully");
+        } catch (SQLException e) {;
+            e.printStackTrace();
+        }
+    }
+
     //to promote an existing clubAdvisor member to admin
     public void promoteToClubAdmin(ClubAdvisor newadmin,Clubs clubs){
         String sql = "UPDATE club_advisor_clubs SET is_admin = ? WHERE club_advisor_id = ? AND club_id=?";
@@ -172,6 +187,8 @@ public class ClubDataHandling {
     }
 
     public void loadClubMembershipData(Clubs club){
+        ArrayList<ClubAdvisor>array1=new ArrayList<>();
+        ArrayList<ClubAdvisor>array2=new ArrayList<>();
         String sql="SELECT * FROM club_advisor_clubs WHERE club_id = ?";
         MySqlConnect databaseLink= new MySqlConnect();
         try (Connection connection = databaseLink.getDatabaseLink();
@@ -186,9 +203,13 @@ public class ClubDataHandling {
 
                     CADataHandling object=new CADataHandling();
                     if(admin){
-                        club.getClubAdmin().add(object.loadClubAdvisorData(clubAdvisorId));
+                        ClubAdvisor clubAdvisor=object.loadClubAdvisorData(clubAdvisorId);
+                        array1.add(clubAdvisor);
+                        club.setClubAdmin(array1);
                     }else{
-                        club.getClubAdvisorMembers().add(object.loadClubAdvisorData(clubAdvisorId));
+                        ClubAdvisor clubAdvisor=object.loadClubAdvisorData(clubAdvisorId);
+                        array2.add(clubAdvisor);
+                        club.setClubAdmin(array2);
                     }
                 }
             }
@@ -277,6 +298,7 @@ public class ClubDataHandling {
         }
     }
     public void loadClubStudentMembershipData(Clubs club){
+        ArrayList<Student>array1=new ArrayList<>();
         String sql="SELECT * FROM student_clubs WHERE club_id = ?";
         MySqlConnect databaseLink= new MySqlConnect();
         try (Connection connection = databaseLink.getDatabaseLink();
@@ -289,8 +311,11 @@ public class ClubDataHandling {
                     String clubID=resultSet.getString("club_id");
                     //boolean admin=resultSet.getBoolean("is_admin");
 
+
                     StudentDataHandling object=new StudentDataHandling();
-                    club.getStudentMembers().add(object.loadStudentData(StudentId));
+                    Student student=object.loadStudentData(StudentId);
+                    array1.add(student);
+                    club.setStudentMembers(array1);
 
                 }
             }
@@ -319,7 +344,7 @@ public class ClubDataHandling {
         }
     }
     public void removeStudentMember(Student student,Clubs clubs){
-        String sql="DELETE FROM student_clubs WHERE student_id = ? AND club_id= ?";
+        String sql="DELETE FROM student_clubs WHERE BINARY student_id = ? AND BINARY club_id= ?";
         MySqlConnect databaseLink= new MySqlConnect();
 
         try (Connection connection = databaseLink.getDatabaseLink();
@@ -332,6 +357,12 @@ public class ClubDataHandling {
             e.printStackTrace();
         }
     }
+
+
+
+
+
+
 
 
 }

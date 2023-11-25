@@ -41,6 +41,11 @@ public class ClubAdvisor {
 
     //This constructor will be used alone side with ClubAdvisorId when loading data from database to system
     public ClubAdvisor(String name, String email, String mobileNum, String password) {
+        validateName(name);
+        validateEmail(email);
+        validateMobileNumber(mobileNum);
+        validatePassword(password);
+
         this.name = name;
         this.email = email;
         this.mobileNum = mobileNum;
@@ -99,7 +104,7 @@ public class ClubAdvisor {
 
     private void validatePassword(String password) {
         if (!password.matches(PASSWORD_REGEX)) {
-            throw new IllegalArgumentException("Invalid password format: " + password);
+            throw new IllegalArgumentException("Invalid password format or your passwords doesn't match " );
         }
     }
     public void joinORCreateClub(Clubs club) { //Do not call this method in driver seperately

@@ -3,10 +3,7 @@ package CommonSceneControlers;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import main.Main;
 import stake_holders.ClubAdvisor;
 import stake_holders.Student;
@@ -15,6 +12,7 @@ import utils.StudentDataHandling;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AccountManager implements Initializable {
@@ -61,6 +59,8 @@ public class AccountManager implements Initializable {
     private Label userPasswordField1Label;
     @FXML
     private Label userPasswordField2Label;
+    @FXML
+    private Label userPasswordField2Label2;
 
     //event listeners to validate and show the users messages about their inputs in realtime.
     //For example if user enters a invalid input to the username field, it will show a message saying that the input is-
@@ -80,16 +80,23 @@ public class AccountManager implements Initializable {
         userFirstNameField.setEditable(false);
         userLastNameField.setEditable(false);
         userEmailField.setEditable(false);
+        userTeleField.setEditable(false);
         userPasswordField1.setEditable(false);
+        userPasswordField2.setEditable(false);
         userPasswordField2.setVisible(false);
+        userPasswordField2Label2.setVisible(false);
+
+        saveButton.setVisible(false);
+        cancelTheUpdateButton.setVisible(false);
 
 
         if(LoginAndRegistration.currentUserType.equals("CLUB-ADVISOR")){
             userIdField.setText(Main.currentUser.getClubAdvisorId());
-            String[] fullName=Main.currentUser.getName().split("-");
+            String[] fullName=Main.currentUser.getName().split("_");
             userFirstNameField.setText(fullName[0]);
             userLastNameField.setText(fullName[1]);
             userEmailField.setText(Main.currentUser.getEmail());
+            userTeleField.setText(Main.currentUser.getMobileNum());
             userPasswordField1.setText(Main.currentUser.getPassword());
             userPasswordField2.setText(Main.currentUser.getPassword());
         } else if (LoginAndRegistration.currentUserType.equals("STUDENT")) {
@@ -98,6 +105,7 @@ public class AccountManager implements Initializable {
             userFirstNameField.setText(fullName[0]);
             userLastNameField.setText(fullName[1]);
             userEmailField.setText(Main.currentStudentUser.getEmail());
+            userTeleField.setText(Main.currentStudentUser.getMobileNumber());
             userPasswordField1.setText(Main.currentStudentUser.getPassword());
             userPasswordField2.setText(Main.currentStudentUser.getPassword());
         }
@@ -182,22 +190,23 @@ public class AccountManager implements Initializable {
 
     @FXML
     private void update(){
-        handleNewUserFirstNameChange();
-        handleNewUserLastNameChange();
-        handleNewUserEmailChange();
-        handleNewUserTeleChange();
+        if(showConfirmationAlert("are you sure that you want to update account details?")){
+            handleNewUserFirstNameChange();
+            handleNewUserLastNameChange();
+            handleNewUserEmailChange();
+            handleNewUserTeleChange();
 
-        userFirstNameField.setEditable(true);
-        userLastNameField.setEditable(true);
-        userEmailField.setEditable(true);
-        userPasswordField1.setEditable(true);
-    }
-    @FXML
-    private void resetThePassword(){
-        userPasswordField1.setEditable(true);
-        userPasswordField2.setVisible(true);
-        handleNewUserPassword1Change();
-        handleNewUserPassword2Change();
+            userFirstNameField.setEditable(true);
+            userLastNameField.setEditable(true);
+            userEmailField.setEditable(true);
+            userPasswordField1.setEditable(true);
+            userPasswordField1.setEditable(true);
+            userPasswordField2.setVisible(true);
+            userPasswordField2Label2.setVisible(true);
+            saveButton.setVisible(true);
+            cancelTheUpdateButton.setVisible(true);
+        }
+
     }
 
     @FXML
@@ -209,7 +218,7 @@ public class AccountManager implements Initializable {
         String newPassword;
         if(validatePasswordMatch()){newPassword=userPasswordField1.getText();}else{newPassword="invalid";}
         try{
-            if(LoginAndRegistration.currentUserType.equals("CLUBADVISOR")){
+            if(LoginAndRegistration.currentUserType.equals("CLUB-ADVISOR")){
                 ClubAdvisor updatedUser=new ClubAdvisor(newName,newEmail,newTele,newPassword);
                 updatedUser.setClubAdvisorId(userId);
                 CADataHandling obj=new CADataHandling();
@@ -300,6 +309,14 @@ public class AccountManager implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    private boolean showConfirmationAlert(String message){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
     }
 
 

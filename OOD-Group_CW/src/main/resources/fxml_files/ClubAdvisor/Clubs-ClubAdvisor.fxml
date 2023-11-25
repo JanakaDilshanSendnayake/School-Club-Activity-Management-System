@@ -83,39 +83,6 @@
                                           <Label layoutX="484.0" layoutY="63.0" prefHeight="18.0" prefWidth="83.0" text="Sort Table by:" />
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="adminAppointPane" prefHeight="526.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;">
-                                       <children>
-                                          <TableView fx:id="clubAdvisorMembersNavigateTable" layoutX="74.0" layoutY="146.0" prefHeight="257.0" prefWidth="602.0">
-                                             <columns>
-                                                <TableColumn fx:id="clubAdvisorMembersIdColumn" maxWidth="255.20001220703125" minWidth="-1.0" prefWidth="144.0" text="CLUB_ADVISOR_ID" />
-                                                <TableColumn fx:id="clubAdvisorMembersNameColumn" prefWidth="236.0" text="CLUB ADVISOR NAME" />
-                                             </columns>
-                                          </TableView>
-                                          <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Appoint a new admin" textAlignment="RIGHT">
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Button fx:id="viewButton1" layoutX="474.0" layoutY="467.0" mnemonicParsing="false" onAction="#viewClubDetails" prefHeight="44.0" prefWidth="126.0">
-                                             <graphic>
-                                                <Group>
-                                                   <children>
-                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="VIEW">
-                                                         <font>
-                                                            <Font name="Times New Roman Bold" size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@../../Icons/expand-screen.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                </Group>
-                                             </graphic>
-                                          </Button>
-                                       </children>
-                                    </AnchorPane>
                                     <AnchorPane fx:id="caUpdateClubs" prefHeight="639.0" prefWidth="919.0" style="-fx-background-color: #DCDCDC;">
                                        <children>
                                           <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Update Club Details" textAlignment="RIGHT">
@@ -243,7 +210,7 @@
                                                 </Group>
                                              </graphic>
                                           </Button>
-                                          <Button layoutY="510.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="53.0">
+                                          <Button layoutY="510.0" mnemonicParsing="false" onAction="#goBack" prefHeight="40.0" prefWidth="53.0">
                                              <graphic>
                                                 <ImageView fitHeight="19.0" fitWidth="17.0">
                                                    <image>
@@ -293,6 +260,39 @@
                                                       <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
                                                             <Image url="@../../Icons/pencil.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children>
+                                                </Group>
+                                             </graphic>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="adminAppointPane" prefHeight="526.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;">
+                                       <children>
+                                          <TableView fx:id="clubAdvisorMembersNavigateTable" layoutX="74.0" layoutY="146.0" prefHeight="257.0" prefWidth="602.0">
+                                             <columns>
+                                                <TableColumn fx:id="clubAdvisorMembersIdColumn" maxWidth="255.20001220703125" minWidth="-1.0" prefWidth="144.0" text="CLUB_ADVISOR_ID" />
+                                                <TableColumn fx:id="clubAdvisorMembersNameColumn" prefWidth="236.0" text="CLUB ADVISOR NAME" />
+                                             </columns>
+                                          </TableView>
+                                          <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Appoint a new admin" textAlignment="RIGHT">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Button layoutX="474.0" layoutY="467.0" mnemonicParsing="false" onAction="#saveNewAdmin" prefHeight="44.0" prefWidth="126.0">
+                                             <graphic>
+                                                <Group>
+                                                   <children>
+                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="Appoint">
+                                                         <font>
+                                                            <Font name="Times New Roman Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../Icons/graduation-cap.png" />
                                                          </image>
                                                       </ImageView>
                                                    </children>
