@@ -1,6 +1,7 @@
 package SceneControlersClubAdvisors;
 
 import javafx.beans.value.ChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,8 @@ import javafx.stage.Stage;
 import utils.EventDataHandling;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.*;
 
 
@@ -23,6 +26,7 @@ import java.util.*;
 public class CAEvents implements Initializable {
 
 
+    public TextField newEventIDFieldUpdate;
     /**
      *  Left Side Naviagtion bar buttons
      */
@@ -104,12 +108,26 @@ public class CAEvents implements Initializable {
     @FXML
     private Label newEventDatePickerLabelUpdate;
 
+    @FXML
+    private ComboBox<String> selectClubComboBox;
+
+    @FXML
+    private ComboBox<String> selectEventComboBox;
+
 
     // Event Objects
     private ChangeListener<String> newEventNameFieldListener;
     private ChangeListener<String> newEventDescriptionTextAreaListener;
     private ChangeListener<String> newEventVenueFieldListener;
 
+    // this variable is used to check whether if there is an ongoing detail update.
+    private boolean updateStatus;
+
+    String newEventID ;
+    String newEventName;
+    String newEventVenue;
+    LocalDate newEventDate;
+    String newEventDescriptionText;
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -129,73 +147,122 @@ public class CAEvents implements Initializable {
         });
 
 
+        boolean isEventID = false;
+        boolean isEventName = false;
+        boolean isEventVenue = false;
+        boolean isEventDate = false;
+        boolean isEventDescription = false;
+        boolean isEventClub = false;
+
+
+
         // initializing the event listener to validate the user input in "newClubNameField" text-field
         newEventNameFieldListener = ((observable, oldValue, newValue) -> {
-            String validationMessage = validateTextField(newValue, EVENT_NAME_REGEX, "Name can only contain letters and Underscores.",30);
+            String validationMessage = validateTextField(newValue, EVENT_NAME_REGEX, "Name can only contain letters and Underscores.", 30);
             newEventNameLabel.setText(validationMessage);
             setLabelStyle(validationMessage, newEventNameLabel);
         });
 
 
         // initializing the event listener to validate the user input in "newEventDescriptionTextArea" text-field
-        newEventDescriptionTextAreaListener=((observable, oldValue, newValue) -> {
-            String validationMessage = validateTextField(newValue, EVENT_DESCRIPTION_REGEX, "Invalid",500);
+        newEventDescriptionTextAreaListener = ((observable, oldValue, newValue) -> {
+            String validationMessage = validateTextField(newValue, EVENT_DESCRIPTION_REGEX, "Invalid", 500);
             newEventDescriptionLabel.setText(validationMessage);
             setLabelStyle(validationMessage, newEventDescriptionLabel);
         });
 
         // initializing the event listener to validate the user input in "newClubNameField" text-field
-        newEventVenueFieldListener=((observable, oldValue, newValue) -> {
+        newEventVenueFieldListener = ((observable, oldValue, newValue) -> {
             String validationMessage = validateTextField(newValue, EVENT_VENUE_REGEX, "This field is mandatory.");
             newEventVenueFieldLabel.setText(validationMessage);
             setLabelStyle(validationMessage, newEventVenueFieldLabel);
         });
 
-    }
 
-    @FXML
-    public void newEventCreation(ActionEvent event){
-
-        System.out.println(newEventNameField.getText());
-
+        // Update event
         EventDataHandling eventDataHandling = new EventDataHandling();
+        ObservableList<String> clubList = eventDataHandling.getClubListFromDatabase();
+        selectClubComboBox.setItems(clubList);
+
+        selectClubComboBox.setOnAction(event -> {
+            String selectedClub = selectClubComboBox.getValue();
+            if (selectedClub != null) {
+                System.out.println("Selected Club: " + selectedClub);
+
+                // Use the selectedClub value as needed.
+                // For example, pass it to another method:
+                ObservableList<String> events = eventDataHandling.getEventsByClubName(selectedClub);
+                selectEventComboBox.setItems(events);
 
 
-        eventDataHandling.newEventCreationToDatabase(newEventIDField.getText(),newEventNameField.getText(),newEventVenueField.getText(),newEventDatePicker.getValue(), organizingClubComboBox.getValue(), newEventDescriptionTextArea.getText());
+            } else {
+                System.out.println("No club selected.");
+            }
+        });
+
+        selectEventComboBox.setOnAction(event -> {
+            String selectedEvent = selectEventComboBox.getValue();
+            if (selectedEvent != null) {
+                System.out.println("Selected Event: " + selectedEvent);
+
+                // Use the selectedClub value as needed.
+                // For example, pass it to another method:
+                ObservableList<Object> observableList = eventDataHandling.getEventsByEventName(selectedEvent);
+
+                for (Object obj : observableList) {
+                    System.out.println(observableList);
+                }
+
+
+                System.out.println("right there " + observableList.get(3));
+
+
+                int newEventID = (Integer) observableList.get(0);
+                String newEventName = (String) observableList.get(1);
+                String newEventVenue = (String) observableList.get(2);
+                newEventDate = (LocalDate) observableList.get(3);
+                String organizingClubComboBox = (String) observableList.get(4);
+                String newEventDescriptionText = (String) observableList.get(5);
+
+                System.out.println("right here " + newEventDate);
+
+                newEventIDFieldUpdate.setText(String.valueOf(newEventID));
+                newEventNameFieldUpdate.setText(newEventName);
+                newEventVenueFieldUpdate.setText(newEventVenue);
+                newEventDatePickerUpdate.setValue(newEventDate);
+                organizingClubComboBoxUpdate.setValue(organizingClubComboBox);
+                newEventDescriptionTextAreaUpdate.setText(newEventDescriptionText);
+
+
+            } else {
+                System.out.println("No club selected.");
+            }
+        });
+
+//        eventDataHandling.getEventListFromDatabase();
 
     }
 
+    public void eventUpdaterAction(ActionEvent event) throws SQLException {
+
+        EventDataHandling eventDataHandlingUpdate = new EventDataHandling();
+        System.out.println("Here : " + newEventDate);
+        eventDataHandlingUpdate.deleteExisitingData(newEventID,newEventName, newEventVenue, newEventDate,organizingClubComboBox, newEventDescriptionText);
+
+    }
 
     /**
-     *
+     * Validated the Event listerns on fxml files
+     * @param value
+     * @param regex
+     * @param invalidMessage
+     * @param maximumCharacterLim
+     * @return
      */
-    @FXML
-    private void handleNewEventNameChange(){
-        newEventNameField.textProperty().addListener(newEventNameFieldListener);
-    }
-
-    /**
-     *
-     */
-    @FXML
-    private void hanldeNewEventDescription(){
-        newEventDescriptionTextArea.textProperty().addListener(newEventDescriptionTextAreaListener);
-    }
-
-    /**
-     *
-     */
-    @FXML
-    private void handleNewEventVenue(){
-        newEventVenueField.textProperty().addListener(newEventDescriptionTextAreaListener);
-    }
-
-
-
-
 
     private String validateTextField(String value, String regex, String invalidMessage,int maximumCharacterLim) {
         if (value.matches(regex)) {
+
             return "Valid";
         } else {
             if (value.length()>maximumCharacterLim){
@@ -270,52 +337,62 @@ public class CAEvents implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    //    When user selects a event from the table in event navigation page and press view button,
-//    data of that event will be loaded in the view event details page
+
+
     @FXML
-    public void viewClubDetails(){
-        caViewEvents.toFront();
-        //Rest of the function
-    }
-//  When the user want to edit the current details of the event and click edit button,
-//  current data should be loaded in the editable text fields in update edit details
+    public void newEventCreation(ActionEvent event){
 
-    private boolean updateStatus; // this variable is used to check whether if there is an ongoing detail update.
+        System.out.println(newEventNameField.getText());
+
+        EventDataHandling eventDataHandling = new EventDataHandling();
+
+
+        eventDataHandling.newEventCreationToDatabase(newEventIDField.getText(),newEventNameField.getText(),newEventVenueField.getText(),newEventDatePicker.getValue(), organizingClubComboBox.getValue(), newEventDescriptionTextArea.getText());
+
+    }
+
+
+    /**
+     *
+     */
     @FXML
-    public void editEventDetails(){
-        updateStatus=true;
-        caUpdateEvents.toFront();
-        //Rest of the function
+    private void handleNewEventNameChange(){
+        newEventNameField.textProperty().addListener(newEventNameFieldListener);
     }
-    //  When user click suspend button the club and all the relevant information should be deleted
+
+    /**
+     *
+     */
     @FXML
-    public void suspendEvent(){
-        if (showConfirmationAlert("Are you sure you want to suspend event.")){
-            //Implement the rest of the function
-            showInfoAlert("Event and all of the relevant details Successfully deleted.");
-        }else{}
+    private void hanldeNewEventDescription(){
+        newEventDescriptionTextArea.textProperty().addListener(newEventDescriptionTextAreaListener);
     }
 
-    //  When user inputs updated data and press update button, data should be validated and saved
+    /**
+     *
+     */
     @FXML
-    public void updateEventDetails(){
-
-        //Rest of the function
-        updateStatus=false;
-        showInfoAlert("Event details updated successfully");
-        caViewEvents.toFront();
+    private void handleNewEventVenue(){
+        newEventVenueField.textProperty().addListener(newEventDescriptionTextAreaListener);
     }
-    @FXML
-    public void updateCancel(){
 
-        // Rest of the function
-        updateStatus=false;
-        showErrorAlert("Update cancelled");
-        caViewEvents.toFront();
+    public void searchEventUpdateAction(ActionEvent event) {
     }
 
 
-    public void eventUpdaterAction(ActionEvent event) {
-    }
+
+
+    /*
+        Updating the events
+    */
+
+
+
+
+
+
+
+
+
 }
 
