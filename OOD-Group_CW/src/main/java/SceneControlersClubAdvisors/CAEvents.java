@@ -134,6 +134,11 @@ public class CAEvents implements Initializable {
     String newselectClubComboBoxUpdate;
     String selectClubComboBoxUpdatePass;
 
+
+    @FXML
+    private ComboBox<String> viewEventOptionCA;
+
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
 
@@ -141,9 +146,9 @@ public class CAEvents implements Initializable {
 
         caEventsTabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             if (updateStatus && newTab == createNewEventTab) {
-                if(showConfirmationAlert("There's an ongoing update. Do you want to cancel it?")){
+                if (showConfirmationAlert("There's an ongoing update. Do you want to cancel it?")) {
                     caEventsTabPane.getSelectionModel().select(newTab);
-                }else{
+                } else {
                     caEventsTabPane.getSelectionModel().select(oldTab);
                 }
 
@@ -157,7 +162,6 @@ public class CAEvents implements Initializable {
         boolean isEventDate = false;
         boolean isEventDescription = false;
         boolean isEventClub = false;
-
 
 
         // initializing the event listener to validate the user input in "newClubNameField" text-field
@@ -261,6 +265,42 @@ public class CAEvents implements Initializable {
         });
 
 //        eventDataHandling.getEventListFromDatabase();
+
+        viewEventOptionCA.getItems().addAll("All Events", "My Events Only", "Other events");
+
+        viewEventOptionCA.setOnAction(event -> {
+            String selectedOption = viewEventOptionCA.getValue();
+            System.out.println("Selected option: " + selectedOption);
+
+            // Perform actions based on the selected option
+            if ("All Events".equals(selectedOption)) {
+                // Do something for Option 1
+            } else if ("My Events Only".equals(selectedOption)) {
+                // Do something for Option 2
+            } else if ("Other events".equals(selectedOption)) {
+                // Do something for Option 3
+            }
+        });
+
+//        TableView<Event> tableView = new TableView<>();
+//
+//        // Define columns
+//        TableColumn<Event, String> firstNameColumn = new TableColumn<>("First Name");
+//        TableColumn<Person, String> lastNameColumn = new TableColumn<>("Last Name");
+//        TableColumn<Person, Integer> ageColumn = new TableColumn<>("Age");
+//
+//        // Set cell value factories
+//        firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
+//        lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
+//        ageColumn.setCellValueFactory(cellData -> cellData.getValue().ageProperty().asObject());
+//
+//        // Add columns to the table
+//        tableView.getColumns().addAll(firstNameColumn, lastNameColumn, ageColumn)
+//
+
+
+
+
 
     }
 
@@ -433,9 +473,8 @@ public class CAEvents implements Initializable {
 
 
     /*
-        Updating the events
+        Viewing the events
     */
-
 
 
 
