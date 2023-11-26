@@ -1,6 +1,7 @@
 package utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import stake_holders.Events;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -16,72 +17,59 @@ public class EventDataHandling {
 
     Connection connection = null;
     String sql;
+    //====================================================================
+    public boolean validateEventId(String eventIdToBeValidated){
+        boolean eventIdAlreadyExists=false;
+        String sql ="SELECT * FROM events WHERE BINARY event_id= ?";
+        MySqlConnect databaseLink= new MySqlConnect();
+
+        try (Connection connection = databaseLink.getDatabaseLink();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, eventIdToBeValidated);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    //Events Id already exists
+                    eventIdAlreadyExists = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return eventIdAlreadyExists;
+    }
+
+    //==================================================================
 
 
     /**
      * Club advisor schedule a new event
-     * @param newEventIDField
-     * @param newEventNameField
-     * @param newEventVenueField
-     * @param newEventDatePicker
-     * @param organizingClubComboBoxValue
-     * @param newEventDescriptionTextArea
+     * @param event
      */
-    public void newEventCreationToDatabase(String newEventIDField, String newEventNameField, String newEventVenueField, LocalDate newEventDatePicker, String organizingClubComboBoxValue, String newEventDescriptionTextArea) {
+    public void saveNewEventToDatabase(Events event) {
+        String sql="INSERT INTO events (event_id, event_name, event_description,event_date,event_venue,club_id ) VALUES (?, ? , ?, ?, ?, ? )";
+        System.out.println(event.getParentClub().getClubId());
 
-        String club_id = "";
+        MySqlConnect databaseLink= new MySqlConnect();
+        try (Connection connection = databaseLink.getDatabaseLink();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-        // To find the club id of the organizing club , then later query it as foreign key to even table
-        sql = " SELECT club_id FROM club WHERE club_name = ? ";
-
-        // Database
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = getConnection(JDBC_URL, USERNAME, PASSWORD);
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                // Set the parameter (club_name) for the query
-                preparedStatement.setString(1, organizingClubComboBoxValue);
-
-                // Execute the query and get the result set
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    // Check if there is a result
-                    if (resultSet.next()) {
-                        // Retrieve the value of the "club_id" column from the result set
-                        club_id = resultSet.getString("club_id");
-
-                        // Now, you can use the clubId variable as needed
-                        System.out.println("Club ID: " + club_id);
-                    } else {
-                        System.out.println("No matching club found.");
-                    }
-                }
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            // Handle any SQL or class loading errors
-        }
-        sql =
-
-        "INSERT INTO event (event_id, event_name, event_venue,  event_date, event_description, club_id ) VALUES (?, ? , ?, ?, ?, ? )";
-
-        try {
-
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = getConnection(JDBC_URL, USERNAME, PASSWORD);
-
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, newEventIDField);
-            preparedStatement.setString(2, newEventNameField);
-            preparedStatement.setString(3, newEventVenueField);
-            preparedStatement.setString(4, String.valueOf(newEventDatePicker));
-            preparedStatement.setString(5, newEventDescriptionTextArea);
-            preparedStatement.setString(6, club_id);
-
+            // Set parameters for the SQL query
+            preparedStatement.setString(1, event.getEventId());
+            preparedStatement.setString(2, event.getEventName());
+            preparedStatement.setString(3, event.getEventDescription());
+            preparedStatement.setDate(4,java.sql.Date.valueOf(event.getEventDate()));
+            preparedStatement.setString(5, event.getEventLocation());
+            preparedStatement.setString(6,event.getParentClub().getClubId());
+            // Execute the SQL query
             preparedStatement.executeUpdate();
 
-            connection.close();
-        } catch (ClassNotFoundException | SQLException e) {
+
+            System.out.println("Club data saved successfully.");
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

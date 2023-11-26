@@ -1,6 +1,8 @@
 package SceneControlersClubAdvisors;
 
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,13 +13,21 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import main.Main;
+import stake_holders.Clubs;
+import stake_holders.Events;
+import utils.ClubDataHandling;
+import utils.EventDataHandling;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Random;
 import java.util.ResourceBundle;
 
-public class CAEvents3 implements Initializable {
+public class CAEvents3 extends BaseSceneController implements Initializable {
 
     //Buttons - SideBar
     @FXML private Button caHomeButton;
@@ -81,13 +91,43 @@ public class CAEvents3 implements Initializable {
 
     private static final String EVENT_VENUE_REGEX = "^.+$";
 
+    //@FXML private ComboBox<String> eventCreatorClubSelector;
+    ObservableList<String> clubsSorterData= FXCollections.observableArrayList();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateStatus=false;
+        newEventDescriptionTextArea.setWrapText(true);
         //caNaviEvents.toFront();
 
+        ClubDataHandling object=new ClubDataHandling();
+        object.loadClubDataRelevantToCA(Main.currentUser);
 
+        ArrayList<String> clubNames = new ArrayList<>();
+
+        for (Clubs ca : Main.currentUser.getClubsWithAdminAccess()) {
+            clubNames.add(ca.getClubId()+"-"+ca.getClubName());
+        }
+
+        clubsSorterData.addAll(clubNames);
+        organizingClubComboBox.setItems(clubsSorterData);
+
+        organizingClubComboBox.setOnAction(event->{
+            String selectedOption = organizingClubComboBox.getSelectionModel().getSelectedItem();
+//            setUpClubAdvisorMembersNaviTable(selectedOption);
+
+            String[] split=selectedOption.split("-");
+
+            ClubDataHandling obj=new ClubDataHandling();
+            Main.currentClub= obj.loadClubData(split[0]);
+
+            System.out.println(Main.currentClub.getClubName());
+        });
+
+
+
+//======================================================================================================================
         caEventsTabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             if (updateStatus && newTab == createNewEventTab) {
                 if(showConfirmationAlert("There's an ongoing update. Do you want to cancel it?")){
@@ -136,99 +176,64 @@ public class CAEvents3 implements Initializable {
     }
 
     @FXML
-    private void handleNewEventVenue(){
-        newEventVenueField.textProperty().addListener(newEventDescriptionTextAreaListener);
+    private void handleNewEventVenue() {
+        newEventVenueField.textProperty().addListener(newEventVenueFieldListener);
     }
 
+    private String generateEventId() {
+        String prefix = "E";
+        int randomNumber;
+        EventDataHandling object=new EventDataHandling();
 
+        do {
+            randomNumber = new Random().nextInt(1000);
+        } while (object.validateEventId(Main.currentClub.getClubId()+prefix + randomNumber));
 
-
-
-    private String validateTextField(String value, String regex, String invalidMessage,int maximumCharacterLim) {
-        if (value.matches(regex)) {
-            return "Valid";
-        } else {
-            if (value.length()>maximumCharacterLim){
-                return "Maximum character limit exceeded";
-            }else{
-                return invalidMessage;}
-        }
+        return Main.currentClub.getClubId()+prefix + randomNumber;
     }
-
-
-    //Method to handle the color changes of the messages that's shown the text labels
-    private void setLabelStyle(String validationMessage, Label label) {
-        if (validationMessage.equals("Valid")) {
-            label.setStyle("-fx-text-fill: green;");
-        } else {
-            label.setStyle("-fx-text-fill: red;");
-        }
-    }
-
-    private String validateTextField(String value, String regex, String invalidMessage) {
-        if (value.matches(regex)) {
-            return "Valid";
-        } else {
-            if (value.length()>30){
-                return "Maximum character limit exceeded";
-            }else{
-                return invalidMessage;}
-        }
-    }
-
-    private void showInfoAlert( String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    private void showErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-    private boolean showConfirmationAlert(String message){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get() == ButtonType.OK;
-    }
-
     @FXML
-    public void clickSidebar(ActionEvent actionEvent) throws IOException {
+    private void saveEvent(){
+        //if(!(organizingClubComboBox.getSelectionModel().getSelectedItem()==null)){
+            String newEventId=generateEventId();
+            String newEventName= newEventNameField.getText();
+            String newClubDescription=newEventDescriptionTextArea.getText();
+            String newEventVenue=newEventVenueField.getText();
+            LocalDate newEventDate=newEventDatePicker.getValue();
 
-        if(actionEvent.getSource()==caHomeButton){
-            root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Menu-ClubAdvisor.fxml"));
-        }if(actionEvent.getSource()==caEventsButton){
-            root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Events-ClubAdvisor.fxml"));
-        }if(actionEvent.getSource()==caClubsButton){
-            root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Clubs-ClubAdvisor.fxml"));
-        }if(actionEvent.getSource()==caReportsButton){
-            root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Report-ClubAdvisor.fxml"));
-        }
-//        if(actionEvent.getSource()==caAccount){
-//            root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Clubs-ClubAdvisor.fxml"));
-//        }
-        scene = new Scene(root);
-        stage =(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+            System.out.println(Main.currentClub.getClubName());
+
+            System.out.println(newEventId);
+            System.out.println(newEventName);
+            System.out.println(newClubDescription);
+            System.out.println(newEventVenue);
+            System.out.println(newEventDate);
+
+            try{
+                Events newEvent=Main.currentClub.createEvent(newEventId,newEventName,newEventDate,newEventVenue,newClubDescription);
+                System.out.println(newEvent.getEventId());
+
+                EventDataHandling object=new EventDataHandling();
+                object.saveNewEventToDatabase(newEvent);
+
+                showInfoAlert("Success");
+            }catch (IllegalArgumentException e){
+                showErrorAlert(e.toString());
+            }
+        //}
+
     }
-    //    When user selects a event from the table in event navigation page and press view button,
-//    data of that event will be loaded in the view event details page
+
+
+
+    //When user selects an event from the table in event navigation page and press view button,
+    //    data of that event will be loaded in the view event details page
     @FXML
     public void viewClubDetails(){
         caViewEvents.toFront();
         //Rest of the function
     }
-//  When the user want to edit the current details of the event and click edit button,
-//  current data should be loaded in the editable text fields in update edit details
+    //  When the user want to edit the current details of the event and click edit button,
+    //  current data should be loaded in the editable text fields in update edit details
 
     private boolean updateStatus; // this variable is used to check whether if there is an ongoing detail update.
     @FXML

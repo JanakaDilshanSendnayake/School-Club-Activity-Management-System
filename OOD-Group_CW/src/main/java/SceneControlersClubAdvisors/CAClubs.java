@@ -30,7 +30,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Random;
 
-public class CAClubs implements Initializable {
+public class CAClubs extends BaseSceneController implements Initializable {
 
     //Buttons - SideBar
     @FXML private Button caHomeButton;
@@ -299,50 +299,50 @@ public class CAClubs implements Initializable {
 
     }
 
-    private String validateTextField(String value, String regex, String invalidMessage,int maximumCharacterLim) {
-        if (value.matches(regex)) {
-            return "Valid";
-        } else {
-            if (value.length()>maximumCharacterLim){
-                return "Maximum character limit exceeded";
-            }else{
-                return invalidMessage;}
-        }
-    }
-
-
-    //Method to handle the color changes of the messages that's shown the text labels
-    private void setLabelStyle(String validationMessage, Label label) {
-        if (validationMessage.equals("Valid")) {
-            label.setStyle("-fx-text-fill: green;");
-        } else {
-            label.setStyle("-fx-text-fill: red;");
-        }
-    }
-
-    private void showInfoAlert( String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    private void showErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-    private boolean showConfirmationAlert(String message){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get() == ButtonType.OK;
-    }
+//    private String validateTextField(String value, String regex, String invalidMessage,int maximumCharacterLim) {
+//        if (value.matches(regex)) {
+//            return "Valid";
+//        } else {
+//            if (value.length()>maximumCharacterLim){
+//                return "Maximum character limit exceeded";
+//            }else{
+//                return invalidMessage;}
+//        }
+//    }
+//
+//
+//    //Method to handle the color changes of the messages that's shown the text labels
+//    private void setLabelStyle(String validationMessage, Label label) {
+//        if (validationMessage.equals("Valid")) {
+//            label.setStyle("-fx-text-fill: green;");
+//        } else {
+//            label.setStyle("-fx-text-fill: red;");
+//        }
+//    }
+//
+//    private void showInfoAlert( String message) {
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//        alert.setTitle("Information");
+//        alert.setHeaderText(null);
+//        alert.setContentText(message);
+//        alert.showAndWait();
+//    }
+//
+//    private void showErrorAlert(String message) {
+//        Alert alert = new Alert(Alert.AlertType.ERROR);
+//        alert.setTitle("Error");
+//        alert.setHeaderText(null);
+//        alert.setContentText(message);
+//        alert.showAndWait();
+//    }
+//    private boolean showConfirmationAlert(String message){
+//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//        alert.setTitle("Confirmation");
+//        alert.setHeaderText(null);
+//        alert.setContentText(message);
+//        Optional<ButtonType> result = alert.showAndWait();
+//        return result.isPresent() && result.get() == ButtonType.OK;
+//    }
 
     @FXML
     private void clickSidebar(ActionEvent actionEvent) throws IOException {
@@ -398,7 +398,7 @@ public class CAClubs implements Initializable {
             Clubs newClub=new Clubs(newClubId, newClubName,newClubType,newClubDescription,Main.currentUser);
             //System.out.println(newClub.getClubAdmin().getName());
             //Adding the created club to current user
-            Main.currentUser.getClubsWithAdminAccess().add(newClub);
+            Main.currentUser.getClubsWithAdminAccess().add(newClub);//-------------------------
             //saving the created club to the club table and club-advisor_club table
             ClubDataHandling object=new ClubDataHandling();
             object.saveNewClubToDatabase(newClub);
