@@ -121,7 +121,7 @@ public class StudentDataHandling {
 
     public Student loadStudentData(String studentID){
         Student student=null;
-        String sql="SELECT * FROM student WHERE student_id = ?";
+        String sql="SELECT * FROM student WHERE BINARY student_id = ?";
         MySqlConnect databaseLink= new MySqlConnect();
 
         try (Connection connection = databaseLink.getDatabaseLink();
