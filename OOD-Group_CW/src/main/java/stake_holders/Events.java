@@ -10,7 +10,7 @@ public class Events {
     private String eventLocation;
     private String eventDescription;
     private Clubs parentClub;
-    private ArrayList<Student> attendance;
+    //private ArrayList<Student> studentMembersOfTheParentClub;
 
 
     private static final String EVENT_NAME_REGEX = "^[a-zA-Z_]{1,31}$";
@@ -30,6 +30,9 @@ public class Events {
         this.eventLocation = eventLocation;
         this.eventDescription=eventDescription;
         this.parentClub = parentClub;
+        //this.eventAttendance=new ArrayList<>();
+
+        //attendanceMarking();
     }
 
     private void validateEventName(String name){
@@ -66,13 +69,13 @@ public class Events {
     }
 
 
-    public ArrayList<Student> getAttendance() {
-        return attendance;
-    }
-
-    public void setAttendance(ArrayList<Student> attendance) {
-        this.attendance = attendance;
-    }
+//    public ArrayList<Student> getAttendance() {
+//        return studentMembersOfTheParentClub;
+//    }
+//
+//    public void setAttendance(ArrayList<Student> attendance) {
+//        this.studentMembersOfTheParentClub = attendance;
+//    }
 
     public String getEventId() {
         return eventId;
@@ -121,5 +124,23 @@ public class Events {
     public void setParentClub(Clubs parentClub) {
         this.parentClub = parentClub;
     }
+
+    //=======================================================
+
+//    private ArrayList<Attendance> eventAttendance;
+//    public void attendanceMarking(){
+//
+//        for(Student student:this.parentClub.getStudentMembers()){
+//            this.eventAttendance.add(new Attendance(student,this,false));
+//        }
+//    }
+//
+//    public ArrayList<Attendance> getEventAttendance() {
+//        return eventAttendance;
+//    }
+//
+//    public void setEventAttendance(ArrayList<Attendance> eventAttendance) {
+//        this.eventAttendance = eventAttendance;
+//    }
 }
 

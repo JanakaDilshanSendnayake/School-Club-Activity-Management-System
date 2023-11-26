@@ -28,125 +28,6 @@
                            <children>
                               <StackPane prefHeight="556.0" prefWidth="750.0">
                                  <children>
-                                    <AnchorPane fx:id="caViewClubs" prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #DCDCDC;">
-                                       <children>
-                                          <Label prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="View Club Details" textAlignment="RIGHT">
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Button fx:id="editClubButton" layoutX="338.0" layoutY="486.0" mnemonicParsing="false" onAction="#updateClubDetails" prefHeight="44.0" prefWidth="126.0">
-                                             <graphic>
-                                                <Group>
-                                                   <children>
-                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="EDIT">
-                                                         <font>
-                                                            <Font name="Times New Roman Bold" size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@../../Icons/pencil.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                </Group>
-                                             </graphic>
-                                          </Button>
-                                          <Button fx:id="leaveClubButton" layoutX="609.0" layoutY="486.0" mnemonicParsing="false" onAction="#leaveClub" prefHeight="44.0" prefWidth="126.0">
-                                             <graphic>
-                                                <Group>
-                                                   <children>
-                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="LEAVE">
-                                                         <font>
-                                                            <Font name="Times New Roman Bold" size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@../../Icons/house-leave.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                </Group>
-                                             </graphic>
-                                          </Button>
-                                          <Button fx:id="suspendClubButton" layoutX="475.0" layoutY="486.0" mnemonicParsing="false" onAction="#suspendClub" prefHeight="44.0" prefWidth="126.0">
-                                             <graphic>
-                                                <Group>
-                                                   <children>
-                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="SUSPEND">
-                                                         <font>
-                                                            <Font name="Times New Roman Bold" size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@../../Icons/times-hexagon.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                </Group>
-                                             </graphic>
-                                          </Button>
-                                          <Button layoutY="510.0" mnemonicParsing="false" onAction="#goBack" prefHeight="40.0" prefWidth="53.0">
-                                             <graphic>
-                                                <ImageView fitHeight="19.0" fitWidth="17.0">
-                                                   <image>
-                                                      <Image url="@../../Icons/angle-double-left.png" />
-                                                   </image>
-                                                </ImageView>
-                                             </graphic>
-                                          </Button>
-                                          <Label fx:id="viewClubNameLabel" layoutX="36.0" layoutY="35.0" prefHeight="44.0" prefWidth="309.0" text="Club Name">
-                                             <font>
-                                                <Font name="Times New Roman Bold" size="18.0" />
-                                             </font>
-                                          </Label>
-                                          <TextArea fx:id="viewClubDescriptionTextField" layoutX="36.0" layoutY="79.0" maxWidth="584.0" prefHeight="229.0" prefWidth="584.0" text="Club Description" />
-                                          <Button fx:id="joinClubButton" layoutX="609.0" layoutY="442.0" mnemonicParsing="false" onAction="#joinClub" prefHeight="44.0" prefWidth="126.0">
-                                             <graphic>
-                                                <Group>
-                                                   <children>
-                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="JOIN">
-                                                         <font>
-                                                            <Font name="Times New Roman Bold" size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@../../Icons/house-return.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                </Group>
-                                             </graphic>
-                                          </Button>
-                                          <Label fx:id="viewClubTypeLabel" layoutX="357.0" layoutY="44.0" prefHeight="34.0" prefWidth="262.0" text="Club Type">
-                                             <font>
-                                                <Font name="Times New Roman Bold" size="14.0" />
-                                             </font>
-                                          </Label>
-                                          <Button fx:id="appointNewAdminButton" layoutX="201.0" layoutY="486.0" mnemonicParsing="false" onAction="#appointNewAdmin" prefHeight="44.0" prefWidth="126.0">
-                                             <graphic>
-                                                <Group>
-                                                   <children>
-                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="New Admin">
-                                                         <font>
-                                                            <Font name="Times New Roman Bold" size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@../../Icons/pencil.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                </Group>
-                                             </graphic>
-                                          </Button>
-                                       </children>
-                                    </AnchorPane>
                                     <AnchorPane fx:id="adminAppointPane" prefHeight="526.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;">
                                        <children>
                                           <TableView fx:id="clubAdvisorMembersNavigateTable" layoutX="74.0" layoutY="146.0" prefHeight="257.0" prefWidth="602.0">
@@ -299,6 +180,125 @@
                                                 <Label fx:id="newClubDescriptionLabel1" layoutX="103.0" layoutY="233.0" prefHeight="18.0" prefWidth="587.0" />
                                              </children>
                                           </Group>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="caViewClubs" prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #DCDCDC;">
+                                       <children>
+                                          <Label prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="View Club Details" textAlignment="RIGHT">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Button fx:id="editClubButton" layoutX="338.0" layoutY="486.0" mnemonicParsing="false" onAction="#updateClubDetails" prefHeight="44.0" prefWidth="126.0">
+                                             <graphic>
+                                                <Group>
+                                                   <children>
+                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="EDIT">
+                                                         <font>
+                                                            <Font name="Times New Roman Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../Icons/pencil.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children>
+                                                </Group>
+                                             </graphic>
+                                          </Button>
+                                          <Button fx:id="leaveClubButton" layoutX="609.0" layoutY="486.0" mnemonicParsing="false" onAction="#leaveClub" prefHeight="44.0" prefWidth="126.0">
+                                             <graphic>
+                                                <Group>
+                                                   <children>
+                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="LEAVE">
+                                                         <font>
+                                                            <Font name="Times New Roman Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../Icons/house-leave.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children>
+                                                </Group>
+                                             </graphic>
+                                          </Button>
+                                          <Button fx:id="suspendClubButton" layoutX="475.0" layoutY="486.0" mnemonicParsing="false" onAction="#suspendClub" prefHeight="44.0" prefWidth="126.0">
+                                             <graphic>
+                                                <Group>
+                                                   <children>
+                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="SUSPEND">
+                                                         <font>
+                                                            <Font name="Times New Roman Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../Icons/times-hexagon.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children>
+                                                </Group>
+                                             </graphic>
+                                          </Button>
+                                          <Button layoutY="510.0" mnemonicParsing="false" onAction="#goBack" prefHeight="40.0" prefWidth="53.0">
+                                             <graphic>
+                                                <ImageView fitHeight="19.0" fitWidth="17.0">
+                                                   <image>
+                                                      <Image url="@../../Icons/angle-double-left.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                          <Label fx:id="viewClubNameLabel" layoutX="36.0" layoutY="35.0" prefHeight="44.0" prefWidth="309.0" text="Club Name">
+                                             <font>
+                                                <Font name="Times New Roman Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <TextArea fx:id="viewClubDescriptionTextField" layoutX="36.0" layoutY="79.0" maxWidth="584.0" prefHeight="229.0" prefWidth="584.0" text="Club Description" />
+                                          <Button fx:id="joinClubButton" layoutX="609.0" layoutY="442.0" mnemonicParsing="false" onAction="#joinClub" prefHeight="44.0" prefWidth="126.0">
+                                             <graphic>
+                                                <Group>
+                                                   <children>
+                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="JOIN">
+                                                         <font>
+                                                            <Font name="Times New Roman Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../Icons/house-return.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children>
+                                                </Group>
+                                             </graphic>
+                                          </Button>
+                                          <Label fx:id="viewClubTypeLabel" layoutX="357.0" layoutY="44.0" prefHeight="34.0" prefWidth="262.0" text="Club Type">
+                                             <font>
+                                                <Font name="Times New Roman Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Button fx:id="appointNewAdminButton" layoutX="201.0" layoutY="486.0" mnemonicParsing="false" onAction="#appointNewAdmin" prefHeight="44.0" prefWidth="126.0">
+                                             <graphic>
+                                                <Group>
+                                                   <children>
+                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="New Admin">
+                                                         <font>
+                                                            <Font name="Times New Roman Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../Icons/pencil.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children>
+                                                </Group>
+                                             </graphic>
+                                          </Button>
                                        </children>
                                     </AnchorPane>
                                  </children>

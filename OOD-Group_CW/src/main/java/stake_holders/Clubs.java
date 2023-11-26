@@ -127,6 +127,14 @@ public class Clubs {
         this.studentMembers = studentMembers;
     }
 
+    public ArrayList<Events> getClubEvents() {
+        return clubEvents;
+    }
+
+    public void setClubEvents(ArrayList<Events> clubEvents) {
+        this.clubEvents = clubEvents;
+    }
+
     public void addClubAdvisor(ClubAdvisor clubAdvisor) { //****
         this.clubAdvisorMembers.add(clubAdvisor);
         clubAdvisor.joinORCreateClub(this);
@@ -148,7 +156,7 @@ public class Clubs {
         this.clubEvents.remove(event);
     }
 
-    public void markAttendance(Events event, Student student){
-        event.getAttendance().add(student);
-    }
+//    public void markAttendance(Events event, Student student){
+//        event.getAttendance().add(student);
+//    }
 }

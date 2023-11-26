@@ -1,10 +1,14 @@
 package utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import stake_holders.Attendance;
+import stake_holders.Clubs;
 import stake_holders.Events;
+import stake_holders.Student;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static java.sql.DriverManager.getConnection;
 
@@ -41,6 +45,82 @@ public class EventDataHandling {
         return eventIdAlreadyExists;
     }
 
+    public void loadEventDataOfAClub(Clubs club){
+        String sql="SELECT * FROM events WHERE BINARY club_id = ?";
+        ArrayList<Events> array=new ArrayList<>();
+        MySqlConnect databaseLink= new MySqlConnect();
+        try (Connection connection = databaseLink.getDatabaseLink();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, club.getClubId());
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    String eventId=resultSet.getString("event_id");
+                    String eventName=resultSet.getString("event_name");
+                    String eventDescription=resultSet.getString("event_description");
+                    LocalDate eventDate=resultSet.getDate("event_date").toLocalDate();
+                    String event_venue=resultSet.getString("event_venue");
+
+                    array.add(new Events(eventId,eventName,eventDate,event_venue,eventDescription,club));
+
+                }club.setClubEvents(array);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            // Handle database connection or query errors
+        }
+    }
+
+    public Events loadEventData(String eventId){
+        Events event=null;
+        String sql="SELECT * FROM events WHERE event_Id = ?";
+        MySqlConnect databaseLink= new MySqlConnect();
+
+        try (Connection connection = databaseLink.getDatabaseLink();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, eventId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    String clubiD=resultSet.getString("event_id");
+                    String eventName=resultSet.getString("event_name");
+                    String eventDescription=resultSet.getString("event_description");
+                    LocalDate eventDate=resultSet.getDate("event_date").toLocalDate();
+                    String eventVenue=resultSet.getString("event_venue");
+                    //event=new Events(clubiD,eventName,eventDate,eventVenue,eventDescription);
+
+                }
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+            // Handle database connection or query errors
+        }
+        return event;
+    }
+    public void buildAttendanceRecordForNewEvent(Attendance attendance){
+        String sql="INSERT INTO attendance(student_id,event_id,attendance_status) VALUES (?,?,?)";
+        MySqlConnect databaseLink= new MySqlConnect();
+        try (Connection connection = databaseLink.getDatabaseLink();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            // Set parameters for the SQL query
+            preparedStatement.setString(1, attendance.getStudent().getStudentId());
+            preparedStatement.setString(2, attendance.getEvent().getEventId());
+            preparedStatement.setBoolean(3, attendance.isStatus());
+            // Execute the SQL query
+            preparedStatement.executeUpdate();
+
+
+            System.out.println("Club data saved successfully.");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
+
     //==================================================================
 
 
@@ -65,13 +145,15 @@ public class EventDataHandling {
             preparedStatement.setString(6,event.getParentClub().getClubId());
             // Execute the SQL query
             preparedStatement.executeUpdate();
-
-
             System.out.println("Club data saved successfully.");
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+//        for(Attendance a:event.getEventAttendance()){
+//            buildAttendanceRecordForNewEvent(a);
+//        }
+        System.out.println("all success");
     }
 
     /**

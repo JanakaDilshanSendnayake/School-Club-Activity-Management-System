@@ -345,26 +345,6 @@ public class CAClubs extends BaseSceneController implements Initializable {
 //    }
 
     @FXML
-    private void clickSidebar(ActionEvent actionEvent) throws IOException {
-
-        if(actionEvent.getSource()==caHomeButton){
-            root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Menu-ClubAdvisor.fxml"));
-        }if(actionEvent.getSource()==caEventsButton){
-            root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Events-ClubAdvisor.fxml"));
-        }if(actionEvent.getSource()==caClubsButton){
-            root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Clubs-ClubAdvisor.fxml"));
-        }if(actionEvent.getSource()==caReportsButton){
-            root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Report-ClubAdvisor.fxml"));
-        }
-        if(actionEvent.getSource()==caAccountButton){
-            root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Account-ClubAdvisor.fxml"));
-        }
-        scene = new Scene(root);
-        stage =(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
-    }
-    @FXML
     private void handleNewClubNameChange() {
         newClubNameField.textProperty().addListener(newClubNameFieldListener);
     }
@@ -372,7 +352,7 @@ public class CAClubs extends BaseSceneController implements Initializable {
     private void handleNewClubDescriptionChange(){
         newClubDescriptionField.textProperty().addListener(newClubDescriptionFieldListener);
     }
-    //A method to automaticaly generate clubId
+    //A method to automatically generate clubId
     private String generateClubId() {
         String prefix = "C";
         int randomNumber;
