@@ -1,16 +1,9 @@
 package utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import stake_holders.Events;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
 import static java.sql.DriverManager.getConnection;
 
@@ -22,12 +15,58 @@ public class EventDataHandling {
     ObservableList<String> clubList = FXCollections.observableArrayList();
 
     Connection connection = null;
+    String sql;
 
 
-    public void newEventCreationToDatabase(String newEventIDField, String newEventNameField, String newEventVenueField, LocalDate newEventDatePicker, String organizingClubComboBox, String newEventDescriptionTextArea) {
-        String sql = "INSERT INTO event (event_id, event_name, event_venue, event_club, event_date, event_description) VALUES (?, ?, ?, ?, ?, ?)";
+    /**
+     * Club advisor schedule a new event
+     * @param newEventIDField
+     * @param newEventNameField
+     * @param newEventVenueField
+     * @param newEventDatePicker
+     * @param organizingClubComboBoxValue
+     * @param newEventDescriptionTextArea
+     */
+    public void newEventCreationToDatabase(String newEventIDField, String newEventNameField, String newEventVenueField, LocalDate newEventDatePicker, String organizingClubComboBoxValue, String newEventDescriptionTextArea) {
+
+        String club_id = "";
+
+        // To find the club id of the organizing club , then later query it as foreign key to even table
+        sql = " SELECT club_id FROM club WHERE club_name = ? ";
+
+        // Database
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = getConnection(JDBC_URL, USERNAME, PASSWORD);
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                // Set the parameter (club_name) for the query
+                preparedStatement.setString(1, organizingClubComboBoxValue);
+
+                // Execute the query and get the result set
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    // Check if there is a result
+                    if (resultSet.next()) {
+                        // Retrieve the value of the "club_id" column from the result set
+                        club_id = resultSet.getString("club_id");
+
+                        // Now, you can use the clubId variable as needed
+                        System.out.println("Club ID: " + club_id);
+                    } else {
+                        System.out.println("No matching club found.");
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            // Handle any SQL or class loading errors
+        }
+        sql =
+
+        "INSERT INTO event (event_id, event_name, event_venue,  event_date, event_description, club_id ) VALUES (?, ? , ?, ?, ?, ? )";
 
         try {
+
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = getConnection(JDBC_URL, USERNAME, PASSWORD);
 
@@ -36,8 +75,8 @@ public class EventDataHandling {
             preparedStatement.setString(2, newEventNameField);
             preparedStatement.setString(3, newEventVenueField);
             preparedStatement.setString(4, String.valueOf(newEventDatePicker));
-            preparedStatement.setString(5, organizingClubComboBox);
-            preparedStatement.setString(6, newEventDescriptionTextArea);
+            preparedStatement.setString(5, newEventDescriptionTextArea);
+            preparedStatement.setString(6, club_id);
 
             preparedStatement.executeUpdate();
 
@@ -47,12 +86,17 @@ public class EventDataHandling {
         }
     }
 
+    /**
+     * Combobox for clubs; which displays all available clubs using database club table
+     * @return clubList
+     */
     public ObservableList<String> getClubListFromDatabase() {
 
-        String sql = "SELECT club_name FROM club";
-
         try (Connection connection = getConnection(JDBC_URL, USERNAME, PASSWORD)) {
-            String query = "SELECT club_name FROM club";
+            String query =
+
+            " SELECT club_name FROM club ";
+
             try (PreparedStatement preparedStatement = connection.prepareStatement(query);
                  ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -68,15 +112,20 @@ public class EventDataHandling {
     }
 
 
-    public ObservableList<String> getEventsByClubName(String userInputClubName) {
+    /**
+     * Get the events of a club using join sql query method
+     * @param userInputClubName
+     * @return
+     */
+    public ObservableList<String> getEventListByClub(String userInputClubName) {
+
         ObservableList<String> eventNames = FXCollections.observableArrayList();
-        String sql = "SELECT event_name FROM event WHERE club_name = ?";
-
         try (Connection connection = getConnection(JDBC_URL, USERNAME, PASSWORD)) {
-            String query = "SELECT event_name FROM event JOIN club ON event.club_id = club.club_id " +
-                    "WHERE club_name = ? ";
+            sql =
 
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        " SELECT event_name FROM event JOIN club ON event.club_id = club.club_id WHERE club_name = ? ";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, userInputClubName);
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -97,34 +146,41 @@ public class EventDataHandling {
     }
 
 
+    /**
+     * In the update combo box we have strings as club name not integers club id here
+     * Since only 1 foreign key we turn it
+     * @param selectedEvent
+     * @return
+     */
     public ObservableList<Object> getEventsByEventName(String selectedEvent) {
+        String club_id = "";
         ObservableList<Object> observableList = FXCollections.observableArrayList();
-        String sql = "SELECT event_name FROM event WHERE club_name = ?";
 
-        int eventId;
-        String eventName;
         try (Connection connection = getConnection(JDBC_URL, USERNAME, PASSWORD)) {
-            String query = "SELECT event_id, event_name, event_venue, event_date, event_club, event_description " +
-                    "FROM event WHERE event_name = ? ";
 
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        sql =
+
+        " SELECT event_id, event_name, event_venue, event_date, event_description, club_id " +
+        " FROM event WHERE event_name = ? ";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, selectedEvent);
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
-                        eventId = resultSet.getInt("event_id");
-                        eventName = resultSet.getString("event_name");
+
+                        int eventId = resultSet.getInt("event_id");
+                        String eventName = resultSet.getString("event_name");
                         String eventVenue = resultSet.getString("event_venue");
                         LocalDate eventDate = resultSet.getDate("event_date").toLocalDate();
-                        ;
-                        String eventClub = resultSet.getString("event_club");
                         String eventDescription = resultSet.getString("event_description");
+                        club_id = resultSet.getString("club_id");
+
 
                         observableList.add(eventId);
                         observableList.add(eventName);
                         observableList.add(eventVenue);
                         observableList.add(eventDate);
-                        observableList.add(eventClub);
                         observableList.add(eventDescription);
 
                     }
@@ -134,45 +190,157 @@ public class EventDataHandling {
             e.printStackTrace();
             // Handle any SQL errors
         }
+
+        club_id = clubIdtoClubName(club_id);
+        observableList.add(club_id);
         return observableList;
     }
 
 
-    public void deleteExisitingData(String newEventID, String newEventName, String newEventVenue, LocalDate newEventDate, ComboBox<String> organizingClubComboBox, String newEventDescriptionText) throws SQLException {
+    /**
+     *
+     * @param club_id
+     * @return
+     */
+    public String clubIdtoClubName(String club_id){
+        String club_name = "";
+
+        // To find the club id of the organizing club , then later query it as foreign key to even table
+        sql = " SELECT club_name FROM club WHERE club_id = ? ";
+
+        // Database
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = getConnection(JDBC_URL, USERNAME, PASSWORD);
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                // Set the parameter (club_name) for the query
+                preparedStatement.setString(1, club_id);
+
+                // Execute the query and get the result set
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    // Check if there is a result
+                    if (resultSet.next()) {
+                        // Retrieve the value of the "club_id" column from the result set
+                         club_name = resultSet.getString("club_name");
+
+                        // Now, you can use the clubId variable as needed
+                        System.out.println("Club ID: " + club_id);
+                    } else {
+                        System.out.println("No matching club found.");
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            // Handle any SQL or class loading errors
+        }
+        return club_name;
+    }
+
+    public String clubNameToClubID(String selectClubComboBoxUpdatePass){
+
+        String club_id = "";
+
+        // To find the club id of the organizing club , then later query it as foreign key to even table
+        sql = " SELECT club_id FROM club WHERE club_name = ? ";
+
+        // Database
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = getConnection(JDBC_URL, USERNAME, PASSWORD);
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                // Set the parameter (club_name) for the query
+                preparedStatement.setString(1, selectClubComboBoxUpdatePass);
+
+                // Execute the query and get the result set
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    // Check if there is a result
+                    if (resultSet.next()) {
+                        // Retrieve the value of the "club_id" column from the result set
+                        club_id = resultSet.getString("club_id");
+
+                        // Now, you can use the clubId variable as needed
+                        System.out.println("Club ID: " + club_id);
+                    } else {
+                        System.out.println("No matching club found.");
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            // Handle any SQL or class loading errors
+        }
+        return club_id;
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     *
+     * @param newEventID
+     * @param newEventName
+     * @param newEventVenue
+     * @param newEventDate
+     * @param newEventDescriptionText
+     * @param
+     * @throws SQLException
+     */
+    public void UpdateEventTable(String newEventID, String newEventName, String newEventVenue, LocalDate newEventDate, String newEventDescriptionText, String club_idPass) throws SQLException {
 
         System.out.println("time" + newEventDate);
 
-        System.out.println("here");
         try (Connection connection = getConnection(JDBC_URL, USERNAME, PASSWORD)) {
-            connection.setAutoCommit(false);  // Set autocommit to false
-
             // DELETE operation
-            String deleteQuery = "DELETE FROM event WHERE event_id = ?";
+            String deleteQuery = "DELETE FROM event WHERE event_id = ? ";
+
             try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
                 deleteStatement.setString(1, newEventID);
                 int rowsDeleted = deleteStatement.executeUpdate();
                 System.out.println("Rows deleted: " + rowsDeleted);
             }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle any SQL errors for delete operation
+        }
+
+        try (Connection connection = getConnection(JDBC_URL, USERNAME, PASSWORD)) {
             // INSERT operation
-            String insertQuery = "INSERT INTO event (event_id, event_name, event_venue, event_date, event_club, event_description) VALUES (?, ?, ?, ?, ?, ?)";
+            String insertQuery =
+
+                    "INSERT INTO event (event_id, event_name, event_venue, event_date, event_description, club_id) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
+
             try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
                 insertStatement.setString(1, newEventID);
                 insertStatement.setString(2, newEventName);
                 insertStatement.setString(3, newEventVenue);
                 insertStatement.setDate(4, java.sql.Date.valueOf(newEventDate));
-                insertStatement.setString(5, organizingClubComboBox.getValue());
-                insertStatement.setString(6, newEventDescriptionText);
+                insertStatement.setString(5, newEventDescriptionText);
+                insertStatement.setString(6, club_idPass);
 
                 int rowsInserted = insertStatement.executeUpdate();
                 System.out.println("Rows inserted: " + rowsInserted);
             }
 
-            // Commit the transaction
-            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle any SQL errors
+            // Handle any SQL errors for insert operation
         } finally {
             // Close the database connection in the finally block
             if (connection != null) {
@@ -186,10 +354,6 @@ public class EventDataHandling {
 
             System.out.println("Finished");
         }
-
     }
+
 }
-
-
-
-

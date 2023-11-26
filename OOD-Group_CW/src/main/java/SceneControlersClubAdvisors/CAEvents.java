@@ -113,8 +113,8 @@ public class CAEvents implements Initializable {
 
     @FXML
     private ComboBox<String> selectEventComboBox;
-
-
+    @FXML
+    private ComboBox<String> selectClubComboBoxUpdate;
     // Event Objects
     private ChangeListener<String> newEventNameFieldListener;
     private ChangeListener<String> newEventDescriptionTextAreaListener;
@@ -123,12 +123,16 @@ public class CAEvents implements Initializable {
     // this variable is used to check whether if there is an ongoing detail update.
     private boolean updateStatus;
 
-    String newEventID ;
+    int newEventID ;
     String newEventName;
     String newEventVenue;
     LocalDate newEventDate;
+
+    String oldEventName;
     String newEventDescriptionText;
 
+    String newselectClubComboBoxUpdate;
+    String selectClubComboBoxUpdatePass;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -179,19 +183,31 @@ public class CAEvents implements Initializable {
         });
 
 
-        // Update event
+        // 1st Pane = Update events and Navigation of events
+
+        // Getting all the available clubs from database to club list combobox
         EventDataHandling eventDataHandling = new EventDataHandling();
+
+        //Calling the database class and retrieve club list to a observableList
         ObservableList<String> clubList = eventDataHandling.getClubListFromDatabase();
+
+        // Navigate and manage event combobox setting entire club-list
         selectClubComboBox.setItems(clubList);
 
+        // Create a new event combobox setting entire club-list
+        organizingClubComboBox.setItems(clubList);
+
+        // Navigate and manage event combobox setting entire club-list ; If the club advisor want to update, will choose
+        selectClubComboBoxUpdate.setItems(clubList);
+
+
+        //(Navigation and Update Pane only ) After Club advisor selects the required club, all the available events are shown on event combo box
         selectClubComboBox.setOnAction(event -> {
             String selectedClub = selectClubComboBox.getValue();
             if (selectedClub != null) {
                 System.out.println("Selected Club: " + selectedClub);
 
-                // Use the selectedClub value as needed.
-                // For example, pass it to another method:
-                ObservableList<String> events = eventDataHandling.getEventsByClubName(selectedClub);
+                ObservableList<String> events = eventDataHandling.getEventListByClub(selectedClub);
                 selectEventComboBox.setItems(events);
 
 
@@ -200,13 +216,15 @@ public class CAEvents implements Initializable {
             }
         });
 
+
+        // After club advisor selects the event all the event details will be automatically displayed on the relevant field
         selectEventComboBox.setOnAction(event -> {
             String selectedEvent = selectEventComboBox.getValue();
+
             if (selectedEvent != null) {
                 System.out.println("Selected Event: " + selectedEvent);
 
-                // Use the selectedClub value as needed.
-                // For example, pass it to another method:
+                // Taking all the information from database ( event_id, event_name , event_venue etc ) to a observable list
                 ObservableList<Object> observableList = eventDataHandling.getEventsByEventName(selectedEvent);
 
                 for (Object obj : observableList) {
@@ -214,23 +232,26 @@ public class CAEvents implements Initializable {
                 }
 
 
-                System.out.println("right there " + observableList.get(3));
+                System.out.println("right there " + observableList.get(4));
 
+                // old data
+                oldEventName = (String) observableList.get(1);
 
-                int newEventID = (Integer) observableList.get(0);
-                String newEventName = (String) observableList.get(1);
-                String newEventVenue = (String) observableList.get(2);
+                newEventID = (Integer) observableList.get(0);
+                newEventName = (String) observableList.get(1);
+                newEventVenue = (String) observableList.get(2);
                 newEventDate = (LocalDate) observableList.get(3);
-                String organizingClubComboBox = (String) observableList.get(4);
-                String newEventDescriptionText = (String) observableList.get(5);
+                newEventDescriptionText = (String) observableList.get(4);
 
-                System.out.println("right here " + newEventDate);
+                // This is club id : Which we are turning to relavent name and again turning to club id when storing
+                newselectClubComboBoxUpdate = (String) observableList.get(5);
+
+                System.out.println("right here " + newselectClubComboBoxUpdate);
 
                 newEventIDFieldUpdate.setText(String.valueOf(newEventID));
                 newEventNameFieldUpdate.setText(newEventName);
                 newEventVenueFieldUpdate.setText(newEventVenue);
                 newEventDatePickerUpdate.setValue(newEventDate);
-                organizingClubComboBoxUpdate.setValue(organizingClubComboBox);
                 newEventDescriptionTextAreaUpdate.setText(newEventDescriptionText);
 
 
@@ -243,11 +264,51 @@ public class CAEvents implements Initializable {
 
     }
 
-    public void eventUpdaterAction(ActionEvent event) throws SQLException {
+    // After the club advisor has filled the form to save data
+    @FXML
+    public void newEventCreation(ActionEvent event){
+
+        newEventIDFieldUpdate.setText(String.valueOf(newEventID));
+        newEventNameFieldUpdate.setText(newEventName);
+        newEventVenueFieldUpdate.setText(newEventVenue);
+        newEventDatePickerUpdate.setValue(newEventDate);
+        newEventDescriptionTextAreaUpdate.setText(newEventDescriptionText);
+
+        EventDataHandling eventDataHandling = new EventDataHandling();
+        eventDataHandling.newEventCreationToDatabase(newEventIDField.getText(),newEventNameField.getText(),newEventVenueField.getText(),newEventDatePicker.getValue(), newEventDescriptionTextArea.getText(),organizingClubComboBox.getValue());
+
+    }
+
+    /**
+     * When the club advisor decided to update the edited event details it will send to the database
+     * @param event
+     * @throws SQLException
+     */
+    public void eventUpdateAction(ActionEvent event) throws SQLException {
+
+        String newEventIDFieldUpdatePass = newEventIDFieldUpdate.getText();
+        String newEventNameFieldUpdatePass = newEventNameFieldUpdate.getText();
+        String newEventVenueFieldUpdatePass = newEventVenueFieldUpdate.getText();
+        LocalDate newEventDatePickerUpdatePass = newEventDatePickerUpdate.getValue();
+        String newEventDescriptionTextAreaUpdatePass = newEventDescriptionTextAreaUpdate.getText();
+        String selectClubComboBoxUpdatePass = selectClubComboBoxUpdate.getValue();
+
+        System.out.println(selectClubComboBoxUpdatePass);
+        System.out.println(newEventNameFieldUpdatePass);
+        System.out.println(newEventVenueFieldUpdatePass);
+        System.out.println(newEventDatePickerUpdatePass);
+        System.out.println(newEventDescriptionTextAreaUpdatePass);
+        System.out.println(selectClubComboBoxUpdatePass);
+
 
         EventDataHandling eventDataHandlingUpdate = new EventDataHandling();
-        System.out.println("Here : " + newEventDate);
-        eventDataHandlingUpdate.deleteExisitingData(newEventID,newEventName, newEventVenue, newEventDate,organizingClubComboBox, newEventDescriptionText);
+
+        // Taking the club id of current selected class
+        String club_idPass= eventDataHandlingUpdate.clubNameToClubID(selectClubComboBoxUpdatePass);
+
+
+        System.out.println("Here : " + club_idPass);
+        eventDataHandlingUpdate.UpdateEventTable(newEventIDFieldUpdatePass,newEventNameFieldUpdatePass,newEventVenueFieldUpdatePass,newEventDatePickerUpdatePass,newEventDescriptionTextAreaUpdatePass, club_idPass);
 
     }
 
@@ -339,17 +400,6 @@ public class CAEvents implements Initializable {
     }
 
 
-    @FXML
-    public void newEventCreation(ActionEvent event){
-
-        System.out.println(newEventNameField.getText());
-
-        EventDataHandling eventDataHandling = new EventDataHandling();
-
-
-        eventDataHandling.newEventCreationToDatabase(newEventIDField.getText(),newEventNameField.getText(),newEventVenueField.getText(),newEventDatePicker.getValue(), organizingClubComboBox.getValue(), newEventDescriptionTextArea.getText());
-
-    }
 
 
     /**
