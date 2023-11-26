@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="950.0" stylesheets="@../../css/Template.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SceneControlersClubAdvisors.CAReport">
+<AnchorPane prefHeight="600.0" prefWidth="950.0" stylesheets="@../../css/Template.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SceneControlersClubAdvisors.CAReport3">
     <children>
       <AnchorPane layoutX="200.0" prefHeight="600.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;">
          <children>
@@ -25,17 +25,17 @@
                            <children>
                               <Group layoutX="194.0" layoutY="76.0">
                                  <children>
-                                    <ComboBox layoutX="46.0" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
+                                    <ComboBox fx:id="clubsSorter" layoutX="46.0" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
                                     <Label layoutY="5.0" prefHeight="18.0" prefWidth="45.0" text="Club: " />
                                     <Label layoutX="46.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
                                  </children>
                               </Group>
-                              <TableView layoutX="74.0" layoutY="173.0" prefHeight="200.0" prefWidth="535.0">
+                              <TableView fx:id="studentMembersReportTable" layoutX="74.0" layoutY="173.0" prefHeight="200.0" prefWidth="535.0">
                                  <columns>
-                                    <TableColumn prefWidth="116.0" text="Student ID" />
-                                    <TableColumn minWidth="0.0" prefWidth="196.800048828125" text="Stdent Name" />
-                                    <TableColumn minWidth="0.0" prefWidth="112.0" text="Mobile" />
-                                    <TableColumn minWidth="0.0" prefWidth="112.0" text="Email" />
+                                    <TableColumn fx:id="studentIdColumn" prefWidth="116.0" text="Student ID" />
+                                    <TableColumn fx:id="studentNameColumn" minWidth="0.0" prefWidth="196.800048828125" text="Stdent Name" />
+                                    <TableColumn fx:id="studentMobileNumberColumn" minWidth="0.0" prefWidth="112.0" text="Mobile" />
+                                    <TableColumn fx:id="studentEmailColumn" minWidth="0.0" prefWidth="112.0" text="Email" />
                                  </columns>
                               </TableView>
                               <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Generate Club Membership Report" textAlignment="RIGHT">
@@ -119,14 +119,14 @@
                               </Label>
                               <Group layoutX="41.0" layoutY="83.0">
                                  <children>
-                                    <ComboBox fx:id="clubSelection" layoutX="103.0" onAction="#onClubChange" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
+                                    <ComboBox fx:id="clubSelection" layoutX="103.0" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
                                     <Label layoutY="5.0" text="Organizing club: " />
                                     <Label layoutX="103.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
                                  </children>
                               </Group>
                               <Group layoutX="41.0" layoutY="130.0">
                                  <children>
-                                    <ComboBox fx:id="eventSelection" layoutX="103.0" onAction="#onEventClick" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
+                                    <ComboBox fx:id="eventSelection" layoutX="103.0" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
                                     <Label layoutY="5.0" text="Event:" />
                                     <Label layoutX="103.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
                                  </children>

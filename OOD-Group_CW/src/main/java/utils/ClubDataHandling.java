@@ -322,13 +322,14 @@ public class ClubDataHandling {
                     StudentDataHandling object=new StudentDataHandling();
                     Student student=object.loadStudentData(StudentId);
                     array1.add(student);
-                    club.setStudentMembers(array1);
 
-                }
+
+                }club.setStudentMembers(array1);
             }
 
         }catch (SQLException e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
             // Handle database connection or query errors
         }
     }
