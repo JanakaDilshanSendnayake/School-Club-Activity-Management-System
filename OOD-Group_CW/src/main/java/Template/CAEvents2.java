@@ -1,5 +1,6 @@
-package SceneControlersClubAdvisors;
+package Template;
 
+import SceneControlersClubAdvisors.EventMarking;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
