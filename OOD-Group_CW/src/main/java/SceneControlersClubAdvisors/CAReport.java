@@ -23,7 +23,7 @@ public class CAReport implements Initializable {
     Connection ConnectDB = ConnectNow.getDatabaseLink();
 
     @FXML
-    private TableColumn<NameAttendence, Boolean> Attendencecol;
+    private TableColumn<EventMarking, Boolean> Attendencecol;
 
     @FXML
     private ComboBox<String> clubSelection;
@@ -35,18 +35,21 @@ public class CAReport implements Initializable {
     private AnchorPane sidebar;
 
     @FXML
-    private TableColumn<NameAttendence, String> stuIDcol;
+    private TableColumn<EventMarking, String> stuIDcol;
 
     @FXML
-    private TableColumn<NameAttendence, String> stuNamecol;
+    private TableColumn<EventMarking, String> stuNamecol;
 
     @FXML
-    private TableView<NameAttendence> tableview;
+    private TableView<EventMarking> tableview;
+    EventMarking eventMarking = new EventMarking();
 
     @FXML
     void onClubChange(ActionEvent event)  {
         //get events for that club
         String club = clubSelection.getValue();
+        ObservableList<String> eventNames = eventMarking.getEventNames(ConnectDB,club);
+        /*String club = clubSelection.getValue();
         eventSelection.getItems().clear();
         try {
             PreparedStatement ps = ConnectDB.prepareStatement("select event_name\n" +
@@ -56,15 +59,20 @@ public class CAReport implements Initializable {
                     "where club_name = \"club_name\";");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                eventSelection.getItems().addAll(rs.getString("event_name"));
+                eventNames.add(rs.getString("evetn_name"));
+                //eventSelection.getItems().addAll(rs.getString("event_name"));
             }
-        }catch (Exception e){e.printStackTrace();}
+        }catch (Exception e){e.printStackTrace();}*/
+        eventSelection.setItems(eventNames);
     }
 
     @FXML
     void onEventClick(ActionEvent event) {
 // get attendence table for that event
-        ObservableList<NameAttendence> NameAttendence = FXCollections.observableArrayList();
+        String clubName = clubSelection.getValue();
+        String eventName = eventSelection.getValue();
+        ObservableList<EventMarking> attendanceRegister = eventMarking.getRegister(ConnectDB,clubName,eventName);
+        /*ObservableList<EventMarking> NameAttendence = FXCollections.observableArrayList();
         try {
             PreparedStatement ps = ConnectDB.prepareStatement("select student.student_id, student_name, Attendance_status\n" +
                     "from attendance\n" +
@@ -77,26 +85,31 @@ public class CAReport implements Initializable {
                     "where club_name = \"club_name\" and event_name = \"event_name\";");// + (club) + "'");
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                //NameAttendence.add(new NameAttendence(rs.getString(),rs.getString(),rs.getBoolean()));
-            }
-            stuIDcol.setCellValueFactory(new PropertyValueFactory<NameAttendence,String>("studentID"));
-            stuNamecol.setCellValueFactory(new PropertyValueFactory<NameAttendence,String>("studentName"));
-            Attendencecol.setCellValueFactory(new PropertyValueFactory<NameAttendence, Boolean>("Attendence"));
-            tableview.setItems(NameAttendence);
-        }catch (Exception e){e.printStackTrace();}
-    }
+                //NameAttendence.add(new EventMarking(rs.getString(),rs.getString(),rs.getBoolean()));
+            }*/
+            stuIDcol.setCellValueFactory(new PropertyValueFactory<EventMarking,String>("StudentID"));
+            stuNamecol.setCellValueFactory(new PropertyValueFactory<EventMarking,String>("StudentName"));
+            Attendencecol.setCellValueFactory(new PropertyValueFactory<EventMarking, Boolean>("Attendence"));
+            tableview.setItems(attendanceRegister);
+        }//catch (Exception e){e.printStackTrace();}
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        ObservableList<String> clubNames = eventMarking.getClubNames(ConnectDB);
+        /*ObservableList<String> clubNames = FXCollections.observableArrayList();
         try {
             //Class.forName("com.mysql.cj.jdbc.Driver");
             //databaseLink = DriverManager.getConnection("jdbc:mysql://localhost/scams", "root", "#Wolf8me");
             PreparedStatement ps = ConnectDB.prepareStatement("select club_name from Club;");
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                clubSelection.getItems().addAll(rs.getString("club_name"));}
+                //clubSelection.getItems().addAll(rs.getString("club_name"));
+                clubNames.add(rs.getString("club_name"));
+            }
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
+        clubSelection.setItems(clubNames);
     }
 }

@@ -2,6 +2,7 @@ package SceneControlersClubAdvisors;
 
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -91,7 +92,7 @@ public class CAEvents implements Initializable {
 
     //< shahids
     MySqlConnect ConnectNow = new MySqlConnect();
-    Connection ConnectDB = ConnectNow.getDatabaseLink();
+    ;Connection ConnectDB = ConnectNow.getDatabaseLink();
 
     @FXML
     private TableColumn<EventMarking, CheckBox> Attendencecol;
@@ -114,8 +115,9 @@ public class CAEvents implements Initializable {
     @FXML
     private AnchorPane sidebar;
     //public Connection databaseLink;
-    ObservableList<EventMarking> events;
 
+    //ObservableList<EventMarking> events;
+    EventMarking eventMarking = new EventMarking();
     // shahids>
 
 
@@ -161,7 +163,8 @@ public class CAEvents implements Initializable {
         });
 
         // < shahids initialize
-        try {
+        shahidsInitialize();
+        /*try {
             //Class.forName("com.mysql.cj.jdbc.Driver");
             //databaseLink = DriverManager.getConnection("jdbc:mysql://localhost/scams", "root", "#Wolf8me");
             PreparedStatement ps = ConnectDB.prepareStatement("select club_name from Clubs;");
@@ -170,7 +173,7 @@ public class CAEvents implements Initializable {
                 ClubSelectionChoiceBox.getItems().addAll(rs.getString("club_name"));}
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
         // shahids initialize >
 
     }
@@ -315,14 +318,40 @@ public class CAEvents implements Initializable {
     }
 
     // < shahids functions
+
+    void shahidsInitialize(){
+
+        //EventMarking eventMarking = new EventMarking();
+        ObservableList<String> clubChoices = eventMarking.getClubNames(ConnectDB);
+        /*try {
+            //Class.forName("com.mysql.cj.jdbc.Driver");
+            //databaseLink = DriverManager.getConnection("jdbc:mysql://localhost/scams", "root", "#Wolf8me");
+            ObservableList<String> clubChoices = FXCollections.observableArrayList();
+            PreparedStatement ps = ConnectDB.prepareStatement("select club_name from Clubs;");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                clubChoices.add(rs.getString("club_name"));}
+                //ClubSelectionChoiceBox.getItems().addAll(rs.getString("club_name"));}
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+        ClubSelectionChoiceBox.setItems(clubChoices);
+    }
+
     @FXML
     void EditTableview(ActionEvent event)  {
 // start from here: he chooses club ---> display events for that club ----> update tableview
-        String club = ClubSelectionChoiceBox.getValue();
-        EventSelectionChoiceBox.getItems().clear();
-        events = FXCollections.observableArrayList();
-        List<CheckBox> checkBoxes = new ArrayList<>();
-        try {
+        String clubName = ClubSelectionChoiceBox.getValue();
+        ObservableList<String> eventChoices = eventMarking.getEventNames(ConnectDB,clubName);
+        EventSelectionChoiceBox.setItems(eventChoices);
+        //ObservableList<String> eventChoices = FXCollections.observableArrayList();
+       // EventSelectionChoiceBox.getItems().clear();
+        //ObservableList<EventMarking> events = FXCollections.observableArrayList();
+
+        //List<CheckBox> checkBoxes = new ArrayList<>();
+        /*try {
             PreparedStatement ps = ConnectDB.prepareStatement("select event_name\n" +
                     "from Event\n" +
                     "inner join Club\n" +
@@ -330,9 +359,10 @@ public class CAEvents implements Initializable {
                     "where club_name = \"club_name\";");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                EventSelectionChoiceBox.getItems().addAll(rs.getString("event_name"));
-            }
-
+                eventChoices.add(rs.getString("event_name"));
+                //EventSelectionChoiceBox.getItems().addAll(rs.getString("event_name"));
+            }*/
+        /*try{
             PreparedStatement ps1 = ConnectDB.prepareStatement("select student.Student_id, student_name\n" +
                     "from Student_club\n" +
                     "inner join student\n" +
@@ -347,21 +377,23 @@ public class CAEvents implements Initializable {
                 //checkBoxes.add(test);
             }
         }catch (Exception e){
-            e.printStackTrace();}
-
+            e.printStackTrace();}*/
+        ObservableList<EventMarking> register= eventMarking.createRegister(ConnectDB,clubName);
 
         StudentIDcol.setCellValueFactory(new PropertyValueFactory<EventMarking,String>("StudentID"));
         SturdentNamecol.setCellValueFactory(new PropertyValueFactory<EventMarking,String>("StudentName"));
         Attendencecol.setCellValueFactory(new PropertyValueFactory<EventMarking,CheckBox>("checkBox"));
-        Tableview.setItems(events);
+        Tableview.setItems(register);
     }
 
     @FXML
     void handleSave(ActionEvent event) throws SQLException {
         String clubname = ClubSelectionChoiceBox.getValue();
-        String eventname = EventSelectionChoiceBox.getValue();
+        String eventName = EventSelectionChoiceBox.getValue();
+        if (!ClubSelectionChoiceBox.getSelectionModel().isEmpty() && !EventSelectionChoiceBox.getSelectionModel().isEmpty() ){
 //get event id
-        PreparedStatement statement = ConnectDB.prepareStatement("select event_id \n" +
+            eventMarking.saveAttendence(ConnectDB,eventName);
+        /*PreparedStatement statement = ConnectDB.prepareStatement("select event_id \n" +
                 "from event\n" +
                 "where event_name = \"event_name\";");
         ResultSet event_id = statement.executeQuery();
@@ -380,7 +412,12 @@ public class CAEvents implements Initializable {
                 //presentStudents.add(student.getStudentName()+" "+student.getStudentID());
             }else{PreparedStatement ps1 = ConnectDB.prepareStatement("insert into attendance(student_id, event_id, attendance_status) values (student_id, event_id, attendance_status);");
                 ps1.executeUpdate();}// insert bool = False
-        }
+        }*/
+        }else {Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Event not selected");
+            alert.showAndWait();}
     }
     // shahids fuctions>
 }
