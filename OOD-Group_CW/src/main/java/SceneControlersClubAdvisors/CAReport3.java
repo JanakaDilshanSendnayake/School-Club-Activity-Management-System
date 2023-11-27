@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class CAReport3 implements Initializable {
+public class CAReport3 extends BaseSceneController implements Initializable {
 
     @FXML
     private TableView<Student> studentMembersReportTable;

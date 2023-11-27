@@ -1,5 +1,6 @@
 package CommonSceneControlers;
 
+import SceneControlersClubAdvisors.BaseSceneController;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class AccountManager implements Initializable {
+public class AccountManager extends BaseSceneController implements Initializable {
     //Inputs for first name should be always letters. And there's a character limit of 10
     private static final String FIRST_NAME_REGEX = "^[a-zA-Z]{1,10}$";
     //Inputs for last name should be always letters. And there's a character limit of 20
@@ -253,35 +254,35 @@ public class AccountManager implements Initializable {
     }
 
     //==============================================================
-    private String validateTextField(String value, String regex, String invalidMessage,int maximumCharacterLim) {
-        if (value.matches(regex)) {
-            return "Valid";
-        } else {
-            if (value.length()>maximumCharacterLim){
-                return "Maximum character limit exceeded";
-            }else{
-                return invalidMessage;}
-        }
-    }
-    //Overriding the above method. This method is to validate String inputs that doesn't have any character limit
-    private String validateTextField(String value, String regex, String invalidMessage) {
-        if (value.matches(regex)) {
-            return "Valid";
-        } else {
-            if (value.length()>30){
-                return "Maximum character limit exceeded";
-            }else{
-                return invalidMessage;}
-        }
-    }
-    //Method to validate passwords
-    private String validatePasswordField(String value,String regex) {
-        if (value.matches(regex)) {
-            return "Valid";
-        } else {
-            return "Password must be at least 8 characters long and include letters, numbers, and special characters.";
-        }
-    }
+//    private String validateTextField(String value, String regex, String invalidMessage,int maximumCharacterLim) {
+//        if (value.matches(regex)) {
+//            return "Valid";
+//        } else {
+//            if (value.length()>maximumCharacterLim){
+//                return "Maximum character limit exceeded";
+//            }else{
+//                return invalidMessage;}
+//        }
+//    }
+//    //Overriding the above method. This method is to validate String inputs that doesn't have any character limit
+//    private String validateTextField(String value, String regex, String invalidMessage) {
+//        if (value.matches(regex)) {
+//            return "Valid";
+//        } else {
+//            if (value.length()>30){
+//                return "Maximum character limit exceeded";
+//            }else{
+//                return invalidMessage;}
+//        }
+//    }
+//    //Method to validate passwords
+//    private String validatePasswordField(String value,String regex) {
+//        if (value.matches(regex)) {
+//            return "Valid";
+//        } else {
+//            return "Password must be at least 8 characters long and include letters, numbers, and special characters.";
+//        }
+//    }
 
     private boolean validatePasswordMatch() {
         if (userPasswordField1.getText().equals(userPasswordField2.getText())) {
@@ -295,29 +296,29 @@ public class AccountManager implements Initializable {
         }
     }
 
-    private void setLabelStyle(String validationMessage, Label label) {
-        if (validationMessage.equals("Valid")) {
-            label.setStyle("-fx-text-fill: green;");
-        } else {
-            label.setStyle("-fx-text-fill: red;");
-        }
-    }
-
-    private void showErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-    private boolean showConfirmationAlert(String message){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get() == ButtonType.OK;
-    }
+//    private void setLabelStyle(String validationMessage, Label label) {
+//        if (validationMessage.equals("Valid")) {
+//            label.setStyle("-fx-text-fill: green;");
+//        } else {
+//            label.setStyle("-fx-text-fill: red;");
+//        }
+//    }
+//
+//    private void showErrorAlert(String message) {
+//        Alert alert = new Alert(Alert.AlertType.ERROR);
+//        alert.setTitle("Error");
+//        alert.setHeaderText(null);
+//        alert.setContentText(message);
+//        alert.showAndWait();
+//    }
+//    private boolean showConfirmationAlert(String message){
+//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//        alert.setTitle("Confirmation");
+//        alert.setHeaderText(null);
+//        alert.setContentText(message);
+//        Optional<ButtonType> result = alert.showAndWait();
+//        return result.isPresent() && result.get() == ButtonType.OK;
+//    }
 
 
 

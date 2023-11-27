@@ -5,22 +5,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import main.Main;
-import stake_holders.ClubAdvisor;
-import stake_holders.Clubs;
-import stake_holders.Events;
-import stake_holders.Student;
+import stake_holders.*;
 import utils.ClubDataHandling;
 import utils.EventDataHandling;
 
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
@@ -44,7 +39,7 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
     //@FXML private Button leaveClubButton;
     @FXML private Button backToClubNaviButton;
 
-
+//===============================================
     //Panes
     @FXML private TabPane caEventsTabPane;
     @FXML private Tab eventNaviTab;
@@ -53,7 +48,7 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
     @FXML private AnchorPane caViewEvents;
     @FXML private AnchorPane caUpdateEvents;
     @FXML private AnchorPane caCreateNewEvents;
-
+//====================================================
 
     //To validate the data inputs in Create new event tab
     @FXML
@@ -77,19 +72,28 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
     @FXML
     private Label newEventDatePickerLabel;
 
+    //==========================================================
     private ChangeListener<String> newEventNameFieldListener;
     private ChangeListener<String> newEventDescriptionTextAreaListener;
     private ChangeListener<String> newEventVenueFieldListener;
+    //==============================================================
 
     private static final String EVENT_NAME_REGEX = "^[a-zA-Z_]{1,31}$";
     private static final String EVENT_DESCRIPTION_REGEX = "^(?s).{1,200}$";
 
     private static final String EVENT_VENUE_REGEX = "^.+$";
+    //================================================================
 
     //@FXML private ComboBox<String> eventCreatorClubSelector;
     ObservableList<String> clubsSorterData= FXCollections.observableArrayList();
     @FXML private ComboBox<String> navigateEventsPageComboBox;
+    @FXML private ComboBox<String> navigateEventsPageComboBox2;
     ObservableList<String> navigateEventsPageComboBoxData= FXCollections.observableArrayList();
+    ObservableList<String> navigateEventsPageComboBox2Data = FXCollections.observableArrayList(
+            "All Clubs",
+            "My Clubs With Admin Privileges",
+            "My Clubs Without Admin Privileges"
+    );
 
     //=============================================
     @FXML private Label eventNameLabel;
@@ -98,14 +102,22 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
     @FXML private Label eventOrganizingClubNmaeLabel;
     @FXML private TextArea eventDescriptionTextArea;
 
+    //==============================================
+
     @FXML private ComboBox<String> attendanceMarkingClubComboBox ;
     @FXML private ComboBox<String> attendanceMarkingEventComboBox;
-    ObservableList<String> clubsData=FXCollections.observableArrayList();
-    ObservableList<String> eventData=FXCollections.observableArrayList();
+    ObservableList<String> clubsDataForAttendanceMarking =FXCollections.observableArrayList();
+    ObservableList<String> eventDataForAttendanceMarking =FXCollections.observableArrayList();
+    //===============================
+    private String organizingClubComboBoxSelectedOption;
+    private String navigateEventsPageComboBoxSelectedOption;
+    private String attendanceMarkingClubComboBoxSelectedOption;
+    private String attendanceMarkingEventComboBoxSelectedOption;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        caNaviEvents.toFront();
         updateStatus=false;
         newEventDescriptionTextArea.setWrapText(true);
         eventDescriptionTextArea.setWrapText(true);
@@ -116,6 +128,7 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
 
         ArrayList<String> namesOfClubsWithAdminAccess = new ArrayList<>();
         ArrayList<String> namesOfClubsWithoutAdminAccess=new ArrayList<>();
+        ArrayList<String> namesOfAllClubs=new ArrayList<>();
 
         for (Clubs ca : Main.currentUser.getClubsWithAdminAccess()) {
             namesOfClubsWithAdminAccess.add(ca.getClubId()+"-"+ca.getClubName());
@@ -123,100 +136,116 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
         for (Clubs ca : Main.currentUser.getClubsWithoutAdminAccess()){
             namesOfClubsWithoutAdminAccess.add(ca.getClubId()+"-"+ca.getClubName());
         }
-        //Event Creation combo box===========================================================
+        try {
+            for (Clubs ca: object.loadAllClubs()){
+                namesOfAllClubs.add(ca.getClubId()+"-"+ca.getClubName());
+            }
+        }catch (SQLException e){
+            showErrorAlert(e.getMessage());
+        }
+
+
+        //Setting up Event Creation combo box===========================================================
 
         clubsSorterData.addAll(namesOfClubsWithAdminAccess);
         organizingClubComboBox.setItems(clubsSorterData);
 
         organizingClubComboBox.setOnAction(event->{
-            String selectedOption = organizingClubComboBox.getSelectionModel().getSelectedItem();
-//            setUpClubAdvisorMembersNaviTable(selectedOption);
-
-            String[] split=selectedOption.split("-");
-
-            ClubDataHandling obj=new ClubDataHandling();
-            Main.currentClub= obj.loadClubData(split[0]);
-
-            System.out.println(Main.currentClub.getClubName());
+            organizingClubComboBoxSelectedOption=organizingClubComboBox.getSelectionModel().getSelectedItem();
         });
         //Event navigation club box==========================================================
-        navigateEventsPageComboBoxData.addAll(namesOfClubsWithAdminAccess);
-        navigateEventsPageComboBoxData.addAll(namesOfClubsWithoutAdminAccess);
-        navigateEventsPageComboBox.setItems(navigateEventsPageComboBoxData);
+//        navigateEventsPageComboBoxData.addAll(namesOfClubsWithAdminAccess);
+//        navigateEventsPageComboBoxData.addAll(namesOfClubsWithoutAdminAccess);
+//        navigateEventsPageComboBox.setItems(navigateEventsPageComboBoxData);
+
+        //loading event Navigate table==============================================
+        navigateEventsPageComboBox2.setItems(navigateEventsPageComboBox2Data);
+
+        navigateEventsPageComboBox2.setOnAction(event->{
+            object.loadClubDataRelevantToCA(Main.currentUser);
+
+            String selectedOption = navigateEventsPageComboBox2.getSelectionModel().getSelectedItem();
+
+            if (selectedOption.equals("All Clubs")){
+                navigateEventsPageComboBoxData.clear();
+                navigateEventsPageComboBoxData.addAll(namesOfAllClubs);
+            } else if (selectedOption.equals("My Clubs With Admin Privileges")) {
+                navigateEventsPageComboBoxData.clear();
+                navigateEventsPageComboBoxData.addAll(namesOfClubsWithAdminAccess);
+            } else if (selectedOption.equals("My Clubs Without Admin Privileges")) {
+                navigateEventsPageComboBoxData.clear();
+                navigateEventsPageComboBoxData.addAll(namesOfClubsWithoutAdminAccess);
+            }
+            navigateEventsPageComboBox.setItems(navigateEventsPageComboBoxData);
+        });
 
         navigateEventsPageComboBox.setOnAction(event->{
-            String selectedOption = navigateEventsPageComboBox.getSelectionModel().getSelectedItem();
-//            setUpClubAdvisorMembersNaviTable(selectedOption);
+            navigateEventsPageComboBoxSelectedOption = navigateEventsPageComboBox.getSelectionModel().getSelectedItem();
 
-            if (selectedOption != null) {
-                String[] split=selectedOption.split("-");
-                ClubDataHandling obj=new ClubDataHandling();
-                setUpEventNavigateTable(obj.loadClubData(split[0])) ;
+            if (navigateEventsPageComboBoxSelectedOption != null) {
+                setUpEventNavigateTable(selectedClubOptionToClubObject(navigateEventsPageComboBoxSelectedOption)) ;
             }
-
         });
+
+
+
+
         //Attendance marking=======================================================================================
-        clubsData.addAll(namesOfClubsWithAdminAccess);
-        clubsData.addAll(namesOfClubsWithoutAdminAccess);
-        attendanceMarkingClubComboBox.setItems(clubsData);
+        clubsDataForAttendanceMarking.addAll(namesOfClubsWithAdminAccess);
+        clubsDataForAttendanceMarking.addAll(namesOfClubsWithoutAdminAccess);
+        attendanceMarkingClubComboBox.setItems(clubsDataForAttendanceMarking);
 
 
         //attendanceMarkingEventComboBox.setItems(eventData);
 
         attendanceMarkingClubComboBox.setOnAction(event->{
-            String selectedOption = attendanceMarkingClubComboBox.getSelectionModel().getSelectedItem();
+            attendanceMarkingClubComboBoxSelectedOption = attendanceMarkingClubComboBox.getSelectionModel().getSelectedItem();
 
-            if (selectedOption != null) {
-                String[] split=selectedOption.split("-");
+            if (attendanceMarkingClubComboBoxSelectedOption != null) {
+                String[] split=attendanceMarkingClubComboBoxSelectedOption.split("-");
                 ClubDataHandling obj=new ClubDataHandling();
-                Main.currentClub=obj.loadClubData(split[0]) ;
+                Clubs selectedClub=selectedClubOptionToClubObject(attendanceMarkingClubComboBoxSelectedOption) ;
 
                 ClubDataHandling obj1=new ClubDataHandling();
-                obj1.loadClubStudentMembershipData(Main.currentClub);
+                obj1.loadClubStudentMembershipData(selectedClub);
 
-                setUpRegistrationMarkingTable(Main.currentClub.getStudentMembers());
+                setUpRegistrationMarkingTable(selectedClub.getStudentMembers());
 
                 EventDataHandling obj2=new EventDataHandling();
-                obj2.loadEventDataOfAClub(Main.currentClub);
+                obj2.loadEventDataOfAClub(selectedClub);
 
                 ArrayList<String> namesOfEvents=new ArrayList<>();
-                for(Events events:Main.currentClub.getClubEvents()){
+                for(Events events:selectedClub.getClubEvents()){
                     namesOfEvents.add(events.getEventId()+"-"+events.getEventName());
                 }
-                eventData.setAll(namesOfEvents);
-                attendanceMarkingEventComboBox.setItems(eventData);
+                eventDataForAttendanceMarking.setAll(namesOfEvents);
+                attendanceMarkingEventComboBox.setItems(eventDataForAttendanceMarking);
             }
 
         });
 
         attendanceMarkingEventComboBox.setOnAction(event->{
-            String selectedOption = attendanceMarkingEventComboBox.getSelectionModel().getSelectedItem();
+            attendanceMarkingEventComboBoxSelectedOption = attendanceMarkingEventComboBox.getSelectionModel().getSelectedItem();
 //            setUpClubAdvisorMembersNaviTable(selectedOption);
-
-            if (selectedOption != null) {
-                String[] split=selectedOption.split("-");
-
-            }
-
         });
 
-        eventNavigateTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                Main.currentClub=newSelection.getParentClub();
-                eventNameLabel.setText(newSelection.getEventName());
-                eventDescriptionTextArea.setText(newSelection.getEventDescription());
-                eventDateLabel.setText(newSelection.getEventDate().toString());
-                eventVenueLabel.setText(newSelection.getEventLocation());
-                eventOrganizingClubNmaeLabel.setText(Main.currentClub.getClubName());
-
-                updateEventNameField.setText(newSelection.getEventName());
-                updateEventDescriptionTextArea.setText(newSelection.getEventDescription());
-                updateEventDatePicker.setValue(newSelection.getEventDate());
-                updateEventVenueField.setText(newSelection.getEventLocation());
-
-
-            }
-        });
+//        eventNavigateTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+//            if (newSelection != null) {
+//                Main.currentClub=newSelection.getParentClub();
+//                eventNameLabel.setText(newSelection.getEventName());
+//                eventDescriptionTextArea.setText(newSelection.getEventDescription());
+//                eventDateLabel.setText(newSelection.getEventDate().toString());
+//                eventVenueLabel.setText(newSelection.getEventLocation());
+//                eventOrganizingClubNmaeLabel.setText(Main.currentClub.getClubName());
+//
+//                updateEventNameField.setText(newSelection.getEventName());
+//                updateEventDescriptionTextArea.setText(newSelection.getEventDescription());
+//                updateEventDatePicker.setValue(newSelection.getEventDate());
+//                updateEventVenueField.setText(newSelection.getEventLocation());
+//
+//
+//            }
+//        });
 
 
 
@@ -233,6 +262,7 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
 
             }
         });
+//Event listeners for event creation page=======================================================================
         // initializing the event listener to validate the user input in "newClubNameField" text-field
         newEventNameFieldListener=((observable, oldValue, newValue) -> {
             String validationMessage = validateTextField(newValue, EVENT_NAME_REGEX,
@@ -257,8 +287,20 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
             newEventVenueFieldLabel.setText(validationMessage);
             setLabelStyle(validationMessage, newEventVenueFieldLabel);
         });
+//Event listeners for event update page=======================================================================
 
     }
+    private Clubs selectedClubOptionToClubObject(String selectedClubOption){
+        String[] split=selectedClubOption.split("-");
+        ClubDataHandling obj=new ClubDataHandling();
+        return obj.loadClubData(split[0]);
+    }
+    private Events selectedEventOptionToObject(String selectedEventOption){
+        String[] split=selectedEventOption.split("-");
+        EventDataHandling obj=new EventDataHandling();
+        return obj.loadEventData(split[0]);
+    }
+
     @FXML private TableView<Events> eventNavigateTable;
     @FXML private TableColumn<Events,String> eventIdColumn;
     @FXML private TableColumn<Events,String> eventNameColumn;
@@ -294,11 +336,64 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
     }
     @FXML
     private void saveAttendance(){
-        ArrayList<Student> selectedStudents = new ArrayList<>(registrationMarkingTable.getSelectionModel().getSelectedItems());
-        for(Student student:selectedStudents){
-            System.out.println("===================");
-            System.out.println(student.getName());
+
+
+
+        if(attendanceMarkingClubComboBoxSelectedOption==null){
+            showErrorAlert("Please select the club and the relevant event.");
+        }else{
+
+            if(attendanceMarkingEventComboBoxSelectedOption==null){
+                showErrorAlert("Please select the events you are marking the attendance for");
+            }else{
+                Clubs attendanceMarkingClub=selectedClubOptionToClubObject(attendanceMarkingClubComboBoxSelectedOption);
+                Events attendanceMarkingEvent=selectedEventOptionToObject(attendanceMarkingEventComboBoxSelectedOption);
+
+
+
+                //Getting selected students
+                ArrayList<Student> selectedStudents = new ArrayList<>(registrationMarkingTable.getSelectionModel().getSelectedItems());
+                //ArrayList<Student> selectedStudents = new ArrayList<>(registrationMarkingTable.getIte);
+
+                //getting unselected students
+                ArrayList<Student> unselectedStudents= new ArrayList<>(registrationMarkingTable.getItems());
+                unselectedStudents.removeAll(selectedStudents);
+
+                //attendanceMarkingEvent.setAttendedStudents(selectedStudents);
+                //attendanceMarkingEvent.setUnAttendedStudents(unselectedStudents);
+
+                EventDataHandling obj=new EventDataHandling();
+                if(obj.attendanceAlreadyCheckedOrNot(attendanceMarkingEvent.getEventId())){
+                    showInfoAlert("You have already marked the attendance for this Event.");
+                }else{
+                    System.out.println("selected students===================");
+                    for(Student student:selectedStudents){
+                        String studentId=student.getStudentId();
+                        String studentName=student.getName();
+                        String eventId=attendanceMarkingEvent.getEventId();
+                        String eventName=attendanceMarkingEvent.getEventName();
+
+                        Attendance attendance=new Attendance(studentId,studentName,eventId,eventName,true);
+                        obj.markAttendance(attendanceMarkingEvent.getEventId(),student.getStudentId(),true);
+                    }
+                    System.out.println("unselected students===================");
+                    for(Student student:unselectedStudents){
+                        String studentId=student.getStudentId();
+                        String studentName=student.getName();
+                        String eventId=attendanceMarkingEvent.getEventId();
+                        String eventName=attendanceMarkingEvent.getEventName();
+
+                        System.out.println(student.getName());
+                        Attendance attendance=new Attendance(studentId,studentName,eventId,eventName,true);
+                        obj.markAttendance(attendanceMarkingEvent.getEventId(),student.getStudentId(),false);
+                    }
+                }
+
+
+            }
         }
+
+
     }
 
     @FXML
@@ -336,7 +431,10 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
             String newEventVenue=newEventVenueField.getText();
             LocalDate newEventDate=newEventDatePicker.getValue();
 
-            System.out.println(Main.currentClub.getClubName());
+
+            Clubs currentClubUserCreatingTheEventFor= selectedClubOptionToClubObject(organizingClubComboBoxSelectedOption);
+
+            //System.out.println(Main.currentClub.getClubName());
 
             System.out.println(newEventId);
             System.out.println(newEventName);
@@ -347,33 +445,45 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
             try{
                 //================================================
 
-                ClubDataHandling obj=new ClubDataHandling();
-                obj.loadClubStudentMembershipData(Main.currentClub);
-                System.out.println("Student members-"+Main.currentClub.getStudentMembers().get(0).getStudentId());
+                //ClubDataHandling obj=new ClubDataHandling();
+                //obj.loadClubStudentMembershipData(currentClubUserCreatingTheEventFor);
+                //System.out.println("Student members-"+currentClubUserCreatingTheEventFor.getStudentMembers().get(0).getStudentId());
 
 
                 //===================================================================
-                Events newEvent=Main.currentClub.createEvent(newEventId,newEventName,newEventDate,newEventVenue,newClubDescription);
-                System.out.println(newEvent.getEventId());
+                Events newEvent=currentClubUserCreatingTheEventFor.createEvent(newEventId,newEventName,newEventDate,newEventVenue,newClubDescription);
+                //System.out.println(newEvent.getEventId());
 
                 EventDataHandling object=new EventDataHandling();
                 object.saveNewEventToDatabase(newEvent);
 
                 showInfoAlert("Success");
             }catch (IllegalArgumentException e){
-                showErrorAlert(e.toString());
+                showErrorAlert(e.getMessage());
             }
 
     }
 
-
+//Event Navigation and management=======================================================================================
 
     //When user selects an event from the table in event navigation page and press view button,
     //    data of that event will be loaded in the view event details page
     @FXML
     public void viewEventDetails(){
-        caViewEvents.toFront();
-        //Rest of the function
+        Events theEventUserIsViewing=eventNavigateTable.getSelectionModel().getSelectedItem();
+
+        if(theEventUserIsViewing==null){
+            showErrorAlert("please select an event from the table");
+        }else{
+            //set up the text labels
+            eventNameLabel.setText(theEventUserIsViewing.getEventName());
+            eventDescriptionTextArea.setText(theEventUserIsViewing.getEventDescription());
+            eventDateLabel.setText(theEventUserIsViewing.getEventDate().toString());
+            eventVenueLabel.setText(theEventUserIsViewing.getEventLocation());
+            eventOrganizingClubNmaeLabel.setText(theEventUserIsViewing.getParentClub().getClubName());
+            //loading the pane
+            caViewEvents.toFront();
+        }
     }
     @FXML
     public void goBackToEventNavigation(){
@@ -402,40 +512,54 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
     private Label updateEventDatePickerLabel;
     @FXML
     public void editEventDetails(){
-        updateStatus=true;
+
+        Clubs clubTheEventBelogsTo= selectedClubOptionToClubObject(navigateEventsPageComboBoxSelectedOption);
+
+        ClubDataHandling obj=new ClubDataHandling();
+        obj.loadClubMembershipData(clubTheEventBelogsTo);
 
         ArrayList<String> clubAdminIds = new ArrayList<>();
 
-        for (ClubAdvisor ca : Main.currentClub.getClubAdmin()) {
+        for (ClubAdvisor ca : clubTheEventBelogsTo.getClubAdmin()) {
             clubAdminIds.add(ca.getClubAdvisorId());
         }
         if (clubAdminIds.contains(Main.currentUser.getClubAdvisorId())) {
             updateStatus = true;
+            Events theEventUserIsUpdating=eventNavigateTable.getSelectionModel().getSelectedItem();
+            //set up the data in text labels
+            updateEventNameField.setText(theEventUserIsUpdating.getEventName());
+            updateEventDescriptionTextArea.setText(theEventUserIsUpdating.getEventDescription());
+            updateEventDatePicker.setValue(theEventUserIsUpdating.getEventDate());
+            updateEventVenueField.setText(theEventUserIsUpdating.getEventLocation());
+            //loading the pane
             caUpdateEvents.toFront();
         } else {
             showErrorAlert("You aren't authorized for this action!");
         }
-    }
-    //  When user click suspend button the club and all the relevant information should be deleted
-    @FXML
-    public void suspendEvent(){
-        if (showConfirmationAlert("Are you sure you want to suspend event.")){
-            //Implement the rest of the function
-            showInfoAlert("Event and all of the relevant details Successfully deleted.");
-        }else{}
     }
 
     //  When user inputs updated data and press update button, data should be validated and saved
     @FXML
     public void updateEventDetails(){
 
-        String eventId=Main.currentEvent.getEventId();
+        Events theEventUserUpdated=eventNavigateTable.getSelectionModel().getSelectedItem();
+
+
         String updatedEventName=updateEventNameField.getText();
         String updatedEventVenue=updateEventVenueField.getText();
         String updatedEventDescription=updateEventDescriptionTextArea.getText();
         LocalDate updatedEventDate=updateEventDatePicker.getValue();
 
-        Events eventObjectWithUpdatedDetails=new Events(eventId,updatedEventName,updatedEventDate,updatedEventVenue,updatedEventDescription,Main.currentClub);
+
+        theEventUserUpdated.setEventName(updatedEventName);
+        theEventUserUpdated.setEventLocation(updatedEventVenue);
+        theEventUserUpdated.setEventDescription(updatedEventDescription);
+        theEventUserUpdated.setEventDate(updatedEventDate);
+
+        //setup the method save updated event object in DB
+        EventDataHandling obj=new EventDataHandling();
+        obj.updateEventInDatabase(theEventUserUpdated);
+
 
         //Rest of the function
         updateStatus=false;
@@ -449,6 +573,15 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
         updateStatus=false;
         showErrorAlert("Update cancelled");
         caViewEvents.toFront();
+    }
+
+    //  When user click suspend button the club and all the relevant information should be deleted
+    @FXML
+    public void suspendEvent(){
+        if (showConfirmationAlert("Are you sure you want to suspend event.")){
+            //Implement the rest of the function
+            showInfoAlert("Event and all of the relevant details Successfully deleted.");
+        }else{}
     }
 
 

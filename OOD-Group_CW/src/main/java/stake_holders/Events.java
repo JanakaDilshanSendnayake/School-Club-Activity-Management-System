@@ -10,7 +10,8 @@ public class Events {
     private String eventLocation;
     private String eventDescription;
     private Clubs parentClub;
-    //private ArrayList<Student> studentMembersOfTheParentClub;
+    private ArrayList<Student> attendedStudents;
+    private ArrayList<Student> unAttendedStudents;
 
 
     private static final String EVENT_NAME_REGEX = "^[a-zA-Z_]{1,31}$";
@@ -30,9 +31,10 @@ public class Events {
         this.eventLocation = eventLocation;
         this.eventDescription=eventDescription;
         this.parentClub = parentClub;
-        //this.eventAttendance=new ArrayList<>();
 
-        //attendanceMarking();
+        this.attendedStudents=new ArrayList<>();
+        this.unAttendedStudents=new ArrayList<>();
+
     }
 
     private void validateEventName(String name){
@@ -125,6 +127,21 @@ public class Events {
         this.parentClub = parentClub;
     }
 
+    public ArrayList<Student> getAttendedStudents() {
+        return attendedStudents;
+    }
+
+    public void setAttendedStudents(ArrayList<Student> attendedStudents) {
+        this.attendedStudents = attendedStudents;
+    }
+
+    public ArrayList<Student> getUnAttendedStudents() {
+        return unAttendedStudents;
+    }
+
+    public void setUnAttendedStudents(ArrayList<Student> unAttendedStudents) {
+        this.unAttendedStudents = unAttendedStudents;
+    }
     //=======================================================
 
 //    private ArrayList<Attendance> eventAttendance;

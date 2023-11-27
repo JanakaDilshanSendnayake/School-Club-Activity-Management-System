@@ -88,7 +88,10 @@ public class EventDataHandling {
                     String eventDescription=resultSet.getString("event_description");
                     LocalDate eventDate=resultSet.getDate("event_date").toLocalDate();
                     String eventVenue=resultSet.getString("event_venue");
-                    //event=new Events(clubiD,eventName,eventDate,eventVenue,eventDescription);
+                    String parentClubId=resultSet.getString("club_id");
+                    ClubDataHandling obj=new ClubDataHandling();
+                    Clubs parentClub=obj.loadClubData(parentClubId);
+                    event=new Events(clubiD,eventName,eventDate,eventVenue,eventDescription,parentClub);
 
                 }
             }
@@ -121,7 +124,79 @@ public class EventDataHandling {
         }
     }
 
-    //==================================================================
+    public void updateEventInDatabase(Events updatedEvent){
+        String sql = "UPDATE events SET event_name = ?, event_description = ?, event_date = ?, event_venue=?,club_id=? WHERE event_id = ?";
+        MySqlConnect databaseLink= new MySqlConnect();
+
+        try (Connection connection = databaseLink.getDatabaseLink();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            // Set parameters for the SQL query
+            preparedStatement.setString(1, updatedEvent.getEventName());
+            preparedStatement.setString(2, updatedEvent.getEventDescription());
+            preparedStatement.setDate(3, java.sql.Date.valueOf(updatedEvent.getEventDate()));
+            preparedStatement.setString(4, updatedEvent.getEventLocation());
+            preparedStatement.setString(5, updatedEvent.getParentClub().getClubId());
+            preparedStatement.setString(6, updatedEvent.getEventId());
+
+            // Execute the SQL query
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                System.out.println("Student data updated successfully.");
+            } else {
+                System.out.println("No student found with the given username.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public boolean attendanceAlreadyCheckedOrNot(String eventId){
+        boolean attendanceAlreadyChecked=false;
+        String sql =sql="SELECT * FROM attendance WHERE event_id= ?";
+        MySqlConnect databaseLink= new MySqlConnect();
+
+        try (Connection connection = databaseLink.getDatabaseLink();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, eventId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    //event id already exists
+                    attendanceAlreadyChecked = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return attendanceAlreadyChecked;
+
+    }
+
+    public void markAttendance(String eventId, String studentId,boolean status){
+        String sql="INSERT INTO attendance(student_id,event_id,attendance_status) VALUES (?,?,?)";
+        MySqlConnect databaseLink= new MySqlConnect();
+        try (Connection connection = databaseLink.getDatabaseLink();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            // Set parameters for the SQL query
+            preparedStatement.setString(1, studentId);
+            preparedStatement.setString(2, eventId);
+            preparedStatement.setBoolean(3, status);
+            // Execute the SQL query
+            preparedStatement.executeUpdate();
+
+            System.out.println("attendance data saved successfully.");
+
+        } catch (SQLException e) {
+            System.out.println("You have");
+        }
+    }
 
 
     /**
@@ -155,6 +230,8 @@ public class EventDataHandling {
 //        }
         System.out.println("all success");
     }
+
+    //==================================================================
 
     /**
      * Combobox for clubs; which displays all available clubs using database club table

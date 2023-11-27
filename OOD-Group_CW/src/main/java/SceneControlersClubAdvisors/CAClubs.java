@@ -528,7 +528,7 @@ public class CAClubs extends BaseSceneController implements Initializable {
         ClubDataHandling object=new ClubDataHandling();
         object.updateClubInDatabase(clubObjectWithUpdatedDeatils);
 
-        //Main.currentClub=clubObjectWithUpdatedDeatils;
+        //Main.currentClub=clubObjectWithUpdatedDetails;
         //Rest of the function
         updateStatus=false;
         showInfoAlert("Club details updated successfully");

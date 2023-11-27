@@ -5,6 +5,7 @@ public class Attendance {
     private Student student;
     private Events event;
     private boolean status;
+    private String verbalStatus;
 
     private String studentName;
     private String studentId;
@@ -16,15 +17,33 @@ public class Attendance {
         this.student = student;
         this.event = event;
         this.status = status;
+        if(status){
+            this.verbalStatus="Present";
+        }else{
+            this.verbalStatus="Absent";
+        }
 
         this.eventId=event.getEventId();
         this.eventName=event.getEventName();
         this.studentId=student.getStudentId();
         this.studentName=student.getName();
-
-        this.parentClub=event.getParentClub();
     }
-    //public Attendance (String studentId,String studentName,String eventId,)
+
+    public Attendance (String studentId,String studentName,String eventId,String eventName,boolean status){
+
+        this.studentId=studentId;
+        this.studentName=studentName;
+        this.eventId=eventId;
+        this.eventName=eventName;
+        this.status=status;
+
+        if(status){
+            this.verbalStatus="Present";
+        }else{
+            this.verbalStatus="Absent";
+        }
+
+    }
 
     public String getStudentName() {
         return studentName;
