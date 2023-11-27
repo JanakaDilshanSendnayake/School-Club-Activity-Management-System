@@ -108,4 +108,12 @@ public class Attendance {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    public String getVerbalStatus() {
+        return verbalStatus;
+    }
+
+    public void setVerbalStatus(String verbalStatus) {
+        this.verbalStatus = verbalStatus;
+    }
 }

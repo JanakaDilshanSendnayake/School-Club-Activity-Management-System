@@ -178,16 +178,18 @@ public class EventDataHandling {
 
     }
 
-    public void markAttendance(String eventId, String studentId,boolean status){
-        String sql="INSERT INTO attendance(student_id,event_id,attendance_status) VALUES (?,?,?)";
+    public void markAttendance(Attendance attendance){
+        String sql="INSERT INTO attendance(student_id,event_id,student_name,event_name,attendance_status) VALUES (?,?,?,?,?)";
         MySqlConnect databaseLink= new MySqlConnect();
         try (Connection connection = databaseLink.getDatabaseLink();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             // Set parameters for the SQL query
-            preparedStatement.setString(1, studentId);
-            preparedStatement.setString(2, eventId);
-            preparedStatement.setBoolean(3, status);
+            preparedStatement.setString(1, attendance.getStudentId());
+            preparedStatement.setString(2, attendance.getEventId());
+            preparedStatement.setString(3, attendance.getStudentName());
+            preparedStatement.setString(4, attendance.getEventName());
+            preparedStatement.setBoolean(5, attendance.isStatus());
             // Execute the SQL query
             preparedStatement.executeUpdate();
 
@@ -196,6 +198,35 @@ public class EventDataHandling {
         } catch (SQLException e) {
             System.out.println("You have");
         }
+    }
+    public ArrayList<Attendance> loadAttendance(Events event){
+        ArrayList<Attendance> array=new ArrayList<>();
+
+        String sql =sql="SELECT * FROM attendance WHERE event_id= ?";
+        MySqlConnect databaseLink= new MySqlConnect();
+
+        try (Connection connection = databaseLink.getDatabaseLink();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, event.getEventId());
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    String studentId=resultSet.getString("event_id");
+                    String eventId=resultSet.getString("student_id");
+                    String studentName=resultSet.getString("student_name");
+                    String eventName=resultSet.getString("event_name");
+                    Boolean status=resultSet.getBoolean("attendance_status");
+
+                    Attendance attendance=new Attendance(studentId,studentName,eventId,eventName,status);
+                    array.add(attendance);
+
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return array;
     }
 
 

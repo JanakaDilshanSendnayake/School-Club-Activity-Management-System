@@ -350,18 +350,12 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
                 Clubs attendanceMarkingClub=selectedClubOptionToClubObject(attendanceMarkingClubComboBoxSelectedOption);
                 Events attendanceMarkingEvent=selectedEventOptionToObject(attendanceMarkingEventComboBoxSelectedOption);
 
-
-
                 //Getting selected students
                 ArrayList<Student> selectedStudents = new ArrayList<>(registrationMarkingTable.getSelectionModel().getSelectedItems());
-                //ArrayList<Student> selectedStudents = new ArrayList<>(registrationMarkingTable.getIte);
 
                 //getting unselected students
                 ArrayList<Student> unselectedStudents= new ArrayList<>(registrationMarkingTable.getItems());
                 unselectedStudents.removeAll(selectedStudents);
-
-                //attendanceMarkingEvent.setAttendedStudents(selectedStudents);
-                //attendanceMarkingEvent.setUnAttendedStudents(unselectedStudents);
 
                 EventDataHandling obj=new EventDataHandling();
                 if(obj.attendanceAlreadyCheckedOrNot(attendanceMarkingEvent.getEventId())){
@@ -375,7 +369,7 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
                         String eventName=attendanceMarkingEvent.getEventName();
 
                         Attendance attendance=new Attendance(studentId,studentName,eventId,eventName,true);
-                        obj.markAttendance(attendanceMarkingEvent.getEventId(),student.getStudentId(),true);
+                        obj.markAttendance(attendance);
                     }
                     System.out.println("unselected students===================");
                     for(Student student:unselectedStudents){
@@ -385,12 +379,10 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
                         String eventName=attendanceMarkingEvent.getEventName();
 
                         System.out.println(student.getName());
-                        Attendance attendance=new Attendance(studentId,studentName,eventId,eventName,true);
-                        obj.markAttendance(attendanceMarkingEvent.getEventId(),student.getStudentId(),false);
+                        Attendance attendance=new Attendance(studentId,studentName,eventId,eventName,false);
+                        obj.markAttendance(attendance);
                     }
                 }
-
-
             }
         }
 
