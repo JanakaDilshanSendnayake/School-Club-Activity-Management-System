@@ -1,5 +1,6 @@
 package SceneControlersClubAdvisors;
 
+import CommonSceneControlers.BaseSceneController;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

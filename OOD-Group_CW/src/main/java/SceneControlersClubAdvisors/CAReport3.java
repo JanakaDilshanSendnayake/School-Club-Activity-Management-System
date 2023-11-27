@@ -1,5 +1,6 @@
 package SceneControlersClubAdvisors;
 
+import CommonSceneControlers.BaseSceneController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,13 +10,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import main.Main;
-import stake_holders.ClubAdvisor;
 import stake_holders.Clubs;
 import stake_holders.Student;
 import utils.ClubDataHandling;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 

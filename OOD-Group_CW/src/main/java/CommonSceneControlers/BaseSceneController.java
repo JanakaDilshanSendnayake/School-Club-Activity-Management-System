@@ -1,4 +1,4 @@
-package SceneControlersClubAdvisors;
+package CommonSceneControlers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;

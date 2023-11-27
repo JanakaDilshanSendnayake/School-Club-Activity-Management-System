@@ -1,6 +1,5 @@
 package CommonSceneControlers;
 
-import SceneControlersClubAdvisors.BaseSceneController;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,8 +11,6 @@ import utils.CADataHandling;
 import utils.StudentDataHandling;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AccountManager extends BaseSceneController implements Initializable {
