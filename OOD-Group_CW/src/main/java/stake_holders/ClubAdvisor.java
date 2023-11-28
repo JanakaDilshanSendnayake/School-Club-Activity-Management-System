@@ -3,6 +3,7 @@ package stake_holders;
 import utils.CADataHandling;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ClubAdvisor {
 
@@ -64,42 +65,44 @@ public class ClubAdvisor {
     //These methods will be used in constructor to check if the arguments given to constructor, follow the REGEX
     private void validateClubAdvisorId(String clubAdvisorId) {
         CADataHandling clubAdvisor=new CADataHandling();
-//        if (!clubAdvisorId.matches(CLUB_ADVISOR_ID_REGEX)&&clubAdvisor.clubAdvisorUserNameValidation(clubAdvisorId)) {
-//            throw new IllegalArgumentException("Invalid Club Advisor ID format: " + clubAdvisorId);
-//        }
-        if(clubAdvisorId.equals("")){
-            throw new IllegalArgumentException("You haven't filled club advisor id. It's mandatory");
-        }else{
-            if(clubAdvisorId.matches(CLUB_ADVISOR_ID_REGEX)){
-                if(clubAdvisor.clubAdvisorUserNameValidation(clubAdvisorId)){
-                    throw new IllegalArgumentException("This username is already being used.");
-                }
-            }else{
-                throw new IllegalArgumentException("Invalid Club Advisor ID format: " + clubAdvisorId);
-            }
+        if (clubAdvisorId.isEmpty()) {
+            throw new IllegalArgumentException("Club advisor ID is mandatory and cannot be empty");
+        }
+        if (!clubAdvisorId.matches(CLUB_ADVISOR_ID_REGEX)) {
+            throw new IllegalArgumentException("Invalid Club Advisor ID format: " + clubAdvisorId);
+        }
+        if (clubAdvisor.clubAdvisorUserNameValidation(clubAdvisorId)) {
+            throw new IllegalArgumentException("This username is already being used.");
         }
     }
 
     private void validateName(String name) {
-        if(name.equals("_")){
-            throw new IllegalArgumentException("You haven't filled club advisor name. It's mandatory");
-        }else{
-            if(!name.matches(NAME_REGEX)){
-                throw new IllegalArgumentException("Invalid name format: " + name);
-            }
+        if(name.endsWith("_")){
+            throw new IllegalArgumentException("You haven't filled full name. It's mandatory");
+        }
+        if(!name.matches(NAME_REGEX)){
+            throw new IllegalArgumentException("Invalid name format: " + name);
         }
     }
 
     private void validateEmail(String email) {
+        if(email.isEmpty()){
+            throw new IllegalArgumentException("You haven't filled email. It's mandatory");
+        }
         if (!email.matches(EMAIL_REGEX)) {
             throw new IllegalArgumentException("Invalid email format: " + email);
         }
     }
 
     private void validateMobileNumber(String mobileNum) {
+        if(mobileNum.isEmpty()){
+            throw new IllegalArgumentException("You haven't filled mobile number. It's mandatory");
+        }
         if (!mobileNum.matches(MOBILE_NUMBER_REGEX)) {
             throw new IllegalArgumentException("Invalid mobile number format: " + mobileNum);
         }
+
+
     }
 
     private void validatePassword(String password) {

@@ -9,10 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import utils.CADataHandling;
-import utils.StudentDataHandling;
 
-import java.util.Objects;
 import java.util.Optional;
 
 public class BaseSceneController {
@@ -97,7 +94,7 @@ public class BaseSceneController {
 
     }
     public void loadStudentAccounts(ActionEvent actionEvent){
-        try{root = FXMLLoader.load(getClass().getResource("/fxml_files/Student/Account-Student.fxml"));
+        try{root = FXMLLoader.load(getClass().getResource("/fxml_files/Student/Account-Students.fxml"));
             scene = new Scene(root);
             stage =(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -173,9 +170,6 @@ public class BaseSceneController {
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;
     }
-
-
-
 
 
 }

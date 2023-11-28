@@ -53,24 +53,39 @@ public class Student {
 
     private void validateSTUDENTId(String studentId) {
         StudentDataHandling student=new StudentDataHandling();
-        if (!studentId.matches(STUDENT_ID_REGEX)&&student.studentUserNameValidation(studentId)) {
+        if (studentId.isEmpty()) {
+            throw new IllegalArgumentException("Club advisor ID is mandatory and cannot be empty");
+        }
+        if (!studentId.matches(STUDENT_ID_REGEX)) {
             throw new IllegalArgumentException("Invalid Club Advisor ID format: " + studentId);
+        }
+        if (student.studentUserNameValidation(studentId)) {
+            throw new IllegalArgumentException("This username is already being used.");
         }
     }
 
     private void validateName(String name) {
+        if(name.endsWith("_")){
+            throw new IllegalArgumentException("You haven't filled full name. It's mandatory");
+        }
         if (!name.matches(NAME_REGEX)) {
             throw new IllegalArgumentException("Invalid name format: " + name);
         }
     }
 
     private void validateEmail(String email) {
+        if(email.isEmpty()){
+            throw new IllegalArgumentException("You haven't filled email. It's mandatory");
+        }
         if (!email.matches(EMAIL_REGEX)) {
             throw new IllegalArgumentException("Invalid email format: " + email);
         }
     }
 
     private void validateMobileNumber(String mobileNum) {
+        if(mobileNum.isEmpty()){
+            throw new IllegalArgumentException("You haven't filled mobile number. It's mandatory");
+        }
         if (!mobileNum.matches(MOBILE_NUMBER_REGEX)) {
             throw new IllegalArgumentException("Invalid mobile number format: " + mobileNum);
         }

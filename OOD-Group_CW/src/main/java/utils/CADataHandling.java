@@ -95,7 +95,7 @@ public class CADataHandling {
     }
 
 
-    public static void saveNewCAToDatabase(ClubAdvisor clubAdvisor) {
+    public void saveNewCAToDatabase(ClubAdvisor clubAdvisor) {
         String sql = "INSERT INTO club_advisor (club_advisor_id, club_advisor_name, club_advisor_email, club_advisor_telephone, club_advisor_password) VALUES (?, ?, ?, ?, ?)";
 
         MySqlConnect databaseLink= new MySqlConnect();

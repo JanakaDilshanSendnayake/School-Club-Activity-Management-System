@@ -259,6 +259,24 @@
                   </Group>
                </graphic>
             </Button>
+            <ImageView fitHeight="125.0" fitWidth="97.0" layoutX="52.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/club%20advisor.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="74.0" layoutY="542.0" mnemonicParsing="false" onAction="#signOut" prefHeight="44.0" prefWidth="50.0">
+               <graphic>
+                  <Group>
+                     <children>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/power-button-off.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </graphic>
+            </Button>
          </children>
       </AnchorPane>
     </children>

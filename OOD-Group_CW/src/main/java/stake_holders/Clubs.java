@@ -19,16 +19,6 @@ public class Clubs {
     private static final String CLUB_NAME_REGEX = "^[a-zA-Z_]{1,31}$";
     private static final String CLUB_DESCRIPTION_REGEX = "^.{1,500}$";
 
-//    public Clubs(String clubName, String clubId, ClubAdvisor creatorCA) {
-//        clubAdvisorMembers=new ArrayList<>();
-//        this.clubName = clubName;
-//        this.clubId = clubId;
-//        this.clubAdvisorMembers.add(clubAdmin);
-//        creatorCA.joinORCreateClub(this);
-//        this.clubAdmin=creatorCA;
-//    }
-
-
     //Constructor 2. This will be used to create a club object when registering a new club, and then that-
     // -object will be passed into database. Here club id won't be taken as an argument because-
     //-club id is automatically generated using auto increment in the database.
@@ -48,8 +38,6 @@ public class Clubs {
         this.clubType = clubType;
         this.clubDescription = clubDescription;
         this.clubAdmin.add(creator);
-
-
     }
     //This will be used when loading clubs from the database to the system. Data from relevant columns will be given-
     // -as arguments to this constructor and then the created object will be saved in arrays for future uses.
@@ -66,21 +54,19 @@ public class Clubs {
     }
 
     private void validateClubName(String name){
-        if(name.isEmpty()){
+        if(name.isEmpty()) {
             throw new IllegalArgumentException("You haven't filled club name. It's mandatory");
-        }else{
-            if(!name.matches(CLUB_NAME_REGEX)){
-                throw new IllegalArgumentException("Invalid name format: " + name);
-            }
+        }
+        if(!name.matches(CLUB_NAME_REGEX)){
+            throw new IllegalArgumentException("Invalid name format: " + name);
         }
     }
     private void validateClubDescription(String description){
         if(description.isEmpty()){
             throw new IllegalArgumentException("You haven't filled club description. It's mandatory");
-        }else{
-            if(!description.matches(CLUB_DESCRIPTION_REGEX)){
-                throw new IllegalArgumentException("You have exceeded the maximum character limit.");
-            }
+        }
+        if(!description.matches(CLUB_DESCRIPTION_REGEX)){
+            throw new IllegalArgumentException("You have exceeded the maximum character limit.");
         }
     }
     private void validateClubType(String type){
@@ -113,10 +99,7 @@ public class Clubs {
     public ArrayList<Student> getStudentMembers(){return studentMembers;}
 
     public void setClubAdmin(ArrayList<ClubAdvisor> clubAdmin){
-        //if(clubAdvisorMembers.contains(clubAdmin)){
-            this.clubAdmin=clubAdmin;
-            //clubAdmin.getClubsWithAdminAccess().add(this);
-        //}
+        this.clubAdmin=clubAdmin;
     }
 
     public void setClubAdvisorMembers(ArrayList<ClubAdvisor> clubAdvisorMembers) {
@@ -135,17 +118,6 @@ public class Clubs {
         this.clubEvents = clubEvents;
     }
 
-    public void addClubAdvisor(ClubAdvisor clubAdvisor) { //****
-        this.clubAdvisorMembers.add(clubAdvisor);
-        clubAdvisor.joinORCreateClub(this);
-    }
-
-    public void removeClubAdvisor(ClubAdvisor clubAdvisor){ //****
-        if (clubAdvisor!=null && !this.clubAdmin.contains(clubAdvisor)){
-            this.clubAdvisorMembers.remove(clubAdvisor);
-            clubAdvisor.leaveClub(this);
-        }
-    }
     public Events createEvent(String eventId, String eventName, LocalDate eventDate, String eventLocation, String eventDescription){
 
         return new Events(eventId,eventName,eventDate,eventLocation,eventDescription, this);
@@ -156,7 +128,4 @@ public class Clubs {
         this.clubEvents.remove(event);
     }
 
-//    public void markAttendance(Events event, Student student){
-//        event.getAttendance().add(student);
-//    }
 }

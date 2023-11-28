@@ -10,9 +10,22 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="950.0" stylesheets="@../../css/Template.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SceneControlersStudents.StudentsHome">
     <children>
+      <AnchorPane layoutX="200.0" prefHeight="600.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;">
+         <children>
+            <ImageView fitHeight="317.0" fitWidth="750.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../banners/calendar_hero1.jpg" />
+               </image>
+            </ImageView>
+            <Label fx:id="greetings" layoutY="312.0" prefHeight="59.0" prefWidth="482.0" text="Label">
+               <font>
+                  <Font name="Times New Roman Bold" size="24.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
       <AnchorPane fx:id="sidebar" prefHeight="600.0" prefWidth="200.0">
          <children>
-            <Button layoutX="25.0" layoutY="156.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" AnchorPane.bottomAnchor="393.6" AnchorPane.topAnchor="156.0">
+            <Button layoutX="24.0" layoutY="185.0" mnemonicParsing="false" onAction="#loadStudentHome" prefHeight="50.0" prefWidth="150.0" AnchorPane.bottomAnchor="364.6" AnchorPane.topAnchor="185.0">
                <graphic>
                   <Group>
                      <children>
@@ -30,72 +43,72 @@
                   </Group>
                </graphic>
             </Button>
-            <Button layoutX="25.0" layoutY="216.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0">
+            <Button layoutX="24.0" layoutY="245.0" mnemonicParsing="false" onAction="#loadStudentClubs" prefHeight="50.0" prefWidth="150.0">
                <graphic>
                   <Group>
                      <children>
-                        <Label layoutX="36.0" prefHeight="30.0" prefWidth="72.0" text="HOME">
+                        <Label layoutX="36.0" prefHeight="30.0" prefWidth="72.0" text="CLUBS">
                            <font>
                               <Font name="Times New Roman Bold" size="13.0" />
                            </font>
                         </Label>
                         <ImageView fitHeight="23.0" fitWidth="22.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../Icons/home.png" />
+                              <Image url="@../../Icons/school.png" />
                            </image>
                         </ImageView>
                      </children>
                   </Group>
                </graphic>
             </Button>
-            <Button layoutX="25.0" layoutY="276.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0">
+            <Button layoutX="24.0" layoutY="305.0" mnemonicParsing="false" onAction="#loadStudentEvents" prefHeight="50.0" prefWidth="150.0">
                <graphic>
                   <Group>
                      <children>
-                        <Label layoutX="36.0" prefHeight="30.0" prefWidth="72.0" text="HOME">
+                        <Label layoutX="36.0" prefHeight="30.0" prefWidth="72.0" text="EVENTS">
                            <font>
                               <Font name="Times New Roman Bold" size="13.0" />
                            </font>
                         </Label>
                         <ImageView fitHeight="23.0" fitWidth="22.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../Icons/home.png" />
+                              <Image url="@../../Icons/event.png" />
                            </image>
                         </ImageView>
                      </children>
                   </Group>
                </graphic>
             </Button>
-            <Button layoutX="25.0" layoutY="336.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0">
+            <Button layoutX="24.0" layoutY="365.0" mnemonicParsing="false" onAction="#loadStudentAccounts" prefHeight="50.0" prefWidth="150.0">
                <graphic>
                   <Group>
                      <children>
-                        <Label layoutX="36.0" prefHeight="30.0" prefWidth="72.0" text="HOME">
+                        <Label layoutX="36.0" prefHeight="30.0" prefWidth="72.0" text="ACCOUNT">
                            <font>
                               <Font name="Times New Roman Bold" size="13.0" />
                            </font>
                         </Label>
                         <ImageView fitHeight="23.0" fitWidth="22.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../Icons/home.png" />
+                              <Image url="@../../Icons/user-gear.png" />
                            </image>
                         </ImageView>
                      </children>
                   </Group>
                </graphic>
             </Button>
-            <Button layoutX="25.0" layoutY="396.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0">
+            <ImageView fitHeight="125.0" fitWidth="97.0" layoutX="52.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/child-head.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="74.0" layoutY="542.0" mnemonicParsing="false" onAction="#signOut" prefHeight="44.0" prefWidth="50.0">
                <graphic>
                   <Group>
                      <children>
-                        <Label layoutX="36.0" prefHeight="30.0" prefWidth="72.0" text="HOME">
-                           <font>
-                              <Font name="Times New Roman Bold" size="13.0" />
-                           </font>
-                        </Label>
-                        <ImageView fitHeight="23.0" fitWidth="22.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../Icons/home.png" />
+                              <Image url="@../../Icons/power-button-off.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -104,6 +117,5 @@
             </Button>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="200.0" prefHeight="600.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;" />
     </children>
 </AnchorPane>
