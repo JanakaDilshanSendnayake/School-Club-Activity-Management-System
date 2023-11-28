@@ -155,9 +155,6 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
             organizingClubComboBoxSelectedOption=organizingClubComboBox.getSelectionModel().getSelectedItem();
         });
         //Event navigation club box==========================================================
-//        navigateEventsPageComboBoxData.addAll(namesOfClubsWithAdminAccess);
-//        navigateEventsPageComboBoxData.addAll(namesOfClubsWithoutAdminAccess);
-//        navigateEventsPageComboBox.setItems(navigateEventsPageComboBoxData);
 
         //loading event Navigate table==============================================
         navigateEventsPageComboBox2.setItems(navigateEventsPageComboBox2Data);
@@ -227,30 +224,7 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
 
         attendanceMarkingEventComboBox.setOnAction(event->{
             attendanceMarkingEventComboBoxSelectedOption = attendanceMarkingEventComboBox.getSelectionModel().getSelectedItem();
-//            setUpClubAdvisorMembersNaviTable(selectedOption);
         });
-
-//        eventNavigateTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-//            if (newSelection != null) {
-//                Main.currentClub=newSelection.getParentClub();
-//                eventNameLabel.setText(newSelection.getEventName());
-//                eventDescriptionTextArea.setText(newSelection.getEventDescription());
-//                eventDateLabel.setText(newSelection.getEventDate().toString());
-//                eventVenueLabel.setText(newSelection.getEventLocation());
-//                eventOrganizingClubNmaeLabel.setText(Main.currentClub.getClubName());
-//
-//                updateEventNameField.setText(newSelection.getEventName());
-//                updateEventDescriptionTextArea.setText(newSelection.getEventDescription());
-//                updateEventDatePicker.setValue(newSelection.getEventDate());
-//                updateEventVenueField.setText(newSelection.getEventLocation());
-//
-//
-//            }
-//        });
-
-
-
-
 
 //======================================================================================================================
         caEventsTabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
@@ -360,26 +334,13 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
                 EventDataHandling obj=new EventDataHandling();
                 if(obj.attendanceAlreadyCheckedOrNot(attendanceMarkingEvent.getEventId())){
                     showInfoAlert("You have already marked the attendance for this Event.");
-                }else{
-                    System.out.println("selected students===================");
+                }else if(showConfirmationAlert("Are you sure that you want to save attendance for this event? One it's done you can't change it.")){
                     for(Student student:selectedStudents){
-                        String studentId=student.getStudentId();
-                        String studentName=student.getName();
-                        String eventId=attendanceMarkingEvent.getEventId();
-                        String eventName=attendanceMarkingEvent.getEventName();
-
-                        Attendance attendance=new Attendance(studentId,studentName,eventId,eventName,true);
+                        Attendance attendance=new Attendance(student,attendanceMarkingEvent,true);
                         obj.markAttendance(attendance);
                     }
-                    System.out.println("unselected students===================");
                     for(Student student:unselectedStudents){
-                        String studentId=student.getStudentId();
-                        String studentName=student.getName();
-                        String eventId=attendanceMarkingEvent.getEventId();
-                        String eventName=attendanceMarkingEvent.getEventName();
-
-                        System.out.println(student.getName());
-                        Attendance attendance=new Attendance(studentId,studentName,eventId,eventName,false);
+                        Attendance attendance=new Attendance(student,attendanceMarkingEvent,false);
                         obj.markAttendance(attendance);
                     }
                 }
@@ -405,15 +366,16 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
     }
 
     private String generateEventId() {
+        Clubs clubs=selectedClubOptionToClubObject(organizingClubComboBoxSelectedOption);
         String prefix = "E";
         int randomNumber;
         EventDataHandling object=new EventDataHandling();
 
         do {
             randomNumber = new Random().nextInt(1000);
-        } while (object.validateEventId(Main.currentClub.getClubId()+prefix + randomNumber));
+        } while (object.validateEventId(clubs.getClubId()+prefix + randomNumber));
 
-        return Main.currentClub.getClubId()+prefix + randomNumber;
+        return clubs.getClubId()+prefix + randomNumber;
     }
     @FXML
     private void saveEvent(){
@@ -427,7 +389,6 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
 
             Clubs currentClubUserCreatingTheEventFor= selectedClubOptionToClubObject(organizingClubComboBoxSelectedOption);
 
-            //System.out.println(Main.currentClub.getClubName());
 
             System.out.println(newEventId);
             System.out.println(newEventName);
@@ -436,16 +397,11 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
             System.out.println(newEventDate);
 
             try{
-                //================================================
-
-                //ClubDataHandling obj=new ClubDataHandling();
-                //obj.loadClubStudentMembershipData(currentClubUserCreatingTheEventFor);
-                //System.out.println("Student members-"+currentClubUserCreatingTheEventFor.getStudentMembers().get(0).getStudentId());
 
 
                 //===================================================================
                 Events newEvent=currentClubUserCreatingTheEventFor.createEvent(newEventId,newEventName,newEventDate,newEventVenue,newClubDescription);
-                //System.out.println(newEvent.getEventId());
+
 
                 EventDataHandling object=new EventDataHandling();
                 object.saveNewEventToDatabase(newEvent);
@@ -561,21 +517,14 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
     }
     @FXML
     public void updateCancel(){
-
-        // Rest of the function
-        updateStatus=false;
-        showErrorAlert("Update cancelled");
-        caViewEvents.toFront();
+        if(showConfirmationAlert("Are you sure that you want to cancel the update?")) {
+            updateStatus = false;
+            caViewEvents.toFront();
+        }
     }
 
     //  When user click suspend button the club and all the relevant information should be deleted
-    @FXML
-    public void suspendEvent(){
-        if (showConfirmationAlert("Are you sure you want to suspend event.")){
-            //Implement the rest of the function
-            showInfoAlert("Event and all of the relevant details Successfully deleted.");
-        }else{}
-    }
+
 
 
 

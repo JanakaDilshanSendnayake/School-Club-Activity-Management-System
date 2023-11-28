@@ -236,7 +236,6 @@ public class EventDataHandling {
      */
     public void saveNewEventToDatabase(Events event) {
         String sql="INSERT INTO events (event_id, event_name, event_description,event_date,event_venue,club_id ) VALUES (?, ? , ?, ?, ?, ? )";
-        System.out.println(event.getParentClub().getClubId());
 
         MySqlConnect databaseLink= new MySqlConnect();
         try (Connection connection = databaseLink.getDatabaseLink();

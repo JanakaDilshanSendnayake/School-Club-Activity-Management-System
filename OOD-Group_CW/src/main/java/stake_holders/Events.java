@@ -40,10 +40,9 @@ public class Events {
     private void validateEventName(String name){
         if(name.isEmpty()){
             throw new IllegalArgumentException("You haven't filled Event name. It's mandatory");
-        }else{
-            if(!name.matches(EVENT_NAME_REGEX)){
-                throw new IllegalArgumentException("Invalid event format: " + name);
-            }
+        }
+        if(!name.matches(EVENT_NAME_REGEX)){
+            throw new IllegalArgumentException("Invalid event format: " + name);
         }
     }
     private void validateEventDescription(String description){
@@ -58,26 +57,17 @@ public class Events {
     private void validateEventVenue(String description){
         if(description.isEmpty()){
             throw new IllegalArgumentException("You haven't filled event venue. It's mandatory");
-        }else{
-            if(!description.matches(EVENT_DESCRIPTION_REGEX)){
-                throw new IllegalArgumentException("You have exceeded the maximum character limit.");
-            }
         }
+        if(!description.matches(EVENT_VENUE_REGEX)){
+            throw new IllegalArgumentException("You have exceeded the maximum character limit.");
+        }
+
     }
     private void validateEventDate(LocalDate date){
         if(date==null){
             throw new IllegalArgumentException("You haven't selected event date. It's mandatory");
         }
     }
-
-
-//    public ArrayList<Student> getAttendance() {
-//        return studentMembersOfTheParentClub;
-//    }
-//
-//    public void setAttendance(ArrayList<Student> attendance) {
-//        this.studentMembersOfTheParentClub = attendance;
-//    }
 
     public String getEventId() {
         return eventId;

@@ -28,9 +28,58 @@
                            <children>
                               <StackPane prefHeight="556.0" prefWidth="750.0">
                                  <children>
+                                    <AnchorPane fx:id="adminAppointPane" prefHeight="526.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;">
+                                       <children>
+                                          <TableView fx:id="clubAdvisorMembersNavigateTable" layoutX="20.0" layoutY="118.0" prefHeight="319.0" prefWidth="414.0">
+                                             <columns>
+                                                <TableColumn fx:id="clubAdvisorMembersIdColumn" maxWidth="255.20001220703125" minWidth="-1.0" prefWidth="154.4000244140625" text="CLUB_ADVISOR_ID" />
+                                                <TableColumn fx:id="clubAdvisorMembersNameColumn" prefWidth="257.6" text="CLUB ADVISOR NAME" />
+                                             </columns>
+                                          </TableView>
+                                          <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Appoint a new admin" textAlignment="RIGHT">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Button layoutX="527.0" layoutY="393.0" mnemonicParsing="false" onAction="#saveNewAdmin" prefHeight="44.0" prefWidth="126.0">
+                                             <graphic>
+                                                <Group>
+                                                   <children>
+                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="APPOINT">
+                                                         <font>
+                                                            <Font name="Times New Roman Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../Icons/graduation-cap.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children>
+                                                </Group>
+                                             </graphic>
+                                          </Button>
+                                          <Button layoutY="511.0" mnemonicParsing="false" onAction="#fromAdminPageToClubDescription" prefHeight="40.0" prefWidth="53.0">
+                                             <graphic>
+                                                <ImageView fitHeight="19.0" fitWidth="17.0">
+                                                   <image>
+                                                      <Image url="@../../Icons/angle-double-left.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                          <Label fx:id="eventOrganizingClubNmaeLabel" layoutX="20.0" layoutY="57.0" prefHeight="50.0" prefWidth="414.0" style="-fx-background-color: #D5D6F2;" text="BOARD OF CLUB ADVISORS">
+                                             <font>
+                                                <Font name="Times New Roman Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="24.0" layoutY="445.0" prefHeight="18.0" prefWidth="406.0" text="*Club Advisors Highlighted in blue are already admins" />
+                                          <TextArea layoutX="450.0" layoutY="118.0" prefHeight="113.0" prefWidth="280.0" text="*Once you apoint a club Advisor Member as an admin, you are giving him the permission to,&#10;1. Edit club details&#10;2. Organize events&#10;3. Edit event details &#10;4. Generate club reports" wrapText="true" />
+                                       </children>
+                                    </AnchorPane>
                                     <AnchorPane fx:id="caNaviClubs" prefHeight="526.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;">
                                        <children>
-                                          <TableView fx:id="clubNavigateTable" layoutX="74.0" layoutY="146.0" prefHeight="257.0" prefWidth="602.0">
+                                          <TableView fx:id="clubNavigateTable" layoutX="53.0" layoutY="125.0" prefHeight="343.0" prefWidth="582.0">
                                              <columns>
                                                 <TableColumn fx:id="clubIdColumn" maxWidth="255.20001220703125" minWidth="-1.0" prefWidth="144.0" text="CLUB ID" />
                                                 <TableColumn fx:id="clubNameColumn" prefWidth="236.0" text="CLUB NAME" />
@@ -61,7 +110,7 @@
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
                                           </Label>
-                                          <Button fx:id="viewButton" layoutX="474.0" layoutY="467.0" mnemonicParsing="false" onAction="#viewClubDetails" prefHeight="44.0" prefWidth="126.0">
+                                          <Button fx:id="viewButton" layoutX="593.0" layoutY="498.0" mnemonicParsing="false" onAction="#viewClubDetails" prefHeight="44.0" prefWidth="126.0">
                                              <graphic>
                                                 <Group>
                                                    <children>
@@ -79,8 +128,12 @@
                                                 </Group>
                                              </graphic>
                                           </Button>
-                                          <ComboBox fx:id="clubNavigateClubsSorter" layoutX="570.0" layoutY="59.0" prefWidth="150.0" />
-                                          <Label layoutX="484.0" layoutY="63.0" prefHeight="18.0" prefWidth="83.0" text="Sort Table by:" />
+                                          <Group layoutX="484.0" layoutY="59.0">
+                                             <children>
+                                                <ComboBox fx:id="clubNavigateClubsSorter" layoutX="86.0" prefWidth="150.0" />
+                                                <Label layoutY="4.0" prefHeight="18.0" prefWidth="83.0" text="Sort Table by:" />
+                                             </children>
+                                          </Group>
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane fx:id="caUpdateClubs" prefHeight="639.0" prefWidth="919.0" style="-fx-background-color: #DCDCDC;">
@@ -156,7 +209,7 @@
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
                                           </Label>
-                                          <Button fx:id="editClubButton" layoutX="338.0" layoutY="486.0" mnemonicParsing="false" onAction="#updateClubDetails" prefHeight="44.0" prefWidth="126.0">
+                                          <Button fx:id="editClubButton" layoutX="609.0" layoutY="421.0" mnemonicParsing="false" onAction="#updateClubDetails" prefHeight="44.0" prefWidth="126.0">
                                              <graphic>
                                                 <Group>
                                                    <children>
@@ -174,7 +227,7 @@
                                                 </Group>
                                              </graphic>
                                           </Button>
-                                          <Button fx:id="leaveClubButton" layoutX="609.0" layoutY="486.0" mnemonicParsing="false" onAction="#leaveClub" prefHeight="44.0" prefWidth="126.0">
+                                          <Button fx:id="leaveClubButton" layoutX="610.0" layoutY="488.0" mnemonicParsing="false" onAction="#leaveClub" prefHeight="44.0" prefWidth="126.0">
                                              <graphic>
                                                 <Group>
                                                    <children>
@@ -192,24 +245,6 @@
                                                 </Group>
                                              </graphic>
                                           </Button>
-                                          <Button fx:id="suspendClubButton" layoutX="475.0" layoutY="486.0" mnemonicParsing="false" onAction="#suspendClub" prefHeight="44.0" prefWidth="126.0">
-                                             <graphic>
-                                                <Group>
-                                                   <children>
-                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="SUSPEND">
-                                                         <font>
-                                                            <Font name="Times New Roman Bold" size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@../../Icons/times-hexagon.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                </Group>
-                                             </graphic>
-                                          </Button>
                                           <Button layoutY="510.0" mnemonicParsing="false" onAction="#goBackToClubNavigation" prefHeight="40.0" prefWidth="53.0">
                                              <graphic>
                                                 <ImageView fitHeight="19.0" fitWidth="17.0">
@@ -219,13 +254,13 @@
                                                 </ImageView>
                                              </graphic>
                                           </Button>
-                                          <Label fx:id="viewClubNameLabel" layoutX="36.0" layoutY="35.0" prefHeight="44.0" prefWidth="309.0" text="Club Name">
+                                          <Label fx:id="viewClubNameLabel" layoutX="31.0" layoutY="70.0" prefHeight="35.0" prefWidth="310.0" style="-fx-background-color: #D5D6F2;" text="Club Name">
                                              <font>
                                                 <Font name="Times New Roman Bold" size="18.0" />
                                              </font>
                                           </Label>
-                                          <TextArea fx:id="viewClubDescriptionTextField" layoutX="36.0" layoutY="79.0" maxWidth="584.0" prefHeight="229.0" prefWidth="584.0" text="Club Description" />
-                                          <Button fx:id="joinClubButton" layoutX="609.0" layoutY="442.0" mnemonicParsing="false" onAction="#joinClub" prefHeight="44.0" prefWidth="126.0">
+                                          <TextArea fx:id="viewClubDescriptionTextField" layoutX="31.0" layoutY="106.0" maxWidth="688.0" prefHeight="210.0" prefWidth="642.0" text="Club Description" />
+                                          <Button fx:id="joinClubButton" layoutX="609.0" layoutY="488.0" mnemonicParsing="false" onAction="#joinClub" prefHeight="44.0" prefWidth="126.0">
                                              <graphic>
                                                 <Group>
                                                    <children>
@@ -243,12 +278,12 @@
                                                 </Group>
                                              </graphic>
                                           </Button>
-                                          <Label fx:id="viewClubTypeLabel" layoutX="357.0" layoutY="44.0" prefHeight="34.0" prefWidth="262.0" text="Club Type">
+                                          <Label fx:id="viewClubTypeLabel" layoutX="485.0" layoutY="70.0" prefHeight="34.0" prefWidth="187.0" text="Club Type">
                                              <font>
                                                 <Font name="Times New Roman Bold" size="14.0" />
                                              </font>
                                           </Label>
-                                          <Button fx:id="appointNewAdminButton" layoutX="201.0" layoutY="486.0" mnemonicParsing="false" onAction="#appointNewAdmin" prefHeight="44.0" prefWidth="126.0">
+                                          <Button fx:id="appointNewAdminButton" layoutX="609.0" layoutY="358.0" mnemonicParsing="false" onAction="#appointNewAdmin" prefHeight="44.0" prefWidth="126.0">
                                              <graphic>
                                                 <Group>
                                                    <children>
@@ -259,62 +294,13 @@
                                                       </Label>
                                                       <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@../../Icons/pencil.png" />
+                                                            <Image url="@../../Icons/club%20advisor.png" />
                                                          </image>
                                                       </ImageView>
                                                    </children>
                                                 </Group>
                                              </graphic>
                                           </Button>
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="adminAppointPane" prefHeight="526.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;">
-                                       <children>
-                                          <TableView fx:id="clubAdvisorMembersNavigateTable" layoutX="20.0" layoutY="118.0" prefHeight="319.0" prefWidth="414.0">
-                                             <columns>
-                                                <TableColumn fx:id="clubAdvisorMembersIdColumn" maxWidth="255.20001220703125" minWidth="-1.0" prefWidth="154.4000244140625" text="CLUB_ADVISOR_ID" />
-                                                <TableColumn fx:id="clubAdvisorMembersNameColumn" prefWidth="257.6" text="CLUB ADVISOR NAME" />
-                                             </columns>
-                                          </TableView>
-                                          <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Appoint a new admin" textAlignment="RIGHT">
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Button layoutX="527.0" layoutY="393.0" mnemonicParsing="false" onAction="#saveNewAdmin" prefHeight="44.0" prefWidth="126.0">
-                                             <graphic>
-                                                <Group>
-                                                   <children>
-                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="APPOINT">
-                                                         <font>
-                                                            <Font name="Times New Roman Bold" size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@../../Icons/graduation-cap.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                </Group>
-                                             </graphic>
-                                          </Button>
-                                          <Button fx:id="fromAdminPageToClubDescription" layoutY="511.0" mnemonicParsing="false" onAction="#goBackToClubNavigation" prefHeight="40.0" prefWidth="53.0">
-                                             <graphic>
-                                                <ImageView fitHeight="19.0" fitWidth="17.0">
-                                                   <image>
-                                                      <Image url="@../../Icons/angle-double-left.png" />
-                                                   </image>
-                                                </ImageView>
-                                             </graphic>
-                                          </Button>
-                                          <Label fx:id="eventOrganizingClubNmaeLabel" layoutX="20.0" layoutY="57.0" prefHeight="50.0" prefWidth="414.0" style="-fx-background-color: #D5D6F2;" text="BOARD OF CLUB ADVISORS">
-                                             <font>
-                                                <Font name="Times New Roman Bold" size="14.0" />
-                                             </font>
-                                          </Label>
-                                          <Label layoutX="24.0" layoutY="445.0" prefHeight="18.0" prefWidth="406.0" text="*Club Advisors Highlighted in blue are already admins" />
-                                          <TextArea layoutX="450.0" layoutY="118.0" prefHeight="113.0" prefWidth="280.0" text="*Once you apoint a club Advisor Member as an admin, you are giving him the permission to,&#10;1. Edit club details&#10;2. Organize events&#10;3. Edit event details &#10;4. Generate club reports" wrapText="true" />
                                        </children>
                                     </AnchorPane>
                                  </children>

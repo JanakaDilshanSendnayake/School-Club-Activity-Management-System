@@ -457,8 +457,8 @@
                               </Button>
                               <TableView fx:id="registrationMarkingTable" layoutX="117.0" layoutY="206.0" prefHeight="262.0" prefWidth="325.0">
                                 <columns>
-                                  <TableColumn fx:id="studentIdColumn" prefWidth="75.0" text="Studen ID" />
-                                  <TableColumn fx:id="studentNameColumn" prefWidth="121.0" text="Student Name" />
+                                  <TableColumn fx:id="studentIdColumn" prefWidth="93.5999755859375" text="Studen ID" />
+                                  <TableColumn fx:id="studentNameColumn" prefWidth="231.2000732421875" text="Student Name" />
                                 </columns>
                               </TableView>
                            </children>

@@ -124,6 +124,9 @@ public class CAClubs extends BaseSceneController implements Initializable {
 
     //To track if the user has selected an item from the table
     private boolean isItemSelectedFromTable;
+
+    //==================
+    public Clubs clubUserHasSelectedFromTheTable;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateStatus=false;
@@ -188,7 +191,9 @@ public class CAClubs extends BaseSceneController implements Initializable {
                 ClubDataHandling obj=new ClubDataHandling();
                 obj.loadClubMembershipData(newSelection);
                 obj.loadClubDataRelevantToCA(Main.currentUser);
-                Main.currentClub=newSelection;
+                //Main.currentClub=newSelection;
+                clubUserHasSelectedFromTheTable=newSelection;
+
 
 
                 ArrayList<String> clubsWithAdminAccessClubIds=new ArrayList<>();
@@ -203,20 +208,23 @@ public class CAClubs extends BaseSceneController implements Initializable {
                 //=====================================================
 
                 if(clubsWithAdminAccessClubIds.contains(newSelection.getClubId())){
+                    System.out.println("++++++++++++++++++++++++++");
                     editClubButton.setVisible(true);
-                    suspendClubButton.setVisible(true);
+
                     joinClubButton.setVisible(false);
                     leaveClubButton.setVisible(true);
                     appointNewAdminButton.setVisible(true);
                 } else if (clubsWithoutAdminAccessClubIds.contains(newSelection.getClubId())) {
+                    System.out.println("=============================");
                     editClubButton.setVisible(false);
-                    suspendClubButton.setVisible(false);
+
                     joinClubButton.setVisible(false);
                     leaveClubButton.setVisible(true);
                     appointNewAdminButton.setVisible(false);
                 }else{
+                    System.out.println("------------------");
                     editClubButton.setVisible(false);
-                    suspendClubButton.setVisible(false);
+
                     joinClubButton.setVisible(true);
                     leaveClubButton.setVisible(false);
                     appointNewAdminButton.setVisible(false);
@@ -250,9 +258,6 @@ public class CAClubs extends BaseSceneController implements Initializable {
             if (newSelection != null) {
                 newAdmin=newSelection;
             }
-//            else{
-//                showErrorAlert("please select a club advisor");
-//            }
         });
 
 
@@ -263,15 +268,16 @@ public class CAClubs extends BaseSceneController implements Initializable {
     private void saveNewAdmin(){
         if(!(newAdmin ==null)){
             ArrayList<String> array=new ArrayList<>();
-            for(ClubAdvisor ca:Main.currentClub.getClubAdmin()){
+            //for(ClubAdvisor ca:Main.currentClub.getClubAdmin())
+            for(ClubAdvisor ca:clubUserHasSelectedFromTheTable.getClubAdmin()){
                 array.add(ca.getClubAdvisorId());
             }
             if(array.contains(newAdmin.getClubAdvisorId())){
                 showErrorAlert("Already an admin");
             }else{
                 ClubDataHandling obj=new ClubDataHandling();
-                obj.promoteToClubAdmin(newAdmin,Main.currentClub);
-                obj.loadClubMembershipData(Main.currentClub);
+                obj.promoteToClubAdmin(newAdmin,clubUserHasSelectedFromTheTable);
+                obj.loadClubMembershipData(clubUserHasSelectedFromTheTable);
                 showInfoAlert("successfully appointed an new admin");
             }
         }else{
@@ -395,7 +401,7 @@ public class CAClubs extends BaseSceneController implements Initializable {
 
             ArrayList<String> clubAdminIds = new ArrayList<>();
 
-            for (ClubAdvisor ca : Main.currentClub.getClubAdmin()) {
+            for (ClubAdvisor ca : clubUserHasSelectedFromTheTable.getClubAdmin()) {
                 clubAdminIds.add(ca.getClubAdvisorId());
             }
 
@@ -413,30 +419,24 @@ public class CAClubs extends BaseSceneController implements Initializable {
     }
 
 //  When user click suspend button the club and all the relevant information should be deleted
-    @FXML
-    private void suspendClub(){
-        if (showConfirmationAlert("Are you sure you want to delete this club and all of the relevant details")){
-            //Implement the rest of the function
-            showInfoAlert("Club and all of the relevant details Successfully deleted.");
-        }else{}
-    }
+
     @FXML
     private void leaveClub(){
         if (showConfirmationAlert("Are you sure that you want to leave the club?")){
             ClubDataHandling obj=new ClubDataHandling();
-            obj.loadClubMembershipData(Main.currentClub);
+            obj.loadClubMembershipData(clubUserHasSelectedFromTheTable);
 
             ArrayList<String> clubAdminIds = new ArrayList<>();
 
-            for (ClubAdvisor ca : Main.currentClub.getClubAdmin()) {
+            for (ClubAdvisor ca : clubUserHasSelectedFromTheTable.getClubAdmin()) {
                 clubAdminIds.add(ca.getClubAdvisorId());
             }
 
-            if(clubAdminIds.contains(Main.currentUser.getClubAdvisorId()) && Main.currentClub.getClubAdmin().size()==1){
+            if(clubAdminIds.contains(Main.currentUser.getClubAdvisorId()) && clubUserHasSelectedFromTheTable.getClubAdmin().size()==1){
                 showErrorAlert("you can't leave the club. Please appoint a new admin before leaving");
             }else{
                 ClubDataHandling object=new ClubDataHandling();
-                obj.removeClubAdvisor(Main.currentUser,Main.currentClub);
+                obj.removeClubAdvisor(Main.currentUser,clubUserHasSelectedFromTheTable);
                 showInfoAlert("You successfully left the club.");
             }
         }
@@ -445,15 +445,15 @@ public class CAClubs extends BaseSceneController implements Initializable {
     private void joinClub(){
         if(showConfirmationAlert("Are you sure that you want to join this club?")){
             ClubDataHandling obj=new ClubDataHandling();
-            obj.addANewCAMember(Main.currentUser,Main.currentClub);
-            showInfoAlert("You joined:"+Main.currentClub.getClubName()+" successfully");
+            obj.addANewCAMember(Main.currentUser,clubUserHasSelectedFromTheTable);
+            showInfoAlert("You joined:"+clubUserHasSelectedFromTheTable.getClubName()+" successfully");
         }
 
 
     }
     @FXML
     private void appointNewAdmin(){
-        setUpClubAdvisorMembersNaviTable(Main.currentClub);
+        setUpClubAdvisorMembersNaviTable(clubUserHasSelectedFromTheTable);
         adminAppointPane.toFront();
 
     }
@@ -483,16 +483,19 @@ public class CAClubs extends BaseSceneController implements Initializable {
             protected void updateItem(ClubAdvisor item, boolean empty) {
                 super.updateItem(item, empty);
 
-                if (item == null || empty) {
+                if (empty || item == null) {
                     setStyle(""); // Reset style for empty rows
-                } else if (club.getClubAdmin().contains(item)) {
-                    // Apply a different color to rows containing objects from club.getClubAdmin()
-                    setStyle("-fx-background-color: lightblue;");
                 } else {
-                    setStyle(""); // Reset style for other rows
+                    // Apply a different color to rows containing objects from club.getClubAdmin()
+                    if (club.getClubAdmin().contains(item)) {
+                        setStyle("-fx-background-color: lightblue;");
+                    } else {
+                        setStyle(""); // Reset style for other rows
+                    }
                 }
             }
         });
+
     }
 
 
@@ -503,7 +506,7 @@ public class CAClubs extends BaseSceneController implements Initializable {
 //  When user inputs updated data and press update button, data should be validated and saved
     @FXML
     private void saveUpdatedClubDetails(){
-        String clubId=Main.currentClub.getClubId();
+        String clubId=clubUserHasSelectedFromTheTable.getClubId();
         String updatedClubName=updateClubNameField.getText();
         String updatedClubType = updateClubTypeComboBox.getSelectionModel().getSelectedItem();
         String updatedClubDescription=updateClubDescriptionField.getText();

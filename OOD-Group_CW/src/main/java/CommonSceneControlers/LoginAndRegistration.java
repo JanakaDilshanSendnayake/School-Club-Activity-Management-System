@@ -156,49 +156,15 @@ public class LoginAndRegistration extends BaseSceneController implements Initial
         StudentDataHandling student=new StudentDataHandling();
         if((Objects.equals(currentUserType, "CLUB-ADVISOR") && clubAdvisor.clubAdvisorUserNameValidation(value))||(Objects.equals(currentUserType, "STUDENT") && student.studentUserNameValidation(value))){
             return "Sorry this user name is already taken";
-        }else {
-            if (value.matches(USER_ID_REGEX)) {
-                return "Valid";
-            } else {
-                if (value.length() > 10) {
-                    return "Maximum character limit exceeded";
-                } else {
-                    return "User ID should be a combination letters and numbers.";
-                }
-            }
+        }if (value.matches(USER_ID_REGEX)) {
+            return "Valid";
         }
+        if (value.length() > 10) {
+            return "Maximum character limit exceeded";
+        }
+        return "User ID should be a combination of letters and numbers.";
     }
 
-//    //Method to validate string inputs with a character limit
-//    private String validateTextField(String value, String regex, String invalidMessage,int maximumCharacterLim) {
-//        if (value.matches(regex)) {
-//            return "Valid";
-//        } else {
-//            if (value.length()>maximumCharacterLim){
-//                return "Maximum character limit exceeded";
-//            }else{
-//                return invalidMessage;}
-//        }
-//    }
-//    //Overriding the above method. This method is to validate String inputs that doesn't have any character limit
-//    private String validateTextField(String value, String regex, String invalidMessage) {
-//        if (value.matches(regex)) {
-//            return "Valid";
-//        } else {
-//            if (value.length()>30){
-//                return "Maximum character limit exceeded";
-//            }else{
-//                return invalidMessage;}
-//        }
-//    }
-//    //Method to validate passwords
-//    private String validatePasswordField(String value,String regex) {
-//        if (value.matches(regex)) {
-//            return "Valid";
-//        } else {
-//            return "Password must be at least 8 characters long and include letters, numbers, and special characters.";
-//        }
-//    }
     //Method to check if the passwords in both password and Re enter password fields matches
     private boolean validatePasswordMatch() {
         if (newUserPasswordField1.getText().equals(newUserPasswordField2.getText())) {
@@ -211,15 +177,6 @@ public class LoginAndRegistration extends BaseSceneController implements Initial
             return false;
         }
     }
-    //Method to handle the color changes of the messages that's shown the text labels
-//    private void setLabelStyle(String validationMessage, Label label) {
-//        if (validationMessage.equals("Valid")) {
-//            label.setStyle("-fx-text-fill: green;");
-//        } else {
-//            label.setStyle("-fx-text-fill: red;");
-//        }
-//    }
-
     @FXML
     private void handleNewUserIdChange() {
         newUserIdField.textProperty().addListener(newUserIdFieldListener);
