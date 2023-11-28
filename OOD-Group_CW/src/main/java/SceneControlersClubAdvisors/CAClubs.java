@@ -1,15 +1,13 @@
 package SceneControlersClubAdvisors;
 
+import CommonSceneControlers.BaseSceneController;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -22,15 +20,13 @@ import stake_holders.Clubs;
 import utils.ClubDataHandling;
 
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Random;
 
-public class CAClubs implements Initializable {
+public class CAClubs extends BaseSceneController implements Initializable {
 
     //Buttons - SideBar
     @FXML private Button caHomeButton;
@@ -91,9 +87,14 @@ public class CAClubs implements Initializable {
 
     @FXML private Label newClubNameLabel;
     @FXML private Label newClubDescriptionLabel;
+
+    //Event listeners to monitor user inputs realtime and show messages about the inputs realtime
     private ChangeListener<String> newClubNameFieldListener;
     private ChangeListener<String> newClubDescriptionFieldListener;
+    private ChangeListener<String> updateClubNameFieldListener;
+    private ChangeListener<String> updateClubDescriptionFieldListener;
 
+    //Regular expressions to validate user inputs
 
     private static final String CLUB_NAME_REGEX = "^[a-zA-Z_]{1,31}$";
     private static final String CLUB_DESCRIPTION_REGEX = "^(?s).{1,200}$";
@@ -223,7 +224,9 @@ public class CAClubs implements Initializable {
             }
         });
 
-        // Initializing Event listener for Club Advisor First Name
+        //Initializing event listeners for input fields in new club creation page================================
+
+        // Initializing Event listener for new club name field
         newClubNameFieldListener=((observable, oldValue, newValue) -> {
             String validationMessage = validateTextField(newValue, CLUB_NAME_REGEX,
                     "Name can only contain letters and Underscores.",30);
@@ -231,7 +234,7 @@ public class CAClubs implements Initializable {
             setLabelStyle(validationMessage, newClubNameLabel);
         });
 
-        // Initializing Event listener for Club Advisor First Name
+        // Initializing Event listener for new club text area
         newClubDescriptionFieldListener=((observable, oldValue, newValue) -> {
             String validationMessage = validateTextField(newValue, CLUB_DESCRIPTION_REGEX,
                     "",500);
@@ -239,13 +242,20 @@ public class CAClubs implements Initializable {
             setLabelStyle(validationMessage, newClubDescriptionLabel);
         });
 
+        //Initializing event listeners for input fields in update club creation page================================
+
+        //===
+
         clubAdvisorMembersNavigateTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 newAdmin=newSelection;
-            }else{
-                showErrorAlert("please select a club advisor");
             }
+//            else{
+//                showErrorAlert("please select a club advisor");
+//            }
         });
+
+
     }
     private ClubAdvisor newAdmin;
 
@@ -256,11 +266,9 @@ public class CAClubs implements Initializable {
             for(ClubAdvisor ca:Main.currentClub.getClubAdmin()){
                 array.add(ca.getClubAdvisorId());
             }
-
             if(array.contains(newAdmin.getClubAdvisorId())){
                 showErrorAlert("Already an admin");
             }else{
-
                 ClubDataHandling obj=new ClubDataHandling();
                 obj.promoteToClubAdmin(newAdmin,Main.currentClub);
                 obj.loadClubMembershipData(Main.currentClub);
@@ -279,6 +287,7 @@ public class CAClubs implements Initializable {
 
         observableList.addAll(arrayList);
 
+        //Filter table according text added in searchbar-https://www.youtube.com/watch?v=FeTrcNBVWtg&t=33s
         FilteredList<Clubs> filteredData=new FilteredList<>(observableList, b -> true);
 
         clubNavigateSearchbar.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -299,71 +308,6 @@ public class CAClubs implements Initializable {
 
     }
 
-    private String validateTextField(String value, String regex, String invalidMessage,int maximumCharacterLim) {
-        if (value.matches(regex)) {
-            return "Valid";
-        } else {
-            if (value.length()>maximumCharacterLim){
-                return "Maximum character limit exceeded";
-            }else{
-                return invalidMessage;}
-        }
-    }
-
-
-    //Method to handle the color changes of the messages that's shown the text labels
-    private void setLabelStyle(String validationMessage, Label label) {
-        if (validationMessage.equals("Valid")) {
-            label.setStyle("-fx-text-fill: green;");
-        } else {
-            label.setStyle("-fx-text-fill: red;");
-        }
-    }
-
-    private void showInfoAlert( String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    private void showErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-    private boolean showConfirmationAlert(String message){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get() == ButtonType.OK;
-    }
-
-    @FXML
-    private void clickSidebar(ActionEvent actionEvent) throws IOException {
-
-        if(actionEvent.getSource()==caHomeButton){
-            root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Menu-ClubAdvisor.fxml"));
-        }if(actionEvent.getSource()==caEventsButton){
-            root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Events-ClubAdvisor.fxml"));
-        }if(actionEvent.getSource()==caClubsButton){
-            root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Clubs-ClubAdvisor.fxml"));
-        }if(actionEvent.getSource()==caReportsButton){
-            root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Report-ClubAdvisor.fxml"));
-        }
-        if(actionEvent.getSource()==caAccountButton){
-            root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Account-ClubAdvisor.fxml"));
-        }
-        scene = new Scene(root);
-        stage =(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
-    }
     @FXML
     private void handleNewClubNameChange() {
         newClubNameField.textProperty().addListener(newClubNameFieldListener);
@@ -372,7 +316,9 @@ public class CAClubs implements Initializable {
     private void handleNewClubDescriptionChange(){
         newClubDescriptionField.textProperty().addListener(newClubDescriptionFieldListener);
     }
-    //A method to automaticaly generate clubId
+
+
+    //A method to automatically generate clubId
     private String generateClubId() {
         String prefix = "C";
         int randomNumber;
@@ -398,7 +344,7 @@ public class CAClubs implements Initializable {
             Clubs newClub=new Clubs(newClubId, newClubName,newClubType,newClubDescription,Main.currentUser);
             //System.out.println(newClub.getClubAdmin().getName());
             //Adding the created club to current user
-            Main.currentUser.getClubsWithAdminAccess().add(newClub);
+            Main.currentUser.getClubsWithAdminAccess().add(newClub);//-------------------------
             //saving the created club to the club table and club-advisor_club table
             ClubDataHandling object=new ClubDataHandling();
             object.saveNewClubToDatabase(newClub);
@@ -465,6 +411,7 @@ public class CAClubs implements Initializable {
         }
 
     }
+
 //  When user click suspend button the club and all the relevant information should be deleted
     @FXML
     private void suspendClub(){
@@ -530,7 +477,24 @@ public class CAClubs implements Initializable {
         System.out.println(club.getClubAdmin());
         clubAdvisorMembersNavigateTable.setItems(clubsAdvisorMembersToDisplay);
 
+        //Javafx: TableView change row color based on column value-https://stackoverflow.com/a/56309916
+        clubAdvisorMembersNavigateTable.setRowFactory(tv -> new TableRow<ClubAdvisor>() {
+            @Override
+            protected void updateItem(ClubAdvisor item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setStyle(""); // Reset style for empty rows
+                } else if (club.getClubAdmin().contains(item)) {
+                    // Apply a different color to rows containing objects from club.getClubAdmin()
+                    setStyle("-fx-background-color: lightblue;");
+                } else {
+                    setStyle(""); // Reset style for other rows
+                }
+            }
+        });
     }
+
 
 
 
@@ -548,7 +512,7 @@ public class CAClubs implements Initializable {
         ClubDataHandling object=new ClubDataHandling();
         object.updateClubInDatabase(clubObjectWithUpdatedDeatils);
 
-        //Main.currentClub=clubObjectWithUpdatedDeatils;
+        //Main.currentClub=clubObjectWithUpdatedDetails;
         //Rest of the function
         updateStatus=false;
         showInfoAlert("Club details updated successfully");
@@ -564,8 +528,13 @@ public class CAClubs implements Initializable {
 
     }
     @FXML
-    private void goBack(){
+    private void goBackToClubNavigation(){
         caNaviClubs.toFront();
+    }
+
+    @FXML
+    private void fromAdminPageToClubDescription(){
+        caViewClubs.toFront();
     }
 
 

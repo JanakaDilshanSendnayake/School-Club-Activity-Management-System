@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import stake_holders.ClubAdvisor;
 import stake_holders.Clubs;
+import stake_holders.Events;
 import stake_holders.Student;
 
 
@@ -18,6 +19,7 @@ public class Main extends Application {
     public static ClubAdvisor currentUser;
     public static Clubs currentClub;
     public static Student currentStudentUser;
+    public static Events currentEvent;
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml_files/Common/LoginOrRegister.fxml"));

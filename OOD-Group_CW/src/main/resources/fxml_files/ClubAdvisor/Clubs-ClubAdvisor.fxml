@@ -28,6 +28,61 @@
                            <children>
                               <StackPane prefHeight="556.0" prefWidth="750.0">
                                  <children>
+                                    <AnchorPane fx:id="caNaviClubs" prefHeight="526.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;">
+                                       <children>
+                                          <TableView fx:id="clubNavigateTable" layoutX="74.0" layoutY="146.0" prefHeight="257.0" prefWidth="602.0">
+                                             <columns>
+                                                <TableColumn fx:id="clubIdColumn" maxWidth="255.20001220703125" minWidth="-1.0" prefWidth="144.0" text="CLUB ID" />
+                                                <TableColumn fx:id="clubNameColumn" prefWidth="236.0" text="CLUB NAME" />
+                                                <TableColumn fx:id="clubTypeColumn" prefWidth="236.0" text="CLUB TYPE" />
+                                             </columns>
+                                          </TableView>
+                                          <Group layoutX="39.0" layoutY="53.0">
+                                             <children>
+                                                <TextField fx:id="clubNavigateSearchbar" layoutX="31.0" layoutY="1.0" prefHeight="34.0" prefWidth="253.0" style="-fx-background-color: white;" />
+                                                <ImageView fitHeight="20.0" fitWidth="20.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../Icons/search.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <Button layoutX="296.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="102.0">
+                                                   <graphic>
+                                                      <Label prefHeight="18.0" prefWidth="72.0" text="SEARCH">
+                                                         <font>
+                                                            <Font name="Times New Roman Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </graphic>
+                                                </Button>
+                                             </children>
+                                          </Group>
+                                          <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Navigate clubs" textAlignment="RIGHT">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Button fx:id="viewButton" layoutX="474.0" layoutY="467.0" mnemonicParsing="false" onAction="#viewClubDetails" prefHeight="44.0" prefWidth="126.0">
+                                             <graphic>
+                                                <Group>
+                                                   <children>
+                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="VIEW">
+                                                         <font>
+                                                            <Font name="Times New Roman Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../Icons/expand-screen.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children>
+                                                </Group>
+                                             </graphic>
+                                          </Button>
+                                          <ComboBox fx:id="clubNavigateClubsSorter" layoutX="570.0" layoutY="59.0" prefWidth="150.0" />
+                                          <Label layoutX="484.0" layoutY="63.0" prefHeight="18.0" prefWidth="83.0" text="Sort Table by:" />
+                                       </children>
+                                    </AnchorPane>
                                     <AnchorPane fx:id="caUpdateClubs" prefHeight="639.0" prefWidth="919.0" style="-fx-background-color: #DCDCDC;">
                                        <children>
                                           <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Update Club Details" textAlignment="RIGHT">
@@ -155,7 +210,7 @@
                                                 </Group>
                                              </graphic>
                                           </Button>
-                                          <Button layoutY="510.0" mnemonicParsing="false" onAction="#goBack" prefHeight="40.0" prefWidth="53.0">
+                                          <Button layoutY="510.0" mnemonicParsing="false" onAction="#goBackToClubNavigation" prefHeight="40.0" prefWidth="53.0">
                                              <graphic>
                                                 <ImageView fitHeight="19.0" fitWidth="17.0">
                                                    <image>
@@ -215,10 +270,10 @@
                                     </AnchorPane>
                                     <AnchorPane fx:id="adminAppointPane" prefHeight="526.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;">
                                        <children>
-                                          <TableView fx:id="clubAdvisorMembersNavigateTable" layoutX="74.0" layoutY="146.0" prefHeight="257.0" prefWidth="602.0">
+                                          <TableView fx:id="clubAdvisorMembersNavigateTable" layoutX="20.0" layoutY="118.0" prefHeight="319.0" prefWidth="414.0">
                                              <columns>
-                                                <TableColumn fx:id="clubAdvisorMembersIdColumn" maxWidth="255.20001220703125" minWidth="-1.0" prefWidth="144.0" text="CLUB_ADVISOR_ID" />
-                                                <TableColumn fx:id="clubAdvisorMembersNameColumn" prefWidth="236.0" text="CLUB ADVISOR NAME" />
+                                                <TableColumn fx:id="clubAdvisorMembersIdColumn" maxWidth="255.20001220703125" minWidth="-1.0" prefWidth="154.4000244140625" text="CLUB_ADVISOR_ID" />
+                                                <TableColumn fx:id="clubAdvisorMembersNameColumn" prefWidth="257.6" text="CLUB ADVISOR NAME" />
                                              </columns>
                                           </TableView>
                                           <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Appoint a new admin" textAlignment="RIGHT">
@@ -226,11 +281,11 @@
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
                                           </Label>
-                                          <Button layoutX="474.0" layoutY="467.0" mnemonicParsing="false" onAction="#saveNewAdmin" prefHeight="44.0" prefWidth="126.0">
+                                          <Button layoutX="527.0" layoutY="393.0" mnemonicParsing="false" onAction="#saveNewAdmin" prefHeight="44.0" prefWidth="126.0">
                                              <graphic>
                                                 <Group>
                                                    <children>
-                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="Appoint">
+                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="APPOINT">
                                                          <font>
                                                             <Font name="Times New Roman Bold" size="12.0" />
                                                          </font>
@@ -244,61 +299,22 @@
                                                 </Group>
                                              </graphic>
                                           </Button>
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="caNaviClubs" prefHeight="526.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;">
-                                       <children>
-                                          <TableView fx:id="clubNavigateTable" layoutX="74.0" layoutY="146.0" prefHeight="257.0" prefWidth="602.0">
-                                             <columns>
-                                                <TableColumn fx:id="clubIdColumn" maxWidth="255.20001220703125" minWidth="-1.0" prefWidth="144.0" text="CLUB ID" />
-                                                <TableColumn fx:id="clubNameColumn" prefWidth="236.0" text="CLUB NAME" />
-                                                <TableColumn fx:id="clubTypeColumn" prefWidth="236.0" text="CLUB TYPE" />
-                                             </columns>
-                                          </TableView>
-                                          <Group layoutX="39.0" layoutY="53.0">
-                                             <children>
-                                                <TextField fx:id="clubNavigateSearchbar" layoutX="31.0" layoutY="1.0" prefHeight="34.0" prefWidth="253.0" style="-fx-background-color: white;" />
-                                                <ImageView fitHeight="20.0" fitWidth="20.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                                          <Button fx:id="fromAdminPageToClubDescription" layoutY="511.0" mnemonicParsing="false" onAction="#goBackToClubNavigation" prefHeight="40.0" prefWidth="53.0">
+                                             <graphic>
+                                                <ImageView fitHeight="19.0" fitWidth="17.0">
                                                    <image>
-                                                      <Image url="@../../Icons/search.png" />
+                                                      <Image url="@../../Icons/angle-double-left.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Button layoutX="296.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="102.0">
-                                                   <graphic>
-                                                      <Label prefHeight="18.0" prefWidth="72.0" text="SEARCH">
-                                                         <font>
-                                                            <Font name="Times New Roman Bold" size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                   </graphic>
-                                                </Button>
-                                             </children>
-                                          </Group>
-                                          <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Navigate clubs" textAlignment="RIGHT">
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Button fx:id="viewButton" layoutX="474.0" layoutY="467.0" mnemonicParsing="false" onAction="#viewClubDetails" prefHeight="44.0" prefWidth="126.0">
-                                             <graphic>
-                                                <Group>
-                                                   <children>
-                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="VIEW">
-                                                         <font>
-                                                            <Font name="Times New Roman Bold" size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@../../Icons/expand-screen.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                </Group>
                                              </graphic>
                                           </Button>
-                                          <ComboBox fx:id="clubNavigateClubsSorter" layoutX="570.0" layoutY="59.0" prefWidth="150.0" />
-                                          <Label layoutX="484.0" layoutY="63.0" prefHeight="18.0" prefWidth="83.0" text="Sort Table by:" />
+                                          <Label fx:id="eventOrganizingClubNmaeLabel" layoutX="20.0" layoutY="57.0" prefHeight="50.0" prefWidth="414.0" style="-fx-background-color: #D5D6F2;" text="BOARD OF CLUB ADVISORS">
+                                             <font>
+                                                <Font name="Times New Roman Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="24.0" layoutY="445.0" prefHeight="18.0" prefWidth="406.0" text="*Club Advisors Highlighted in blue are already admins" />
+                                          <TextArea layoutX="450.0" layoutY="118.0" prefHeight="113.0" prefWidth="280.0" text="*Once you apoint a club Advisor Member as an admin, you are giving him the permission to,&#10;1. Edit club details&#10;2. Organize events&#10;3. Edit event details &#10;4. Generate club reports" wrapText="true" />
                                        </children>
                                     </AnchorPane>
                                  </children>
@@ -380,7 +396,7 @@
       </AnchorPane>
       <AnchorPane fx:id="sidebar" prefHeight="600.0" prefWidth="200.0">
          <children>
-            <Button fx:id="caHomeButton" layoutX="25.0" layoutY="156.0" mnemonicParsing="false" onAction="#clickSidebar" prefHeight="50.0" prefWidth="150.0" AnchorPane.bottomAnchor="393.6" AnchorPane.topAnchor="156.0">
+            <Button fx:id="caHomeButton" layoutX="25.0" layoutY="156.0" mnemonicParsing="false" onAction="#loadHome" prefHeight="50.0" prefWidth="150.0" AnchorPane.bottomAnchor="393.6" AnchorPane.topAnchor="156.0">
                <graphic>
                   <Group>
                      <children>
@@ -398,7 +414,7 @@
                   </Group>
                </graphic>
             </Button>
-            <Button fx:id="caClubsButton" layoutX="25.0" layoutY="216.0" mnemonicParsing="false" onAction="#clickSidebar" prefHeight="50.0" prefWidth="150.0">
+            <Button fx:id="caClubsButton" layoutX="25.0" layoutY="216.0" mnemonicParsing="false" onAction="#loadClubs" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #7476a6;">
                <graphic>
                   <Group>
                      <children>
@@ -416,7 +432,7 @@
                   </Group>
                </graphic>
             </Button>
-            <Button fx:id="caEventsButton" layoutX="25.0" layoutY="276.0" mnemonicParsing="false" onAction="#clickSidebar" prefHeight="50.0" prefWidth="150.0">
+            <Button fx:id="caEventsButton" layoutX="25.0" layoutY="276.0" mnemonicParsing="false" onAction="#loadEvents" prefHeight="50.0" prefWidth="150.0">
                <graphic>
                   <Group>
                      <children>
@@ -434,7 +450,7 @@
                   </Group>
                </graphic>
             </Button>
-            <Button fx:id="caReportsButton" layoutX="25.0" layoutY="336.0" mnemonicParsing="false" onAction="#clickSidebar" prefHeight="50.0" prefWidth="150.0">
+            <Button fx:id="caReportsButton" layoutX="25.0" layoutY="336.0" mnemonicParsing="false" onAction="#loadReports" prefHeight="50.0" prefWidth="150.0">
                <graphic>
                   <Group>
                      <children>
@@ -452,7 +468,7 @@
                   </Group>
                </graphic>
             </Button>
-            <Button fx:id="caAccountButton" layoutX="25.0" layoutY="396.0" mnemonicParsing="false" onAction="#clickSidebar" prefHeight="50.0" prefWidth="150.0">
+            <Button fx:id="caAccountButton" layoutX="25.0" layoutY="396.0" mnemonicParsing="false" onAction="#loadAccounts" prefHeight="50.0" prefWidth="150.0">
                <graphic>
                   <Group>
                      <children>
@@ -464,6 +480,24 @@
                         <ImageView fitHeight="23.0" fitWidth="22.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../Icons/user-gear.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </graphic>
+            </Button>
+            <ImageView fitHeight="125.0" fitWidth="97.0" layoutX="52.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/club%20advisor.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="cancelTheUpdateButton1" layoutX="74.0" layoutY="542.0" mnemonicParsing="false" onAction="#signOut" prefHeight="44.0" prefWidth="50.0">
+               <graphic>
+                  <Group>
+                     <children>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/power-button-off.png" />
                            </image>
                         </ImageView>
                      </children>

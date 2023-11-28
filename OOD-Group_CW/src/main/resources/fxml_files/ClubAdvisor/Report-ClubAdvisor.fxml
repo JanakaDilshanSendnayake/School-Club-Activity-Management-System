@@ -25,7 +25,7 @@
                            <children>
                               <Group layoutX="194.0" layoutY="76.0">
                                  <children>
-                                    <ComboBox fx:id="clubsSorter" layoutX="46.0" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
+                                    <ComboBox fx:id="clubsSorterInStudentMemberReport" layoutX="46.0" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
                                     <Label layoutY="5.0" prefHeight="18.0" prefWidth="45.0" text="Club: " />
                                     <Label layoutX="46.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
                                  </children>
@@ -74,17 +74,18 @@
                                  </font></Label>
                               <Group layoutX="65.0" layoutY="85.0">
                                  <children>
-                                    <ComboBox layoutX="37.0" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
+                                    <ComboBox fx:id="clubSorterInActivityReport" layoutX="37.0" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
                                     <Label layoutY="5.0" prefHeight="18.0" prefWidth="36.0" text="Club: " />
                                     <Label layoutX="37.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
                                  </children>
                               </Group>
-                              <TableView layoutX="99.0" layoutY="146.0" prefHeight="200.0" prefWidth="535.0">
+                              <TableView fx:id="eventTable" layoutX="99.0" layoutY="146.0" prefHeight="200.0" prefWidth="584.0">
                                  <columns>
-                                    <TableColumn prefWidth="116.0" text="Events" />
-                                    <TableColumn minWidth="0.0" prefWidth="196.800048828125" text="Date" />
-                                    <TableColumn minWidth="0.0" prefWidth="112.0" text="Venue" />
-                                    <TableColumn minWidth="0.0" prefWidth="112.0" text="Description" />
+                                    <TableColumn fx:id="eventIdColumn" minWidth="0.0" prefWidth="63.199951171875" text="Events" />
+                                    <TableColumn fx:id="eventNameColumn" minWidth="0.0" prefWidth="104.0" text="Event Name" />
+                                    <TableColumn fx:id="eventVenueColumn" minWidth="0.0" text="Venue" />
+                                    <TableColumn fx:id="eventDateColumn" minWidth="0.0" prefWidth="151.20001220703125" text="Date" />
+                                    <TableColumn fx:id="eventDescriptionColumn" minWidth="0.0" prefWidth="183.199951171875" text="Description" />
                                  </columns>
                               </TableView>
                               <Button layoutX="490.0" layoutY="425.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0">
@@ -119,23 +120,25 @@
                               </Label>
                               <Group layoutX="41.0" layoutY="83.0">
                                  <children>
-                                    <ComboBox fx:id="clubSelection" layoutX="103.0" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
+                                    <ComboBox fx:id="clubSorterInAttendanceReport" layoutX="103.0" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
                                     <Label layoutY="5.0" text="Organizing club: " />
                                     <Label layoutX="103.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
                                  </children>
                               </Group>
                               <Group layoutX="41.0" layoutY="130.0">
                                  <children>
-                                    <ComboBox fx:id="eventSelection" layoutX="103.0" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
+                                    <ComboBox fx:id="eventSorterInAttendanceReport" layoutX="103.0" prefHeight="26.0" prefWidth="250.0" promptText="Select" style="-fx-background-color: white;" />
                                     <Label layoutY="5.0" text="Event:" />
                                     <Label layoutX="103.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
                                  </children>
                               </Group>
-                              <TableView fx:id="tableview" layoutX="128.0" layoutY="199.0" prefHeight="200.0" prefWidth="425.0">
+                              <TableView fx:id="attendanceReportTable" layoutX="44.0" layoutY="199.0" prefHeight="200.0" prefWidth="670.0">
                                 <columns>
-                                  <TableColumn fx:id="stuIDcol" prefWidth="116.0" text="Student ID" />
-                                  <TableColumn fx:id="stuNamecol" minWidth="0.0" prefWidth="196.800048828125" text="Stdent Name" />
-                                    <TableColumn fx:id="Attendencecol" minWidth="0.0" prefWidth="112.0" text="Attendance" />
+                                  <TableColumn fx:id="attendanceReportTableStudentIdColumn" prefWidth="80.80000305175781" text="Student ID" />
+                                  <TableColumn fx:id="attendanceReportTableStudentNameColumn" minWidth="0.0" prefWidth="127.20001220703125" text="Stdent Name" />
+                                    <TableColumn fx:id="attendanceReportTableEventIdColumn" minWidth="0.0" prefWidth="145.5999755859375" text="Event id" />
+                                    <TableColumn fx:id="attendanceReportTableEventNameColumn" minWidth="0.0" prefWidth="139.20001220703125" text="event" />
+                                    <TableColumn fx:id="attendanceReportTableStatusColumn" minWidth="0.0" prefWidth="172.0" text="Attendance" />
                                 </columns>
                               </TableView>
                               <Button layoutX="490.0" layoutY="425.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0">
@@ -166,7 +169,7 @@
       </AnchorPane>
       <AnchorPane fx:id="sidebar" prefHeight="600.0" prefWidth="200.0">
          <children>
-            <Button layoutX="25.0" layoutY="156.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" AnchorPane.bottomAnchor="393.6" AnchorPane.topAnchor="156.0">
+            <Button layoutX="25.0" layoutY="156.0" mnemonicParsing="false" onAction="#loadHome" prefHeight="50.0" prefWidth="150.0" AnchorPane.bottomAnchor="393.6" AnchorPane.topAnchor="156.0">
                <graphic>
                   <Group>
                      <children>
@@ -184,7 +187,7 @@
                   </Group>
                </graphic>
             </Button>
-            <Button layoutX="25.0" layoutY="216.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0">
+            <Button layoutX="25.0" layoutY="216.0" mnemonicParsing="false" onAction="#loadClubs" prefHeight="50.0" prefWidth="150.0">
                <graphic>
                   <Group>
                      <children>
@@ -202,7 +205,7 @@
                   </Group>
                </graphic>
             </Button>
-            <Button layoutX="25.0" layoutY="276.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0">
+            <Button layoutX="25.0" layoutY="276.0" mnemonicParsing="false" onAction="#loadEvents" prefHeight="50.0" prefWidth="150.0">
                <graphic>
                   <Group>
                      <children>
@@ -220,7 +223,7 @@
                   </Group>
                </graphic>
             </Button>
-            <Button layoutX="25.0" layoutY="336.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0">
+            <Button layoutX="25.0" layoutY="336.0" mnemonicParsing="false" onAction="#loadReports" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #7476a6;">
                <graphic>
                   <Group>
                      <children>
@@ -238,7 +241,7 @@
                   </Group>
                </graphic>
             </Button>
-            <Button layoutX="25.0" layoutY="396.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0">
+            <Button layoutX="25.0" layoutY="396.0" mnemonicParsing="false" onAction="#loadAccounts" prefHeight="50.0" prefWidth="150.0">
                <graphic>
                   <Group>
                      <children>

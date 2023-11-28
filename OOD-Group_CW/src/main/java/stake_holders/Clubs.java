@@ -1,6 +1,7 @@
 package stake_holders;
 
 import java.security.PublicKey;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Clubs {
@@ -16,7 +17,7 @@ public class Clubs {
 
     //regex
     private static final String CLUB_NAME_REGEX = "^[a-zA-Z_]{1,31}$";
-    private static final String CLUB_DESCRIPTION_REGEX = "^.{1,200}$";
+    private static final String CLUB_DESCRIPTION_REGEX = "^.{1,500}$";
 
 //    public Clubs(String clubName, String clubId, ClubAdvisor creatorCA) {
 //        clubAdvisorMembers=new ArrayList<>();
@@ -65,7 +66,7 @@ public class Clubs {
     }
 
     private void validateClubName(String name){
-        if(name.equals("")){
+        if(name.isEmpty()){
             throw new IllegalArgumentException("You haven't filled club name. It's mandatory");
         }else{
             if(!name.matches(CLUB_NAME_REGEX)){
@@ -74,7 +75,7 @@ public class Clubs {
         }
     }
     private void validateClubDescription(String description){
-        if(description.equals("")){
+        if(description.isEmpty()){
             throw new IllegalArgumentException("You haven't filled club description. It's mandatory");
         }else{
             if(!description.matches(CLUB_DESCRIPTION_REGEX)){
@@ -126,28 +127,36 @@ public class Clubs {
         this.studentMembers = studentMembers;
     }
 
+    public ArrayList<Events> getClubEvents() {
+        return clubEvents;
+    }
+
+    public void setClubEvents(ArrayList<Events> clubEvents) {
+        this.clubEvents = clubEvents;
+    }
+
     public void addClubAdvisor(ClubAdvisor clubAdvisor) { //****
         this.clubAdvisorMembers.add(clubAdvisor);
         clubAdvisor.joinORCreateClub(this);
     }
 
     public void removeClubAdvisor(ClubAdvisor clubAdvisor){ //****
-        if (clubAdvisor!=null && !clubAdvisor.equals(this.clubAdmin)){
+        if (clubAdvisor!=null && !this.clubAdmin.contains(clubAdvisor)){
             this.clubAdvisorMembers.remove(clubAdvisor);
             clubAdvisor.leaveClub(this);
         }
     }
-    public void createEvent(String name, String eventName, String eventDate, String eventLocation, ClubAdvisor clubAdvisor){
-        if (clubAdvisor!=null && clubAdvisor.equals(this.clubAdmin)){
-            Events event=new Events(eventName,eventDate,eventLocation,this);
-            this.clubEvents.add(event);
-        }
+    public Events createEvent(String eventId, String eventName, LocalDate eventDate, String eventLocation, String eventDescription){
+
+        return new Events(eventId,eventName,eventDate,eventLocation,eventDescription, this);
+            //this.clubEvents.add(event);
+
     }
     public void suspendEvent(Events event){
         this.clubEvents.remove(event);
     }
 
-    public void markAttendance(Events event, Student student){
-        event.getAttendance().add(student);
-    }
+//    public void markAttendance(Events event, Student student){
+//        event.getAttendance().add(student);
+//    }
 }

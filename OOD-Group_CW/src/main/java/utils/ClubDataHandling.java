@@ -16,7 +16,7 @@ public class ClubDataHandling {
 
     public boolean clubIdValidation(String userIdToBeValidated){
         boolean clubIdAlreadyExists=false;
-        String sql ="SELECT * FROM clubs WHERE club_id= ?";
+        String sql ="SELECT * FROM clubs WHERE BINARY club_id= ?";
         MySqlConnect databaseLink= new MySqlConnect();
 
         try (Connection connection = databaseLink.getDatabaseLink();

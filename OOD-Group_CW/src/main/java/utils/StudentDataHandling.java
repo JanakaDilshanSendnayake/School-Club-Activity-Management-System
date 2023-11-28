@@ -10,7 +10,7 @@ public class StudentDataHandling {
 
     public boolean studentLogin(String studentId, String password){
         boolean isAuthenticated = false;
-        String sql = "SELECT * FROM student WHERE student_id = ? AND student_password = ?";
+        String sql = "SELECT * FROM student WHERE BINARY student_id = ? AND BINARY student_password = ?";
 
         MySqlConnect databaseLink= new MySqlConnect();
 

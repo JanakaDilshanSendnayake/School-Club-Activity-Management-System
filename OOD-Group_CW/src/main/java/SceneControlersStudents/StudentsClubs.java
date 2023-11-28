@@ -12,13 +12,14 @@ import javafx.scene.layout.AnchorPane;
 import main.Main;
 import stake_holders.Clubs;
 import utils.ClubDataHandling;
+import CommonSceneControlers.BaseSceneController;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class StudentsClubs extends StudentBaseSceneControler implements Initializable  {
+public class StudentsClubs extends BaseSceneController implements Initializable  {
 
     //Club navigate pane javafx elements======================================
     @FXML private AnchorPane naviClubsPane;
