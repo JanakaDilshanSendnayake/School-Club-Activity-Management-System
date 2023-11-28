@@ -111,6 +111,24 @@
                   </Group>
                </graphic>
             </Button>
+            <ImageView fitHeight="125.0" fitWidth="97.0" layoutX="52.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/club%20advisor.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="74.0" layoutY="542.0" mnemonicParsing="false" onAction="#signOut" prefHeight="44.0" prefWidth="50.0">
+               <graphic>
+                  <Group>
+                     <children>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/power-button-off.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </graphic>
+            </Button>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="200.0" prefHeight="600.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;">
@@ -123,79 +141,6 @@
                            <children>
                               <StackPane prefHeight="555.0" prefWidth="750.0">
                                  <children>
-                                    <AnchorPane fx:id="caUpdateEvents" minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="371.0" style="-fx-background-color: #DCDCDC;">
-                                       <children>
-                                          <Label prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Update Event Details" textAlignment="RIGHT">
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Group layoutX="333.0" layoutY="89.0">
-                                             <children>
-                                                <TextArea fx:id="updateEventDescriptionTextArea" layoutY="21.0" onMouseClicked="#hanldeNewEventDescription" prefHeight="214.0" prefWidth="371.0" style="-fx-control-inner-background: white;" />
-                                                <Label text="Event Description: " />
-                                                <Label fx:id="updateEventDescriptionLabel" layoutY="235.0" prefHeight="18.0" prefWidth="368.0" />
-                                             </children>
-                                          </Group>
-                                          <Group layoutX="126.0" layoutY="85.0">
-                                             <children>
-                                                <TextField fx:id="updateEventNameField" layoutX="-88.0" layoutY="30.0" onMouseClicked="#handleNewEventNameChange" prefHeight="26.0" prefWidth="248.0" style="-fx-background-color: white;" />
-                                                <Label layoutX="-86.0" layoutY="4.0" prefHeight="18.0" prefWidth="101.0" text="Event Name:" />
-                                                <Label fx:id="updateEventNameLabel" layoutX="-88.0" layoutY="57.0" prefHeight="17.0" prefWidth="249.0" />
-                                             </children>
-                                          </Group>
-                                          <Group layoutX="37.0" layoutY="197.0">
-                                             <children>
-                                                <TextField fx:id="updateEventVenueField" layoutY="25.0" onMouseClicked="#handleNewEventVenue" prefHeight="26.0" prefWidth="248.0" style="-fx-background-color: white;" />
-                                                <Label layoutY="3.0" prefHeight="18.0" prefWidth="101.0" text="Venue" />
-                                                <Label fx:id="updateEventVenueFieldLabel" layoutY="55.0" prefHeight="18.0" prefWidth="250.0" />
-                                             </children>
-                                          </Group>
-                                          <Group layoutX="38.0" layoutY="295.0">
-                                             <children>
-                                                <DatePicker fx:id="updateEventDatePicker" layoutX="1.0" layoutY="26.0" prefHeight="26.0" prefWidth="250.0" style="-fx-background-color: white;" />
-                                                <Label layoutY="4.0" prefHeight="18.0" prefWidth="101.0" text="Date" />
-                                                <Label fx:id="updateEventDatePickerLabel" layoutY="59.0" prefHeight="18.0" prefWidth="250.0" />
-                                             </children>
-                                          </Group>
-                                          <Button layoutX="207.0" layoutY="493.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0">
-                                             <graphic>
-                                                <Group>
-                                                   <children>
-                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="CLEAR">
-                                                         <font>
-                                                            <Font name="Times New Roman Bold" size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@../../Icons/cross.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                </Group>
-                                             </graphic>
-                                          </Button>
-                                          <Button layoutX="339.0" layoutY="494.0" mnemonicParsing="false" onAction="#updateEventDetails" prefHeight="44.0" prefWidth="126.0">
-                                             <graphic>
-                                                <Group>
-                                                   <children>
-                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="SAVE">
-                                                         <font>
-                                                            <Font name="Times New Roman Bold" size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@../../Icons/disk.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                </Group>
-                                             </graphic>
-                                          </Button>
-                                       </children>
-                                    </AnchorPane>
                                     <AnchorPane fx:id="caViewEvents" prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #DCDCDC;">
                                        <children>
                                           <Label prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="View Event Details" textAlignment="RIGHT">
@@ -203,25 +148,7 @@
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
                                           </Label>
-                                          <Button layoutX="513.0" layoutY="456.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0">
-                                             <graphic>
-                                                <Group>
-                                                   <children>
-                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="SUSPEND">
-                                                         <font>
-                                                            <Font name="Times New Roman Bold" size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@../../Icons/cross.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                </Group>
-                                             </graphic>
-                                          </Button>
-                                          <Button layoutX="375.0" layoutY="456.0" mnemonicParsing="false" onAction="#editEventDetails" prefHeight="44.0" prefWidth="126.0">
+                                          <Button layoutX="609.0" layoutY="320.0" mnemonicParsing="false" onAction="#editEventDetails" prefHeight="44.0" prefWidth="126.0">
                                              <graphic>
                                                 <Group>
                                                    <children>
@@ -240,22 +167,22 @@
                                              </graphic>
                                           </Button>
                                           <TextArea fx:id="eventDescriptionTextArea" layoutX="114.0" layoutY="159.0" prefHeight="249.0" prefWidth="484.0" />
-                                          <Label fx:id="eventNameLabel" layoutX="110.0" layoutY="104.0" prefHeight="50.0" prefWidth="210.0" text="Event Name">
+                                          <Label fx:id="eventNameLabel" layoutX="110.0" layoutY="104.0" prefHeight="50.0" prefWidth="484.0" style="-fx-background-color: #D5D6F2;" text="Event Name">
                                              <font>
                                                 <Font name="Times New Roman Bold" size="18.0" />
                                              </font>
                                           </Label>
-                                          <Label fx:id="eventOrganizingClubNmaeLabel" layoutX="110.0" layoutY="53.0" prefHeight="50.0" prefWidth="160.0" text="Event organizing club">
+                                          <Label fx:id="eventOrganizingClubNmaeLabel" layoutX="233.0" layoutY="57.0" prefHeight="50.0" prefWidth="162.0" style="-fx-background-color: #D5D6F2;" text="Event organizing club">
                                              <font>
                                                 <Font name="Times New Roman Bold" size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label fx:id="eventVenueLabel" layoutX="465.0" layoutY="108.0" prefHeight="50.0" prefWidth="236.0" text="Event location">
+                                          <Label fx:id="eventVenueLabel" layoutX="185.0" layoutY="409.0" prefHeight="50.0" prefWidth="416.0" style="-fx-background-color: #D5D6F2;" text="Event location">
                                              <font>
                                                 <Font name="Times New Roman Bold" size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label fx:id="eventDateLabel" layoutX="465.0" layoutY="57.0" prefHeight="50.0" prefWidth="241.0" text="Event date">
+                                          <Label fx:id="eventDateLabel" layoutX="184.0" layoutY="459.0" prefHeight="50.0" prefWidth="417.0" style="-fx-background-color: #D5D6F2;" text="Event date">
                                              <font>
                                                 <Font name="Times New Roman Bold" size="14.0" />
                                              </font>
@@ -269,16 +196,31 @@
                                                 </ImageView>
                                              </graphic>
                                           </Button>
+                                          <Label fx:id="eventOrganizingClubNmaeLabel1" layoutX="110.0" layoutY="57.0" prefHeight="50.0" prefWidth="122.0" style="-fx-background-color: #D5D6F2;" text="Brought to you by:">
+                                             <font>
+                                                <Font name="Times New Roman Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="eventOrganizingClubNmaeLabel11" layoutX="110.0" layoutY="409.0" prefHeight="50.0" prefWidth="74.0" style="-fx-background-color: #D5D6F2;" text="Location:">
+                                             <font>
+                                                <Font name="Times New Roman Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="eventOrganizingClubNmaeLabel111" layoutX="110.0" layoutY="459.0" prefHeight="50.0" prefWidth="74.0" style="-fx-background-color: #D5D6F2;" text="Date:">
+                                             <font>
+                                                <Font name="Times New Roman Bold" size="14.0" />
+                                             </font>
+                                          </Label>
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane fx:id="caNaviEvents" prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #DCDCDC;">
                                        <children>
-                                          <TableView fx:id="eventNavigateTable" layoutX="18.0" layoutY="151.0" prefHeight="310.0" prefWidth="714.0">
+                                          <TableView fx:id="eventNavigateTable" layoutX="18.0" layoutY="151.0" prefHeight="310.0" prefWidth="721.0">
                                              <columns>
-                                                <TableColumn fx:id="eventNameColumn" prefWidth="257.6000518798828" text="EVENT NAME" />
-                                                <TableColumn fx:id="eventIdColumn" prefWidth="124.79998779296875" text="EVENT ID" />
-                                                <TableColumn fx:id="eventDateColumn" prefWidth="105.5999755859375" text="DATE" />
-                                                <TableColumn fx:id="eventVenueColumn" prefWidth="224.7999267578125" text="VENUE" />
+                                                <TableColumn fx:id="eventNameColumn" prefWidth="210.0" text="EVENT NAME" />
+                                                <TableColumn fx:id="eventIdColumn" prefWidth="170.0" text="EVENT ID" />
+                                                <TableColumn fx:id="eventDateColumn" prefWidth="170.0" text="DATE" />
+                                                <TableColumn fx:id="eventVenueColumn" prefWidth="170.0" text="VENUE" />
                                              </columns>
                                           </TableView>
                                           <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Navigate Events" textAlignment="RIGHT">
@@ -323,8 +265,83 @@
                                                 </Group>
                                              </graphic>
                                           </Button>
-                                          <ComboBox fx:id="navigateEventsPageComboBox" layoutX="390.0" layoutY="103.0" prefHeight="26.0" prefWidth="180.0" promptText="Options" />
+                                          <ComboBox fx:id="navigateEventsPageComboBox" layoutX="431.0" layoutY="103.0" prefHeight="26.0" prefWidth="180.0" promptText="Options" />
                                           <ComboBox fx:id="navigateEventsPageComboBox2" layoutX="123.0" layoutY="103.0" prefHeight="26.0" prefWidth="180.0" promptText="Options" />
+                                          <Label layoutX="41.0" layoutY="108.0" prefHeight="18.0" prefWidth="69.0" text="Sort Clubs" />
+                                          <Label layoutX="340.0" layoutY="108.0" prefHeight="18.0" prefWidth="69.0" text="Select club" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="caUpdateEvents" minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="371.0" style="-fx-background-color: #DCDCDC;">
+                                       <children>
+                                          <Label prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Update Event Details" textAlignment="RIGHT">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Group layoutX="333.0" layoutY="89.0">
+                                             <children>
+                                                <TextArea fx:id="updateEventDescriptionTextArea" layoutY="21.0" onMouseClicked="#handleUpdateEventDescription" prefHeight="214.0" prefWidth="371.0" style="-fx-control-inner-background: white;" />
+                                                <Label text="Event Description: " />
+                                                <Label fx:id="updateEventDescriptionLabel" layoutY="235.0" prefHeight="18.0" prefWidth="368.0" />
+                                             </children>
+                                          </Group>
+                                          <Group layoutX="126.0" layoutY="85.0">
+                                             <children>
+                                                <TextField fx:id="updateEventNameField" layoutX="-88.0" layoutY="30.0" onMouseClicked="#handleUpdateEventName" prefHeight="26.0" prefWidth="248.0" style="-fx-background-color: white;" />
+                                                <Label layoutX="-86.0" layoutY="4.0" prefHeight="18.0" prefWidth="101.0" text="Event Name:" />
+                                                <Label fx:id="updateEventNameLabel" layoutX="-88.0" layoutY="57.0" prefHeight="17.0" prefWidth="249.0" />
+                                             </children>
+                                          </Group>
+                                          <Group layoutX="37.0" layoutY="197.0">
+                                             <children>
+                                                <TextField fx:id="updateEventVenueField" layoutY="25.0" onMouseClicked="#handleUpdateEventVenue" prefHeight="26.0" prefWidth="248.0" style="-fx-background-color: white;" />
+                                                <Label layoutY="3.0" prefHeight="18.0" prefWidth="101.0" text="Venue" />
+                                                <Label fx:id="updateEventVenueFieldLabel" layoutY="55.0" prefHeight="18.0" prefWidth="250.0" />
+                                             </children>
+                                          </Group>
+                                          <Group layoutX="38.0" layoutY="295.0">
+                                             <children>
+                                                <DatePicker fx:id="updateEventDatePicker" layoutX="1.0" layoutY="26.0" prefHeight="26.0" prefWidth="250.0" style="-fx-background-color: white;" />
+                                                <Label layoutY="4.0" prefHeight="18.0" prefWidth="101.0" text="Date" />
+                                                <Label fx:id="updateEventDatePickerLabel" layoutY="59.0" prefHeight="18.0" prefWidth="250.0" />
+                                             </children>
+                                          </Group>
+                                          <Button layoutX="207.0" layoutY="493.0" mnemonicParsing="false" onAction="#updateCancel" prefHeight="44.0" prefWidth="126.0">
+                                             <graphic>
+                                                <Group>
+                                                   <children>
+                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="CANCEL">
+                                                         <font>
+                                                            <Font name="Times New Roman Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../Icons/cross.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children>
+                                                </Group>
+                                             </graphic>
+                                          </Button>
+                                          <Button layoutX="339.0" layoutY="494.0" mnemonicParsing="false" onAction="#updateEventDetails" prefHeight="44.0" prefWidth="126.0">
+                                             <graphic>
+                                                <Group>
+                                                   <children>
+                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="SAVE">
+                                                         <font>
+                                                            <Font name="Times New Roman Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../Icons/disk.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children>
+                                                </Group>
+                                             </graphic>
+                                          </Button>
                                        </children>
                                     </AnchorPane>
                                  </children>
@@ -375,7 +392,7 @@
                                     <Label fx:id="newEventDatePickerLabel" layoutY="59.0" prefHeight="18.0" prefWidth="250.0" />
                                  </children>
                               </Group>
-                              <Button layoutX="207.0" layoutY="493.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0">
+                              <Button layoutX="207.0" layoutY="493.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="44.0" prefWidth="126.0">
                                  <graphic>
                                     <Group>
                                        <children>
@@ -437,7 +454,7 @@
                                     <Label layoutX="103.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
                                  </children>
                               </Group>
-                              <Button layoutX="602.0" layoutY="299.0" mnemonicParsing="false" onAction="#saveAttendance" prefHeight="44.0" prefWidth="126.0">
+                              <Button layoutX="516.0" layoutY="302.0" mnemonicParsing="false" onAction="#saveAttendance" prefHeight="44.0" prefWidth="126.0">
                                  <graphic>
                                     <Group>
                                        <children>
@@ -461,6 +478,11 @@
                                   <TableColumn fx:id="studentNameColumn" prefWidth="231.2000732421875" text="Student Name" />
                                 </columns>
                               </TableView>
+                              <Label layoutX="117.0" layoutY="479.0" prefHeight="34.0" prefWidth="328.0" style="-fx-background-color: #D5D6F2;" text="Select the rows while holding Ctrl button" textAlignment="RIGHT">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                      </content>

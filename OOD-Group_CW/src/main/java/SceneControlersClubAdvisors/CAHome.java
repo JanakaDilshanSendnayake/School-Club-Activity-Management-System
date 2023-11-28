@@ -1,7 +1,11 @@
 package SceneControlersClubAdvisors;
 
+import CommonSceneControlers.BaseSceneController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Label;
 
 import java.net.URL;
@@ -9,10 +13,18 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-public class CAHome implements Initializable {
+public class CAHome extends BaseSceneController implements Initializable {
 
     @FXML
     private Label greetings;
+    @FXML
+    private BarChart<?, ?> userCount;
+
+    @FXML
+    private CategoryAxis x;
+
+    @FXML
+    private NumberAxis y;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

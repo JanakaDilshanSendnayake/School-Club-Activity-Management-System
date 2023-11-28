@@ -78,6 +78,10 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
     private ChangeListener<String> newEventDescriptionTextAreaListener;
     private ChangeListener<String> newEventVenueFieldListener;
     //==============================================================
+    private ChangeListener<String> updateEventNameFieldListener;
+    private ChangeListener<String> updateEventDescriptionTextAreaListener;
+    private ChangeListener<String> updateEventVenueFieldListener;
+    //=============================================================
 
     private static final String EVENT_NAME_REGEX = "^[a-zA-Z_]{1,31}$";
     private static final String EVENT_DESCRIPTION_REGEX = "^(?s).{1,200}$";
@@ -264,6 +268,29 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
         });
 //Event listeners for event update page=======================================================================
 
+        updateEventNameFieldListener=((observable, oldValue, newValue) -> {
+            String validationMessage = validateTextField(newValue, EVENT_NAME_REGEX,
+                    "Name can only contain letters and Underscores.",30);
+            updateEventNameLabel.setText(validationMessage);
+            setLabelStyle(validationMessage, updateEventNameLabel);
+        });
+
+
+        // initializing the event listener to validate the user input in "newClubNameField" text-field
+        updateEventDescriptionTextAreaListener=((observable, oldValue, newValue) -> {
+            String validationMessage = validateTextField(newValue, EVENT_DESCRIPTION_REGEX,
+                    "",500);
+            updateEventDescriptionLabel.setText(validationMessage);
+            setLabelStyle(validationMessage, updateEventDescriptionLabel);
+        });
+
+        // initializing the event listener to validate the user input in "newClubNameField" text-field
+        updateEventVenueFieldListener=((observable, oldValue, newValue) -> {
+            String validationMessage = validateTextField(newValue, EVENT_VENUE_REGEX,
+                    "This field is mandatory.");
+            updateEventVenueFieldLabel.setText(validationMessage);
+            setLabelStyle(validationMessage, updateEventVenueFieldLabel);
+        });
     }
     private Clubs selectedClubOptionToClubObject(String selectedClubOption){
         String[] split=selectedClubOption.split("-");
@@ -364,7 +391,19 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
     private void handleNewEventVenue() {
         newEventVenueField.textProperty().addListener(newEventVenueFieldListener);
     }
-
+//===================================================================
+    @FXML
+    private void handleUpdateEventName(){
+        updateEventNameField.textProperty().addListener(updateEventNameFieldListener);
+    }
+    @FXML
+    private void handleUpdateEventVenue(){
+        updateEventVenueField.textProperty().addListener(updateEventVenueFieldListener);
+    }
+    @FXML
+    private void handleUpdateEventDescription(){
+        updateEventDescriptionTextArea.textProperty().addListener(updateEventDescriptionTextAreaListener);
+    }
     private String generateEventId() {
         Clubs clubs=selectedClubOptionToClubObject(organizingClubComboBoxSelectedOption);
         String prefix = "E";
@@ -388,29 +427,30 @@ public class CAEvents3 extends BaseSceneController implements Initializable {
 
 
             Clubs currentClubUserCreatingTheEventFor= selectedClubOptionToClubObject(organizingClubComboBoxSelectedOption);
-
-
-            System.out.println(newEventId);
-            System.out.println(newEventName);
-            System.out.println(newClubDescription);
-            System.out.println(newEventVenue);
-            System.out.println(newEventDate);
-
             try{
-
-
                 //===================================================================
                 Events newEvent=currentClubUserCreatingTheEventFor.createEvent(newEventId,newEventName,newEventDate,newEventVenue,newClubDescription);
-
-
                 EventDataHandling object=new EventDataHandling();
                 object.saveNewEventToDatabase(newEvent);
 
                 showInfoAlert("Success");
+                clearFields();
             }catch (IllegalArgumentException e){
                 showErrorAlert(e.getMessage());
             }
 
+    }
+    @FXML
+    private void clearFields(){
+        newEventNameField.textProperty().removeListener(newEventNameFieldListener);
+        newEventVenueField.textProperty().removeListener(newEventVenueFieldListener);
+        newEventDescriptionTextArea.textProperty().removeListener(newEventDescriptionTextAreaListener);
+        newEventNameField.setText("");
+        newEventDescriptionTextArea.setText("");
+        newEventVenueField.setText("");
+        newEventNameLabel.setText("");
+        newEventVenueFieldLabel.setText("");
+        newEventDescriptionLabel.setText("");
     }
 
 //Event Navigation and management=======================================================================================

@@ -91,6 +91,13 @@ public class CAClubs extends BaseSceneController implements Initializable {
     //Event listeners to monitor user inputs realtime and show messages about the inputs realtime
     private ChangeListener<String> newClubNameFieldListener;
     private ChangeListener<String> newClubDescriptionFieldListener;
+
+    //==================================
+    @FXML private TextArea updateClubDescriptionField;
+    @FXML private TextField updateClubNameField;
+    @FXML private Label updateClubNameLabel;
+    @FXML private Label updateClubDescriptionLabel;
+    @FXML private ComboBox<String> updateClubTypeComboBox;
     private ChangeListener<String> updateClubNameFieldListener;
     private ChangeListener<String> updateClubDescriptionFieldListener;
 
@@ -117,12 +124,8 @@ public class CAClubs extends BaseSceneController implements Initializable {
     @FXML private Label viewClubNameLabel;
     @FXML private TextArea viewClubDescriptionTextField;
     @FXML private Label viewClubTypeLabel;
-    //Textfileds in edit club details page
-    @FXML private TextField updateClubNameField;
-    @FXML private ComboBox<String> updateClubTypeComboBox;
-    @FXML private TextArea updateClubDescriptionField;
 
-    //To track if the user has selected an item from the table
+        //To track if the user has selected an item from the table
     private boolean isItemSelectedFromTable;
 
     //==================
@@ -208,21 +211,18 @@ public class CAClubs extends BaseSceneController implements Initializable {
                 //=====================================================
 
                 if(clubsWithAdminAccessClubIds.contains(newSelection.getClubId())){
-                    System.out.println("++++++++++++++++++++++++++");
                     editClubButton.setVisible(true);
 
                     joinClubButton.setVisible(false);
                     leaveClubButton.setVisible(true);
                     appointNewAdminButton.setVisible(true);
                 } else if (clubsWithoutAdminAccessClubIds.contains(newSelection.getClubId())) {
-                    System.out.println("=============================");
                     editClubButton.setVisible(false);
 
                     joinClubButton.setVisible(false);
                     leaveClubButton.setVisible(true);
                     appointNewAdminButton.setVisible(false);
                 }else{
-                    System.out.println("------------------");
                     editClubButton.setVisible(false);
 
                     joinClubButton.setVisible(true);
@@ -252,6 +252,18 @@ public class CAClubs extends BaseSceneController implements Initializable {
 
         //Initializing event listeners for input fields in update club creation page================================
 
+        updateClubDescriptionFieldListener=((observable, oldValue, newValue) -> {
+            String validationMessage = validateTextField(newValue, CLUB_NAME_REGEX,
+                    "Name can only contain letters and Underscores.",30);
+            updateClubDescriptionLabel.setText(validationMessage);
+            setLabelStyle(validationMessage, updateClubDescriptionLabel);
+        });
+        updateClubNameFieldListener=((observable, oldValue, newValue) -> {
+            String validationMessage = validateTextField(newValue, CLUB_DESCRIPTION_REGEX,
+                    "",500);
+            updateClubNameLabel.setText(validationMessage);
+            setLabelStyle(validationMessage, updateClubNameLabel);
+        });
         //===
 
         clubAdvisorMembersNavigateTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -322,6 +334,16 @@ public class CAClubs extends BaseSceneController implements Initializable {
     private void handleNewClubDescriptionChange(){
         newClubDescriptionField.textProperty().addListener(newClubDescriptionFieldListener);
     }
+    //==============================
+    @FXML
+    private void handleUpdateClubNameChange() {
+        updateClubNameField.textProperty().addListener(updateClubNameFieldListener);
+    }
+    @FXML
+    private void handleUpdateClubDescriptionChange(){
+        updateClubDescriptionField.textProperty().addListener(updateClubDescriptionFieldListener);
+    }
+
 
 
     //A method to automatically generate clubId
