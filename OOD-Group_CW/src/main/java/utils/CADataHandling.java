@@ -107,7 +107,7 @@ public class CADataHandling {
             preparedStatement.setString(1, clubAdvisor.getClubAdvisorId());
             preparedStatement.setString(2, clubAdvisor.getName());
             preparedStatement.setString(3, clubAdvisor.getEmail());
-            preparedStatement.setString(4, clubAdvisor.getMobileNum());
+            preparedStatement.setString(4, clubAdvisor.getMobileNumber());
             preparedStatement.setString(5, clubAdvisor.getPassword());
 
             // Execute the SQL query
@@ -130,7 +130,7 @@ public class CADataHandling {
             // Set parameters for the SQL query
             preparedStatement.setString(1, updatedClubAdvisor.getName());
             preparedStatement.setString(2, updatedClubAdvisor.getEmail());
-            preparedStatement.setString(3, updatedClubAdvisor.getMobileNum());
+            preparedStatement.setString(3, updatedClubAdvisor.getMobileNumber());
             preparedStatement.setString(4, updatedClubAdvisor.getPassword());
             preparedStatement.setString(5, updatedClubAdvisor.getClubAdvisorId());
 

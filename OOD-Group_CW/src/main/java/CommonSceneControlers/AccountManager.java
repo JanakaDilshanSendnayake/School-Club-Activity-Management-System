@@ -102,7 +102,7 @@ public class AccountManager extends BaseSceneController implements Initializable
             userFirstNameField.setText(fullName[0]);
             userLastNameField.setText(fullName[1]);
             userEmailField.setText(Main.currentUser.getEmail());
-            userTeleField.setText(Main.currentUser.getMobileNum());
+            userTeleField.setText(Main.currentUser.getMobileNumber());
             userPasswordField1.setText("************");
         } else if (LoginAndRegistration.currentUserType.equals("STUDENT")) {
             userIdField.setText(Main.currentStudentUser.getStudentId());

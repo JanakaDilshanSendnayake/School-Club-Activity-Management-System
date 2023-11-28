@@ -228,13 +228,7 @@ public class CARegistration implements Initializable {
 
             //Should implement a method that takes above object as an argument and save the data in relevent table fields
 
-            //Only for testing
-            System.out.println(newClubAdvisor);
-            System.out.println(newClubAdvisor.getClubAdvisorId());
-            System.out.println(newClubAdvisor.getName());
-            System.out.println(newClubAdvisor.getEmail());
-            System.out.println(newClubAdvisor.getMobileNum());
-            System.out.println(newClubAdvisor.getPassword());
+
         }catch (Exception e){
             showErrorAlert("You have entered at least one invalid input");
         }
