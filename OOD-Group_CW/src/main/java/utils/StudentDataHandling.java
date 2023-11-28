@@ -66,7 +66,7 @@ public class StudentDataHandling {
 
     }
 
-    public static void saveStudentToDatabase(Student student) {
+    public void saveStudentToDatabase(Student student) {
         String sql = "INSERT INTO student (student_id, student_name, student_email, student_telephone, student_password) VALUES (?, ?, ?, ?, ?)";
 
         MySqlConnect databaseLink= new MySqlConnect();

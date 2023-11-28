@@ -24,7 +24,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class LoginAndRegistration implements Initializable {
+public class LoginAndRegistration extends BaseSceneController implements Initializable {
 
     //REGEX
     //Username should be a combination letters and numbers
@@ -169,36 +169,36 @@ public class LoginAndRegistration implements Initializable {
         }
     }
 
-    //Method to validate string inputs with a character limit
-    private String validateTextField(String value, String regex, String invalidMessage,int maximumCharacterLim) {
-        if (value.matches(regex)) {
-            return "Valid";
-        } else {
-            if (value.length()>maximumCharacterLim){
-                return "Maximum character limit exceeded";
-            }else{
-                return invalidMessage;}
-        }
-    }
-    //Overriding the above method. This method is to validate String inputs that doesn't have any character limit
-    private String validateTextField(String value, String regex, String invalidMessage) {
-        if (value.matches(regex)) {
-            return "Valid";
-        } else {
-            if (value.length()>30){
-                return "Maximum character limit exceeded";
-            }else{
-                return invalidMessage;}
-        }
-    }
-    //Method to validate passwords
-    private String validatePasswordField(String value,String regex) {
-        if (value.matches(regex)) {
-            return "Valid";
-        } else {
-            return "Password must be at least 8 characters long and include letters, numbers, and special characters.";
-        }
-    }
+//    //Method to validate string inputs with a character limit
+//    private String validateTextField(String value, String regex, String invalidMessage,int maximumCharacterLim) {
+//        if (value.matches(regex)) {
+//            return "Valid";
+//        } else {
+//            if (value.length()>maximumCharacterLim){
+//                return "Maximum character limit exceeded";
+//            }else{
+//                return invalidMessage;}
+//        }
+//    }
+//    //Overriding the above method. This method is to validate String inputs that doesn't have any character limit
+//    private String validateTextField(String value, String regex, String invalidMessage) {
+//        if (value.matches(regex)) {
+//            return "Valid";
+//        } else {
+//            if (value.length()>30){
+//                return "Maximum character limit exceeded";
+//            }else{
+//                return invalidMessage;}
+//        }
+//    }
+//    //Method to validate passwords
+//    private String validatePasswordField(String value,String regex) {
+//        if (value.matches(regex)) {
+//            return "Valid";
+//        } else {
+//            return "Password must be at least 8 characters long and include letters, numbers, and special characters.";
+//        }
+//    }
     //Method to check if the passwords in both password and Re enter password fields matches
     private boolean validatePasswordMatch() {
         if (newUserPasswordField1.getText().equals(newUserPasswordField2.getText())) {
@@ -212,13 +212,13 @@ public class LoginAndRegistration implements Initializable {
         }
     }
     //Method to handle the color changes of the messages that's shown the text labels
-    private void setLabelStyle(String validationMessage, Label label) {
-        if (validationMessage.equals("Valid")) {
-            label.setStyle("-fx-text-fill: green;");
-        } else {
-            label.setStyle("-fx-text-fill: red;");
-        }
-    }
+//    private void setLabelStyle(String validationMessage, Label label) {
+//        if (validationMessage.equals("Valid")) {
+//            label.setStyle("-fx-text-fill: green;");
+//        } else {
+//            label.setStyle("-fx-text-fill: red;");
+//        }
+//    }
 
     @FXML
     private void handleNewUserIdChange() {
@@ -259,28 +259,44 @@ public class LoginAndRegistration implements Initializable {
         try{
             if(currentUserType.equals("CLUB-ADVISOR")){
                 ClubAdvisor newUser=new ClubAdvisor(newId,newName,newEmail,newTele,newPassword);
-                CADataHandling.saveNewCAToDatabase(newUser);
-
-                //Only for testing
-                System.out.println(currentUserType);
-                System.out.println(newUser);
-                System.out.println(newUser.getClubAdvisorId());
-                System.out.println(newUser.getName());
-                System.out.println(newUser.getEmail());
-                System.out.println(newUser.getMobileNum());
-                System.out.println(newUser.getPassword());
+                CADataHandling obj=new CADataHandling();
+                obj.saveNewCAToDatabase(newUser);
+                showInfoAlert("You successfully registered to the system.");
             } else if (currentUserType.equals("STUDENT")) {
                 Student newUser=new Student(newId,newName,newEmail,newTele,newPassword);
-                StudentDataHandling.saveStudentToDatabase(newUser);
-
+                StudentDataHandling obj=new StudentDataHandling();
+                obj.saveStudentToDatabase(newUser);
+                showInfoAlert("You successfully registered to the system.");
             }
-
-
         }catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
             showErrorAlert(e.getMessage());
         }
 
+    }
+
+    @FXML
+    private void clearUserInputsFieldsInRegistrationPage(){
+        newUserIdField.textProperty().removeListener(newUserIdFieldListener);
+        newUserFirstNameField.textProperty().removeListener(newUserFirstNameFieldListener);
+        newUserLastNameField.textProperty().removeListener(newUserLastNameFieldListener);
+        newUserEmailField.textProperty().removeListener(newUserEmailFieldListener);
+        newUserTeleField.textProperty().removeListener(newUserTeleFieldListener);
+        newUserPasswordField1.textProperty().removeListener(newUserPassword1Listener);
+        newUserPasswordField2.textProperty().removeListener(newUserPassword2Listener);
+        newUserIdField.setText("");
+        newUserFirstNameLabel.setText("");
+        newUserLastNameField.setText("");
+        newUserEmailField.setText("");
+        newUserTeleField.setText("");
+        newUserPasswordField1.setText("");
+        newUserPasswordField2.setText("");
+        newUserIdLabel.setText("");
+        newUserFirstNameLabel.setText("");
+        newUserEmailLabel.setText("");
+        newUserTeleLabel.setText("");
+        newUserPasswordField1Label.setText("");
+        newUserPasswordField2Label.setText("");
     }
     @FXML
     private TextField loginUserNameField;
@@ -318,13 +334,7 @@ public class LoginAndRegistration implements Initializable {
             showErrorAlert("The login credentials you entered are wrong");
         }
     }
-    private void showErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+
 
     public static String currentUserType;
 
@@ -377,7 +387,11 @@ public class LoginAndRegistration implements Initializable {
     }
     @FXML
     private void backToLoginFromRegistration(){
-        loginPage.toFront();
+        if(showConfirmationAlert("Are you sure that you want cancel the registration process? ")){
+            loginPage.toFront();
+            clearUserInputsFieldsInRegistrationPage();
+        }
+
     }
 
 
