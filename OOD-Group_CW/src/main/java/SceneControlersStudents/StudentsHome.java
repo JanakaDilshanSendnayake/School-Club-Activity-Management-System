@@ -1,4 +1,6 @@
 package SceneControlersStudents;
 
-public class StudentsHome {
+import CommonSceneControlers.BaseSceneController;
+
+public class StudentsHome extends BaseSceneController {
 }

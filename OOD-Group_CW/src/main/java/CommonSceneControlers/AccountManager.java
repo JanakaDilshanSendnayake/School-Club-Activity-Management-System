@@ -287,7 +287,11 @@ public class AccountManager extends BaseSceneController implements Initializable
     @FXML
     private void loadHomeFromAccountManger(ActionEvent actionEvent){
         if (!onGoingAccountDetailsUpdate || showConfirmationAlert("Are you sure you want to cancel the ongoing update?")) {
-            loadHome(actionEvent);
+            if(LoginAndRegistration.currentUserType.equals("CLUB-ADVISOR")) {
+                loadHome(actionEvent);
+            }else if(LoginAndRegistration.currentUserType.equals("STUDENT")) {
+                loadStudentHome(actionEvent);
+            }
         }
     }
 

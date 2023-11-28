@@ -20,125 +20,6 @@
          <children>
             <StackPane prefHeight="600.0" prefWidth="750.0">
                <children>
-                  <AnchorPane prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #DCDCDC;">
-                     <children>
-                        <TableView layoutX="22.0" layoutY="143.0" prefHeight="200.0" prefWidth="709.0">
-                           <columns>
-                              <TableColumn prefWidth="189.6000518798828" text="Event" />
-                              <TableColumn prefWidth="157.5999755859375" text="CLUB " />
-                              <TableColumn prefWidth="253.60003662109375" text="Descrption" />
-                              <TableColumn prefWidth="100.7999267578125" text="Date" />
-                           </columns>
-                        </TableView>
-                        <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Navigate Events" textAlignment="RIGHT">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Group layoutX="22.0" layoutY="70.0">
-                           <children>
-                              <TextField layoutX="31.0" layoutY="1.0" prefHeight="34.0" prefWidth="253.0" style="-fx-background-color: white;" />
-                              <ImageView fitHeight="20.0" fitWidth="20.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../Icons/home.png" />
-                                 </image>
-                              </ImageView>
-                              <Button layoutX="296.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="102.0">
-                                 <graphic>
-                                    <Label prefHeight="18.0" prefWidth="72.0" text="SEARCH">
-                                       <font>
-                                          <Font name="Times New Roman Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                 </graphic>
-                              </Button>
-                           </children>
-                        </Group>
-                        <Button layoutX="514.0" layoutY="456.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0">
-                           <graphic>
-                              <Group>
-                                 <children>
-                                    <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="HOME">
-                                       <font>
-                                          <Font name="Times New Roman Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../Icons/home.png" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                              </Group>
-                           </graphic>
-                        </Button>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #DCDCDC;">
-                     <children>
-                        <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Event Description" textAlignment="RIGHT">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="caNaviEvents" prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #DCDCDC;">
-                     <children>
-                        <TableView fx:id="eventNavigateTable" layoutX="18.0" layoutY="151.0" prefHeight="200.0" prefWidth="714.0">
-                           <columns>
-                              <TableColumn fx:id="eventNameColumn" prefWidth="250.0" text="EVENT NAME" />
-                              <TableColumn fx:id="eventIdColumn" prefWidth="139.99993896484375" text="EVENT ID" />
-                              <TableColumn fx:id="eventDateColumn" prefWidth="126.4000244140625" text="DATE" />
-                              <TableColumn fx:id="eventVenueColumn" prefWidth="126.4000244140625" text="DATE" />
-                           </columns>
-                        </TableView>
-                        <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Navigate Events" textAlignment="RIGHT">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Group layoutX="56.0" layoutY="49.0">
-                           <children>
-                              <TextField layoutX="31.0" layoutY="1.0" prefHeight="34.0" prefWidth="253.0" style="-fx-background-color: white;" />
-                              <ImageView fitHeight="20.0" fitWidth="20.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../Icons/search.png" />
-                                 </image>
-                              </ImageView>
-                              <Button layoutX="296.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="102.0">
-                                 <graphic>
-                                    <Label prefHeight="18.0" prefWidth="72.0" text="SEARCH">
-                                       <font>
-                                          <Font name="Times New Roman Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                 </graphic>
-                              </Button>
-                           </children>
-                        </Group>
-                        <Button layoutX="507.0" layoutY="417.0" mnemonicParsing="false" onAction="#viewEventDetails" prefHeight="44.0" prefWidth="126.0">
-                           <graphic>
-                              <Group>
-                                 <children>
-                                    <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="VIEW">
-                                       <font>
-                                          <Font name="Times New Roman Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../Icons/expand-screen.png" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                              </Group>
-                           </graphic>
-                        </Button>
-                        <ComboBox fx:id="navigateEventsPageComboBox" layoutX="611.0" layoutY="51.0" prefHeight="26.0" prefWidth="90.0" promptText="Options" />
-                        <ComboBox fx:id="navigateEventsPageComboBox2" layoutX="486.0" layoutY="86.0" prefHeight="26.0" prefWidth="90.0" promptText="Options" />
-                     </children>
-                  </AnchorPane>
                   <AnchorPane fx:id="caViewEvents" prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #DCDCDC;">
                      <children>
                         <Label prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="View Event Details" textAlignment="RIGHT">
@@ -178,13 +59,71 @@
                         </Button>
                      </children>
                   </AnchorPane>
+                  <AnchorPane fx:id="caNaviEvents" prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #DCDCDC;">
+                     <children>
+                        <TableView fx:id="eventNavigateTable" layoutX="25.0" layoutY="177.0" prefHeight="350.0" prefWidth="700.0">
+                           <columns>
+                              <TableColumn fx:id="eventNameColumn" prefWidth="250.0" text="EVENT NAME" />
+                              <TableColumn fx:id="eventIdColumn" prefWidth="150.0" text="EVENT ID" />
+                              <TableColumn fx:id="eventDateColumn" prefWidth="150.0" text="DATE" />
+                              <TableColumn fx:id="eventVenueColumn" prefWidth="150.0" text="DATE" />
+                           </columns>
+                        </TableView>
+                        <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Navigate Events" textAlignment="RIGHT">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Group layoutX="56.0" layoutY="49.0">
+                           <children>
+                              <TextField layoutX="31.0" layoutY="1.0" prefHeight="34.0" prefWidth="253.0" style="-fx-background-color: white;" />
+                              <ImageView fitHeight="20.0" fitWidth="20.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../Icons/search.png" />
+                                 </image>
+                              </ImageView>
+                              <Button layoutX="296.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="102.0">
+                                 <graphic>
+                                    <Label prefHeight="18.0" prefWidth="72.0" text="SEARCH">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </Group>
+                        <Button layoutX="568.0" layoutY="542.0" mnemonicParsing="false" onAction="#viewEventDetails" prefHeight="44.0" prefWidth="126.0">
+                           <graphic>
+                              <Group>
+                                 <children>
+                                    <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="VIEW">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../Icons/expand-screen.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </Group>
+                           </graphic>
+                        </Button>
+                        <ComboBox fx:id="navigateEventsPageComboBox" layoutX="435.0" layoutY="126.0" prefHeight="26.0" prefWidth="150.0" promptText="Options" />
+                        <ComboBox fx:id="navigateEventsPageComboBox2" layoutX="148.0" layoutY="126.0" prefHeight="26.0" prefWidth="150.0" promptText="Options" />
+                        <Label layoutX="71.0" layoutY="131.0" prefHeight="18.0" prefWidth="69.0" text="Sort Clubs:" />
+                        <Label layoutX="359.0" layoutY="130.0" prefHeight="18.0" prefWidth="69.0" text="Select club:" />
+                     </children>
+                  </AnchorPane>
                </children>
             </StackPane>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="sidebar" prefHeight="600.0" prefWidth="200.0">
          <children>
-            <Button layoutX="25.0" layoutY="156.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" AnchorPane.bottomAnchor="393.6" AnchorPane.topAnchor="156.0">
+            <Button layoutX="24.0" layoutY="185.0" mnemonicParsing="false" onAction="#loadStudentHome" prefHeight="50.0" prefWidth="150.0" AnchorPane.bottomAnchor="364.6" AnchorPane.topAnchor="185.0">
                <graphic>
                   <Group>
                      <children>
@@ -202,7 +141,7 @@
                   </Group>
                </graphic>
             </Button>
-            <Button layoutX="25.0" layoutY="216.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0">
+            <Button layoutX="24.0" layoutY="245.0" mnemonicParsing="false" onAction="#loadStudentClubs" prefHeight="50.0" prefWidth="150.0">
                <graphic>
                   <Group>
                      <children>
@@ -220,7 +159,7 @@
                   </Group>
                </graphic>
             </Button>
-            <Button layoutX="25.0" layoutY="276.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0">
+            <Button layoutX="24.0" layoutY="305.0" mnemonicParsing="false" onAction="#loadStudentEvents" prefHeight="50.0" prefWidth="150.0">
                <graphic>
                   <Group>
                      <children>
@@ -238,7 +177,7 @@
                   </Group>
                </graphic>
             </Button>
-            <Button layoutX="25.0" layoutY="336.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0">
+            <Button layoutX="24.0" layoutY="365.0" mnemonicParsing="false" onAction="#loadStudentAccounts" prefHeight="50.0" prefWidth="150.0">
                <graphic>
                   <Group>
                      <children>
@@ -249,7 +188,25 @@
                         </Label>
                         <ImageView fitHeight="23.0" fitWidth="22.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../Icons/user.png" />
+                              <Image url="@../../Icons/user-gear.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </graphic>
+            </Button>
+            <ImageView fitHeight="125.0" fitWidth="97.0" layoutX="52.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/child-head.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="74.0" layoutY="542.0" mnemonicParsing="false" onAction="#signOut" prefHeight="44.0" prefWidth="50.0">
+               <graphic>
+                  <Group>
+                     <children>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/power-button-off.png" />
                            </image>
                         </ImageView>
                      </children>

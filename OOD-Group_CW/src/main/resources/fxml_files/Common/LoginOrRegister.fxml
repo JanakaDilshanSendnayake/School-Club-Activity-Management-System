@@ -148,87 +148,6 @@
                   </Button>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="startPage" prefHeight="600.0" prefWidth="950.0" style="-fx-background-color: #D3D3D3;">
-               <children>
-                  <AnchorPane layoutX="375.0" prefHeight="600.0" prefWidth="650.0" style="-fx-background-color: #D5D6F2;" stylesheets="@../../css/Template.css" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="149.60000000000002">
-                     <children>
-                        <Button layoutX="38.0" layoutY="241.0" mnemonicParsing="false" prefHeight="179.0" prefWidth="182.0">
-                           <graphic>
-                              <Group>
-                                 <children>
-                                    <ImageView fitHeight="137.0" fitWidth="144.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../Icons/chalkboard-user.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Label layoutX="10.0" layoutY="137.0" text="ADMINISTRAOTR">
-                                       <font>
-                                          <Font name="Times New Roman Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </Group>
-                           </graphic>
-                        </Button>
-                        <Button layoutX="234.0" layoutY="241.0" mnemonicParsing="false" onAction="#selectClubAdvisor" prefHeight="179.0" prefWidth="182.0">
-                           <graphic>
-                              <Group>
-                                 <children>
-                                    <ImageView fitHeight="137.0" fitWidth="144.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../Icons/club%20advisor.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Label layoutX="10.0" layoutY="137.0" text="CLUB-ADVISOR">
-                                       <font>
-                                          <Font name="Times New Roman Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </Group>
-                           </graphic>
-                        </Button>
-                        <Button layoutX="431.0" layoutY="241.0" mnemonicParsing="false" onAction="#selectStudent" prefHeight="179.0" prefWidth="182.0">
-                           <graphic>
-                              <Group>
-                                 <children>
-                                    <ImageView fitHeight="137.0" fitWidth="144.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../Icons/child-head.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Label layoutX="26.0" layoutY="133.0" prefHeight="33.0" prefWidth="90.0" text="STUDENTS">
-                                       <font>
-                                          <Font name="Times New Roman Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </Group>
-                           </graphic>
-                        </Button>
-                        <Group layoutX="224.0" layoutY="20.0">
-                           <children>
-                              <ImageView fitHeight="137.0" fitWidth="144.0" layoutX="33.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../Icons/daycare.png" />
-                                 </image>
-                              </ImageView>
-                              <Label layoutY="137.0" prefHeight="51.0" prefWidth="202.0" text="WELCOME TO SACMS">
-                                 <font>
-                                    <Font name="Times New Roman Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </Group>
-                        <Label layoutX="196.0" layoutY="449.0" prefHeight="19.0" prefWidth="258.0" text="SELECT YOUR ROLE TO LOGIN">
-                           <font>
-                              <Font name="Times New Roman Bold" size="16.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </AnchorPane>
             <AnchorPane fx:id="loginPage" prefHeight="600.0" prefWidth="950.0" style="-fx-background-color: #D3D3D3;" stylesheets="@../../css/Template.css">
                <children>
                   <AnchorPane layoutX="200.0" prefHeight="600.0" prefWidth="650.0" style="-fx-background-color: #D5D6F2;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="0.0">
@@ -298,6 +217,69 @@
                            </graphic>
                         </Button>
                         <Label fx:id="loginPageTextlabel1" layoutX="258.0" layoutY="152.0" text="STUDENT LOGIN">
+                           <font>
+                              <Font name="Times New Roman Bold" size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="startPage" prefHeight="600.0" prefWidth="950.0" style="-fx-background-color: #D3D3D3;">
+               <children>
+                  <AnchorPane layoutX="375.0" prefHeight="600.0" prefWidth="650.0" style="-fx-background-color: #D5D6F2;" stylesheets="@../../css/Template.css" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="149.60000000000002">
+                     <children>
+                        <Button layoutX="105.0" layoutY="241.0" mnemonicParsing="false" onAction="#selectClubAdvisor" prefHeight="179.0" prefWidth="182.0">
+                           <graphic>
+                              <Group>
+                                 <children>
+                                    <ImageView fitHeight="137.0" fitWidth="144.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../Icons/club%20advisor.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="10.0" layoutY="137.0" text="CLUB-ADVISOR">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Group>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="363.0" layoutY="241.0" mnemonicParsing="false" onAction="#selectStudent" prefHeight="179.0" prefWidth="182.0">
+                           <graphic>
+                              <Group>
+                                 <children>
+                                    <ImageView fitHeight="137.0" fitWidth="144.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../Icons/child-head.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="26.0" layoutY="133.0" prefHeight="33.0" prefWidth="90.0" text="STUDENTS">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Group>
+                           </graphic>
+                        </Button>
+                        <Group layoutX="224.0" layoutY="20.0">
+                           <children>
+                              <ImageView fitHeight="137.0" fitWidth="144.0" layoutX="33.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../Icons/daycare.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutY="137.0" prefHeight="51.0" prefWidth="202.0" text="WELCOME TO SACMS">
+                                 <font>
+                                    <Font name="Times New Roman Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Group>
+                        <Label layoutX="196.0" layoutY="449.0" prefHeight="19.0" prefWidth="258.0" text="SELECT YOUR ROLE TO LOGIN">
                            <font>
                               <Font name="Times New Roman Bold" size="16.0" />
                            </font>

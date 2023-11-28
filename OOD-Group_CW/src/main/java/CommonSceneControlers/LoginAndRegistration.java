@@ -278,7 +278,7 @@ public class LoginAndRegistration extends BaseSceneController implements Initial
             }
         } else if (currentUserType.equals("STUDENT")&&object2.studentLogin(loginUserNameField.getText(),loginPasswordField.getText())) {
             try {
-                root = FXMLLoader.load(getClass().getResource("/fxml_files/Student/Menu-Student.fxml"));
+                root = FXMLLoader.load(getClass().getResource("/fxml_files/Student/Menu-Students.fxml"));
                 scene = new Scene(root);
                 stage =(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
                 stage.setScene(scene);
