@@ -95,6 +95,8 @@ public class LoginAndRegistration implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         startPage.toFront();
+        loginPageTextlabel.setVisible(false);
+        loginPageTextlabel1.setVisible(false);
 //        Platform.runLater(() -> userRegistrationPane.requestFocus());
 
         // Initializing Event listener for Club Advisor ID
@@ -291,12 +293,9 @@ public class LoginAndRegistration implements Initializable {
     private void login(ActionEvent actionEvent){
         CADataHandling object=new CADataHandling();
         StudentDataHandling object2=new StudentDataHandling();
-        System.out.println(loginUserNameField.getText());
-        System.out.println(loginPasswordField.getText());
-        //System.out.println(object.clubAdvisorLogin(loginUserNameField.getText(),loginPasswordField.getText()));
         if(currentUserType.equals("CLUB-ADVISOR") && object.clubAdvisorLogin(loginUserNameField.getText(),loginPasswordField.getText())){
             try {
-                root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Clubs-ClubAdvisor.fxml"));
+                root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Menu-ClubAdvisor.fxml"));
                 scene = new Scene(root);
                 stage =(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
                 stage.setScene(scene);
@@ -306,12 +305,13 @@ public class LoginAndRegistration implements Initializable {
             }
         } else if (currentUserType.equals("STUDENT")&&object2.studentLogin(loginUserNameField.getText(),loginPasswordField.getText())) {
             try {
-                root = FXMLLoader.load(getClass().getResource("/fxml_files/Student/Events-Students.fxml"));
+                root = FXMLLoader.load(getClass().getResource("/fxml_files/Student/Menu-Student.fxml"));
                 scene = new Scene(root);
                 stage =(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
                 stage.setScene(scene);
                 stage.show();
             }catch (Exception e){
+                e.printStackTrace();;
                 showErrorAlert(e.getMessage());
             }
         }else {
@@ -335,6 +335,8 @@ public class LoginAndRegistration implements Initializable {
     @FXML
     private Label loginPageTextlabel;
     @FXML
+    private Label loginPageTextlabel1;
+    @FXML
     private Label registerPageTextLabel;
     @FXML
     private AnchorPane loginPage;
@@ -344,7 +346,8 @@ public class LoginAndRegistration implements Initializable {
     @FXML
     private void selectClubAdvisor(){
         currentUserType="CLUB-ADVISOR";
-        loginPageTextlabel.setText("CLUB ADVISOR LOGIN");
+        loginPageTextlabel.setVisible(true);
+        loginPageTextlabel1.setVisible(false);
         registerPageTextLabel.setText("Club Advisor Registration");
         Image clubAdvisorIcon = new Image(getClass().getResourceAsStream("/Icons/club advisor.png"));
         loginPageIcon.setImage(clubAdvisorIcon);
@@ -355,7 +358,8 @@ public class LoginAndRegistration implements Initializable {
     @FXML
     private void selectStudent(){
         currentUserType="STUDENT";
-        loginPageTextlabel.setText("STUDENT LOGIN");
+        loginPageTextlabel.setVisible(false);
+        loginPageTextlabel1.setVisible(true);
         registerPageTextLabel.setText("Student Registration");
         Image studentIcon = new Image(getClass().getResourceAsStream("/Icons/child-head.png"));
         loginPageIcon.setImage(studentIcon);

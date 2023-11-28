@@ -13,7 +13,7 @@
    <children>
       <AnchorPane fx:id="sidebar" prefHeight="600.0" prefWidth="200.0">
          <children>
-            <Button layoutX="25.0" layoutY="156.0" mnemonicParsing="false" onAction="#loadHome" prefHeight="50.0" prefWidth="150.0" AnchorPane.bottomAnchor="393.6" AnchorPane.topAnchor="156.0">
+            <Button layoutX="25.0" layoutY="156.0" mnemonicParsing="false" onAction="#loadHomeFromAccountManger" prefHeight="50.0" prefWidth="150.0" AnchorPane.bottomAnchor="393.6" AnchorPane.topAnchor="156.0">
                <graphic>
                   <Group>
                      <children>
@@ -31,7 +31,7 @@
                   </Group>
                </graphic>
             </Button>
-            <Button layoutX="25.0" layoutY="216.0" mnemonicParsing="false" onAction="#loadClubs" prefHeight="50.0" prefWidth="150.0">
+            <Button layoutX="25.0" layoutY="216.0" mnemonicParsing="false" onAction="#loadClubsFromAccountManger" prefHeight="50.0" prefWidth="150.0">
                <graphic>
                   <Group>
                      <children>
@@ -49,7 +49,7 @@
                   </Group>
                </graphic>
             </Button>
-            <Button layoutX="25.0" layoutY="276.0" mnemonicParsing="false" onAction="#loadEvents" prefHeight="50.0" prefWidth="150.0">
+            <Button layoutX="25.0" layoutY="276.0" mnemonicParsing="false" onAction="#loadEventsFromAccountManger" prefHeight="50.0" prefWidth="150.0">
                <graphic>
                   <Group>
                      <children>
@@ -67,7 +67,7 @@
                   </Group>
                </graphic>
             </Button>
-            <Button layoutX="25.0" layoutY="336.0" mnemonicParsing="false" onAction="#loadReports" prefHeight="50.0" prefWidth="150.0">
+            <Button layoutX="25.0" layoutY="336.0" mnemonicParsing="false" onAction="#loadReportsFromAccountManger" prefHeight="50.0" prefWidth="150.0">
                <graphic>
                   <Group>
                      <children>
@@ -85,7 +85,7 @@
                   </Group>
                </graphic>
             </Button>
-            <Button layoutX="25.0" layoutY="396.0" mnemonicParsing="false" onAction="#loadAccounts" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #7476a6;">
+            <Button layoutX="25.0" layoutY="396.0" mnemonicParsing="false" onAction="#loadAccountsFromAccountManger" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #7476a6;">
                <graphic>
                   <Group>
                      <children>
@@ -108,6 +108,19 @@
                   <Image url="@../../Icons/club%20advisor.png" />
                </image>
             </ImageView>
+            <Button layoutX="74.0" layoutY="542.0" mnemonicParsing="false" onAction="#signOut" prefHeight="44.0" prefWidth="50.0">
+               <graphic>
+                  <Group>
+                     <children>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/power-button-off.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </graphic>
+            </Button>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="userRegistrationPane" layoutX="200.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="750.0" style="-fx-background-color: #D3D3D3;" stylesheets="@../../css/Template.css">
@@ -164,7 +177,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label layoutX="113.0" layoutY="45.0" prefHeight="34.0" prefWidth="512.0" style="-fx-background-color: #D5D6F2;" text="Your User Name" textAlignment="RIGHT">
+            <Label layoutX="113.0" layoutY="45.0" prefHeight="34.0" prefWidth="512.0" style="-fx-background-color: #D5D6F2;" text="Your User Name (Not changable)" textAlignment="RIGHT">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -204,7 +217,7 @@
                   <Label fx:id="userLastNameLabel" layoutX="100.0" layoutY="26.0" prefHeight="18.0" prefWidth="250.0" />
                </children>
             </Group>
-            <Button fx:id="cancelTheUpdateButton" layoutX="516.0" layoutY="542.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0">
+            <Button fx:id="cancelTheUpdateButton" layoutX="516.0" layoutY="542.0" mnemonicParsing="false" onAction="#cancel" prefHeight="44.0" prefWidth="126.0">
                <graphic>
                   <Group>
                      <children>
@@ -222,7 +235,7 @@
                   </Group>
                </graphic>
             </Button>
-            <Button fx:id="saveButton" layoutX="652.0" layoutY="498.0" mnemonicParsing="false" onAction="#saveTheUpdate" prefHeight="44.0" prefWidth="126.0">
+            <Button fx:id="saveButton" layoutX="652.0" layoutY="542.0" mnemonicParsing="false" onAction="#saveTheUpdate" prefHeight="44.0" prefWidth="126.0">
                <graphic>
                   <Group>
                      <children>
@@ -240,6 +253,7 @@
                   </Group>
                </graphic>
             </Button>
+            <Label layoutX="14.0" layoutY="564.0" prefHeight="18.0" prefWidth="313.0" text="*Press change button to unlock text fields to update them" />
          </children>
       </AnchorPane>
    </children>

@@ -1,9 +1,14 @@
 package CommonSceneControlers;
 
 import javafx.beans.value.ChangeListener;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import main.Main;
 import stake_holders.ClubAdvisor;
 import stake_holders.Student;
@@ -86,6 +91,9 @@ public class AccountManager extends BaseSceneController implements Initializable
 
         saveButton.setVisible(false);
         cancelTheUpdateButton.setVisible(false);
+        updateButton.setVisible(true);
+
+        onGoingAccountDetailsUpdate=false;
 
 
         if(LoginAndRegistration.currentUserType.equals("CLUB-ADVISOR")){
@@ -95,17 +103,15 @@ public class AccountManager extends BaseSceneController implements Initializable
             userLastNameField.setText(fullName[1]);
             userEmailField.setText(Main.currentUser.getEmail());
             userTeleField.setText(Main.currentUser.getMobileNum());
-            userPasswordField1.setText(Main.currentUser.getPassword());
-            userPasswordField2.setText(Main.currentUser.getPassword());
+            userPasswordField1.setText("************");
         } else if (LoginAndRegistration.currentUserType.equals("STUDENT")) {
             userIdField.setText(Main.currentStudentUser.getStudentId());
-            String[] fullName=Main.currentStudentUser.getName().split("-");
+            String[] fullName=Main.currentStudentUser.getName().split("_");
             userFirstNameField.setText(fullName[0]);
             userLastNameField.setText(fullName[1]);
             userEmailField.setText(Main.currentStudentUser.getEmail());
             userTeleField.setText(Main.currentStudentUser.getMobileNumber());
-            userPasswordField1.setText(Main.currentStudentUser.getPassword());
-            userPasswordField2.setText(Main.currentStudentUser.getPassword());
+            userPasswordField1.setText("************");
         }
 
 
@@ -185,14 +191,23 @@ public class AccountManager extends BaseSceneController implements Initializable
     @FXML private Button saveButton;
     @FXML private Button cancelTheUpdateButton;
     @FXML private Button ResetThePassword;
+    private boolean onGoingAccountDetailsUpdate;
 
     @FXML
     private void update(){
-        if(showConfirmationAlert("are you sure that you want to update account details?")){
+        if(showConfirmationAlert("Are you sure that you want to start updating account details?")){
+            if (LoginAndRegistration.currentUserType.equals("CLUB-ADVISOR")) {
+                userPasswordField1.setText(Main.currentUser.getPassword());
+                userPasswordField2.setText(Main.currentUser.getPassword());
+            } else if (LoginAndRegistration.currentUserType.equals("STUDENT")) {
+                userPasswordField1.setText(Main.currentStudentUser.getPassword());
+                userPasswordField2.setText(Main.currentStudentUser.getPassword());
+            }
             handleNewUserFirstNameChange();
             handleNewUserLastNameChange();
             handleNewUserEmailChange();
             handleNewUserTeleChange();
+            onGoingAccountDetailsUpdate=true;
 
             userFirstNameField.setEditable(true);
             userLastNameField.setEditable(true);
@@ -203,83 +218,60 @@ public class AccountManager extends BaseSceneController implements Initializable
             userPasswordField2Label2.setVisible(true);
             saveButton.setVisible(true);
             cancelTheUpdateButton.setVisible(true);
+            updateButton.setVisible(false);
         }
 
     }
 
     @FXML
-    private void saveTheUpdate(){
-        String userId=userIdField.getText();
-        String newName= userFirstNameField.getText().toLowerCase()+"_"+userLastNameField.getText().toLowerCase();
-        String newEmail=userEmailField.getText();
-        String newTele=userTeleField.getText();
-        String newPassword;
-        if(validatePasswordMatch()){newPassword=userPasswordField1.getText();}else{newPassword="invalid";}
-        try{
-            if(LoginAndRegistration.currentUserType.equals("CLUB-ADVISOR")){
-                ClubAdvisor updatedUser=new ClubAdvisor(newName,newEmail,newTele,newPassword);
-                updatedUser.setClubAdvisorId(userId);
-                CADataHandling obj=new CADataHandling();
-                obj.updateClubAdvisorInDatabase(updatedUser);
-                Main.currentUser=updatedUser;
-
-                //Only for testing
-                System.out.println(LoginAndRegistration.currentUserType);
-                System.out.println(updatedUser);
-                System.out.println(updatedUser.getClubAdvisorId());
-                System.out.println(updatedUser.getName());
-                System.out.println(updatedUser.getEmail());
-                System.out.println(updatedUser.getMobileNum());
-                System.out.println(updatedUser.getPassword());
-
-            } else if (LoginAndRegistration.currentUserType.equals("STUDENT")) {
-                Student updatedUser=new Student(newName,newEmail,newTele,newPassword);
-                updatedUser.setStudentId(userId);
-                StudentDataHandling obj= new StudentDataHandling();
-                obj.updateStudentInDatabase(updatedUser);
-                Main.currentStudentUser=updatedUser;
-
+    private void saveTheUpdate(ActionEvent actionEvent){
+        if (showConfirmationAlert("Are you sure that you want to save these updated details?")) {
+            String userId = userIdField.getText();
+            String newName = userFirstNameField.getText().toLowerCase() + "_" + userLastNameField.getText().toLowerCase();
+            String newEmail = userEmailField.getText();
+            String newTele = userTeleField.getText();
+            String newPassword;
+            if (validatePasswordMatch()) {
+                newPassword = userPasswordField1.getText();
+            } else {
+                newPassword = "invalid";
             }
+            try {
+                if (LoginAndRegistration.currentUserType.equals("CLUB-ADVISOR")) {
+                    ClubAdvisor updatedUser = new ClubAdvisor(newName, newEmail, newTele, newPassword);
+                    updatedUser.setClubAdvisorId(userId);
+                    CADataHandling obj = new CADataHandling();
+                    obj.updateClubAdvisorInDatabase(updatedUser);
+                    Main.currentUser = updatedUser;
+                    showInfoAlert("Updated details saved successfully");
+                    loadAccounts(actionEvent);
+                } else if (LoginAndRegistration.currentUserType.equals("STUDENT")) {
+                    Student updatedUser = new Student(newName, newEmail, newTele, newPassword);
+                    updatedUser.setStudentId(userId);
+                    StudentDataHandling obj = new StudentDataHandling();
+                    obj.updateStudentInDatabase(updatedUser);
+                    Main.currentStudentUser = updatedUser;
+                    loadStudentAccounts(actionEvent);
+                    showInfoAlert("Updated details saved successfully");
+                }
 
 
-        }catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
-            showErrorAlert(e.getMessage());
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+                showErrorAlert(e.getMessage());
+            }
         }
-
-
     }
-
-    //==============================================================
-//    private String validateTextField(String value, String regex, String invalidMessage,int maximumCharacterLim) {
-//        if (value.matches(regex)) {
-//            return "Valid";
-//        } else {
-//            if (value.length()>maximumCharacterLim){
-//                return "Maximum character limit exceeded";
-//            }else{
-//                return invalidMessage;}
-//        }
-//    }
-//    //Overriding the above method. This method is to validate String inputs that doesn't have any character limit
-//    private String validateTextField(String value, String regex, String invalidMessage) {
-//        if (value.matches(regex)) {
-//            return "Valid";
-//        } else {
-//            if (value.length()>30){
-//                return "Maximum character limit exceeded";
-//            }else{
-//                return invalidMessage;}
-//        }
-//    }
-//    //Method to validate passwords
-//    private String validatePasswordField(String value,String regex) {
-//        if (value.matches(regex)) {
-//            return "Valid";
-//        } else {
-//            return "Password must be at least 8 characters long and include letters, numbers, and special characters.";
-//        }
-//    }
+    @FXML
+    private void cancel(ActionEvent actionEvent){
+        if(showConfirmationAlert("Are you sure that you want cancel the ongoing update?")) {
+            if(LoginAndRegistration.currentUserType.equals("CLUB-ADVISOR")) {
+                loadAccounts(actionEvent);
+            }else if(LoginAndRegistration.currentUserType.equals("STUDENT")) {
+                loadStudentAccounts(actionEvent);
+            }
+        }
+    }
 
     private boolean validatePasswordMatch() {
         if (userPasswordField1.getText().equals(userPasswordField2.getText())) {
@@ -292,32 +284,51 @@ public class AccountManager extends BaseSceneController implements Initializable
             return false;
         }
     }
+    @FXML
+    private void loadHomeFromAccountManger(ActionEvent actionEvent){
+        if (!onGoingAccountDetailsUpdate || showConfirmationAlert("Are you sure you want to cancel the ongoing update?")) {
+            loadHome(actionEvent);
+        }
+    }
 
-//    private void setLabelStyle(String validationMessage, Label label) {
-//        if (validationMessage.equals("Valid")) {
-//            label.setStyle("-fx-text-fill: green;");
-//        } else {
-//            label.setStyle("-fx-text-fill: red;");
-//        }
-//    }
-//
-//    private void showErrorAlert(String message) {
-//        Alert alert = new Alert(Alert.AlertType.ERROR);
-//        alert.setTitle("Error");
-//        alert.setHeaderText(null);
-//        alert.setContentText(message);
-//        alert.showAndWait();
-//    }
-//    private boolean showConfirmationAlert(String message){
-//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//        alert.setTitle("Confirmation");
-//        alert.setHeaderText(null);
-//        alert.setContentText(message);
-//        Optional<ButtonType> result = alert.showAndWait();
-//        return result.isPresent() && result.get() == ButtonType.OK;
-//    }
+    @FXML
+    private void loadClubsFromAccountManger(ActionEvent actionEvent){
+        if (!onGoingAccountDetailsUpdate || showConfirmationAlert("Are you sure you want to cancel the ongoing update?")) {
+            if(LoginAndRegistration.currentUserType.equals("CLUB-ADVISOR")) {
+                loadClubs(actionEvent);
+            }else if(LoginAndRegistration.currentUserType.equals("STUDENT")) {
+                loadStudentClubs(actionEvent);
+            }
+        }
+    }
 
+    @FXML
+    private void loadEventsFromAccountManger(ActionEvent actionEvent){
+        if (!onGoingAccountDetailsUpdate || showConfirmationAlert("Are you sure you want to cancel the ongoing update?")) {
+            if(LoginAndRegistration.currentUserType.equals("CLUB-ADVISOR")) {
+                loadEvents(actionEvent);
+            }else if(LoginAndRegistration.currentUserType.equals("STUDENT")) {
+                loadStudentEvents(actionEvent);
+            }
+        }
+    }
 
+    @FXML
+    private void loadReportsFromAccountManger(ActionEvent actionEvent){
+        if (!onGoingAccountDetailsUpdate || showConfirmationAlert("Are you sure you want to cancel the ongoing update?")) {
+            loadReports(actionEvent);
+        }
+    }
 
+    @FXML
+    private void loadAccountsFromAccountManger(ActionEvent actionEvent){
+        if (!onGoingAccountDetailsUpdate || showConfirmationAlert("Are you sure you want to cancel the ongoing update?")) {
+            if(LoginAndRegistration.currentUserType.equals("CLUB-ADVISOR")) {
+                loadAccounts(actionEvent);
+            }else if(LoginAndRegistration.currentUserType.equals("STUDENT")) {
+                loadStudentAccounts(actionEvent);
+            }
+        }
+    }
 
 }

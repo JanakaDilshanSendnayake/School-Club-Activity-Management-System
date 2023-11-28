@@ -17,9 +17,9 @@ import java.util.Optional;
 
 public class BaseSceneController {
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
+    public Stage stage;
+    public Scene scene;
+    public Parent root;
     public void loadHome(ActionEvent actionEvent){
         try{root = FXMLLoader.load(getClass().getResource("/fxml_files/ClubAdvisor/Menu-ClubAdvisor.fxml"));
             scene = new Scene(root);
@@ -58,8 +58,55 @@ public class BaseSceneController {
             stage =(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();}catch (Exception e){}
+    }
+    public void signOut(ActionEvent actionEvent){
+        if(showConfirmationAlert("Are you sure that you want to sign out from the system?")){
+            try {
+                root = FXMLLoader.load(getClass().getResource("/fxml_files/Common/LoginOrRegister.fxml"));
+                scene = new Scene(root);
+                stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (Exception e) {
+            }
+        }
+    }
+    //=========================================================================================
+    public void loadStudentHome(ActionEvent actionEvent){
+        try{root = FXMLLoader.load(getClass().getResource("/fxml_files/Student/Menu-Students.fxml"));
+            scene = new Scene(root);
+            stage =(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();}catch (Exception e){}
 
     }
+    public void loadStudentClubs(ActionEvent actionEvent){
+        try{root = FXMLLoader.load(getClass().getResource("/fxml_files/Student/Clubs-Students.fxml"));
+            scene = new Scene(root);
+            stage =(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();}catch (Exception e){}
+
+    }
+    public void loadStudentEvents(ActionEvent actionEvent){
+        try{root = FXMLLoader.load(getClass().getResource("/fxml_files/Student/Events-Students.fxml"));
+            scene = new Scene(root);
+            stage =(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();}catch (Exception e){}
+
+    }
+    public void loadStudentAccounts(ActionEvent actionEvent){
+        try{root = FXMLLoader.load(getClass().getResource("/fxml_files/Student/Account-Student.fxml"));
+            scene = new Scene(root);
+            stage =(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();}catch (Exception e){}
+    }
+
+
+
+
     //Methods to validate the user inputs given to textfields through out the program===================================
 
     //Method to validate string inputs with a character limit

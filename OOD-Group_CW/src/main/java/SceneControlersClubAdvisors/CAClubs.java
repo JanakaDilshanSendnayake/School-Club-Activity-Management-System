@@ -249,9 +249,10 @@ public class CAClubs extends BaseSceneController implements Initializable {
         clubAdvisorMembersNavigateTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 newAdmin=newSelection;
-            }else{
-                showErrorAlert("please select a club advisor");
             }
+//            else{
+//                showErrorAlert("please select a club advisor");
+//            }
         });
 
 

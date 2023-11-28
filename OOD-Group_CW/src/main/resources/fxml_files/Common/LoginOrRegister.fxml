@@ -236,7 +236,7 @@
                         <Pane layoutX="149.0" layoutY="225.0" AnchorPane.bottomAnchor="109.39999999999998" AnchorPane.leftAnchor="149.0" AnchorPane.rightAnchor="182.60000000000002" AnchorPane.topAnchor="225.0">
                            <children>
                               <PasswordField fx:id="loginPasswordField" layoutX="68.0" layoutY="61.0" prefHeight="27.0" prefWidth="250.0" style="-fx-background-color: white;" />
-                              <Label layoutY="5.0" text="Student ID:" />
+                              <Label layoutY="5.0" prefHeight="17.0" prefWidth="66.0" text="User ID:" />
                               <Label layoutX="1.0" layoutY="65.0" prefHeight="18.0" prefWidth="66.0" text="Password:" />
                               <Label layoutX="68.0" layoutY="191.0" prefHeight="18.0" prefWidth="250.0" text="------------------------OR-----------------------" />
                               <Button layoutX="130.0" layoutY="128.0" mnemonicParsing="false" onAction="#login" prefHeight="44.0" prefWidth="126.0">
@@ -278,20 +278,16 @@
                               <TextField fx:id="loginUserNameField" layoutX="68.0" prefHeight="26.0" prefWidth="250.0" />
                            </children>
                         </Pane>
-                        <Group layoutX="235.0" layoutY="43.0">
-                           <children>
-                              <ImageView fx:id="loginPageIcon" fitHeight="98.0" fitWidth="102.0" layoutX="41.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../Icons/club%20advisor.png" />
-                                 </image>
-                              </ImageView>
-                              <Label fx:id="loginPageTextlabel" layoutY="109.0" text="CLUB ADVISOR LOGIN">
-                                 <font>
-                                    <Font name="Times New Roman Bold" size="16.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </Group>
+                        <ImageView fx:id="loginPageIcon" fitHeight="98.0" fitWidth="102.0" layoutX="276.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/club%20advisor.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="loginPageTextlabel" layoutX="235.0" layoutY="152.0" text="CLUB ADVISOR LOGIN">
+                           <font>
+                              <Font name="Times New Roman Bold" size="16.0" />
+                           </font>
+                        </Label>
                         <Button layoutY="554.0" mnemonicParsing="false" onAction="#backToStartFromLogin" prefHeight="47.0" prefWidth="54.0">
                            <graphic>
                               <ImageView fitHeight="34.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
@@ -301,6 +297,11 @@
                               </ImageView>
                            </graphic>
                         </Button>
+                        <Label fx:id="loginPageTextlabel1" layoutX="258.0" layoutY="152.0" text="STUDENT LOGIN">
+                           <font>
+                              <Font name="Times New Roman Bold" size="16.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
                </children>

@@ -273,12 +273,12 @@
                                     </AnchorPane>
                                     <AnchorPane fx:id="caNaviEvents" prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #DCDCDC;">
                                        <children>
-                                          <TableView fx:id="eventNavigateTable" layoutX="18.0" layoutY="151.0" prefHeight="200.0" prefWidth="714.0">
+                                          <TableView fx:id="eventNavigateTable" layoutX="18.0" layoutY="151.0" prefHeight="310.0" prefWidth="714.0">
                                              <columns>
-                                                <TableColumn fx:id="eventNameColumn" prefWidth="250.0" text="EVENT NAME" />
-                                                <TableColumn fx:id="eventIdColumn" prefWidth="139.99993896484375" text="EVENT ID" />
-                                                <TableColumn fx:id="eventDateColumn" prefWidth="126.4000244140625" text="DATE" />
-                                                <TableColumn fx:id="eventVenueColumn" prefWidth="126.4000244140625" text="DATE" />
+                                                <TableColumn fx:id="eventNameColumn" prefWidth="257.6000518798828" text="EVENT NAME" />
+                                                <TableColumn fx:id="eventIdColumn" prefWidth="124.79998779296875" text="EVENT ID" />
+                                                <TableColumn fx:id="eventDateColumn" prefWidth="105.5999755859375" text="DATE" />
+                                                <TableColumn fx:id="eventVenueColumn" prefWidth="224.7999267578125" text="VENUE" />
                                              </columns>
                                           </TableView>
                                           <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Navigate Events" textAlignment="RIGHT">
@@ -305,7 +305,7 @@
                                                 </Button>
                                              </children>
                                           </Group>
-                                          <Button layoutX="507.0" layoutY="417.0" mnemonicParsing="false" onAction="#viewEventDetails" prefHeight="44.0" prefWidth="126.0">
+                                          <Button layoutX="548.0" layoutY="475.0" mnemonicParsing="false" onAction="#viewEventDetails" prefHeight="44.0" prefWidth="126.0">
                                              <graphic>
                                                 <Group>
                                                    <children>
@@ -323,8 +323,8 @@
                                                 </Group>
                                              </graphic>
                                           </Button>
-                                          <ComboBox fx:id="navigateEventsPageComboBox" layoutX="611.0" layoutY="51.0" prefHeight="26.0" prefWidth="90.0" promptText="Options" />
-                                          <ComboBox fx:id="navigateEventsPageComboBox2" layoutX="486.0" layoutY="86.0" prefHeight="26.0" prefWidth="90.0" promptText="Options" />
+                                          <ComboBox fx:id="navigateEventsPageComboBox" layoutX="390.0" layoutY="103.0" prefHeight="26.0" prefWidth="180.0" promptText="Options" />
+                                          <ComboBox fx:id="navigateEventsPageComboBox2" layoutX="123.0" layoutY="103.0" prefHeight="26.0" prefWidth="180.0" promptText="Options" />
                                        </children>
                                     </AnchorPane>
                                  </children>

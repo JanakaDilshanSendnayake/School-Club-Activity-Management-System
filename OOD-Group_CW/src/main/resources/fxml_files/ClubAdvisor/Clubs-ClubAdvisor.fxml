@@ -270,10 +270,10 @@
                                     </AnchorPane>
                                     <AnchorPane fx:id="adminAppointPane" prefHeight="526.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;">
                                        <children>
-                                          <TableView fx:id="clubAdvisorMembersNavigateTable" layoutX="74.0" layoutY="146.0" prefHeight="257.0" prefWidth="602.0">
+                                          <TableView fx:id="clubAdvisorMembersNavigateTable" layoutX="20.0" layoutY="118.0" prefHeight="319.0" prefWidth="414.0">
                                              <columns>
-                                                <TableColumn fx:id="clubAdvisorMembersIdColumn" maxWidth="255.20001220703125" minWidth="-1.0" prefWidth="144.0" text="CLUB_ADVISOR_ID" />
-                                                <TableColumn fx:id="clubAdvisorMembersNameColumn" prefWidth="236.0" text="CLUB ADVISOR NAME" />
+                                                <TableColumn fx:id="clubAdvisorMembersIdColumn" maxWidth="255.20001220703125" minWidth="-1.0" prefWidth="154.4000244140625" text="CLUB_ADVISOR_ID" />
+                                                <TableColumn fx:id="clubAdvisorMembersNameColumn" prefWidth="257.6" text="CLUB ADVISOR NAME" />
                                              </columns>
                                           </TableView>
                                           <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Appoint a new admin" textAlignment="RIGHT">
@@ -281,11 +281,11 @@
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
                                           </Label>
-                                          <Button layoutX="474.0" layoutY="467.0" mnemonicParsing="false" onAction="#saveNewAdmin" prefHeight="44.0" prefWidth="126.0">
+                                          <Button layoutX="527.0" layoutY="393.0" mnemonicParsing="false" onAction="#saveNewAdmin" prefHeight="44.0" prefWidth="126.0">
                                              <graphic>
                                                 <Group>
                                                    <children>
-                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="Appoint">
+                                                      <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="APPOINT">
                                                          <font>
                                                             <Font name="Times New Roman Bold" size="12.0" />
                                                          </font>
@@ -308,6 +308,13 @@
                                                 </ImageView>
                                              </graphic>
                                           </Button>
+                                          <Label fx:id="eventOrganizingClubNmaeLabel" layoutX="20.0" layoutY="57.0" prefHeight="50.0" prefWidth="414.0" style="-fx-background-color: #D5D6F2;" text="BOARD OF CLUB ADVISORS">
+                                             <font>
+                                                <Font name="Times New Roman Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="24.0" layoutY="445.0" prefHeight="18.0" prefWidth="406.0" text="*Club Advisors Highlighted in blue are already admins" />
+                                          <TextArea layoutX="450.0" layoutY="118.0" prefHeight="113.0" prefWidth="280.0" text="*Once you apoint a club Advisor Member as an admin, you are giving him the permission to,&#10;1. Edit club details&#10;2. Organize events&#10;3. Edit event details &#10;4. Generate club reports" wrapText="true" />
                                        </children>
                                     </AnchorPane>
                                  </children>
@@ -473,6 +480,24 @@
                         <ImageView fitHeight="23.0" fitWidth="22.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../Icons/user-gear.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </graphic>
+            </Button>
+            <ImageView fitHeight="125.0" fitWidth="97.0" layoutX="52.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/club%20advisor.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="cancelTheUpdateButton1" layoutX="74.0" layoutY="542.0" mnemonicParsing="false" onAction="#signOut" prefHeight="44.0" prefWidth="50.0">
+               <graphic>
+                  <Group>
+                     <children>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/power-button-off.png" />
                            </image>
                         </ImageView>
                      </children>
