@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
+//BY JANAKA SENDANAYAKE RGU ID:2237952
 
 public class CADataHandling {
 
@@ -147,4 +148,23 @@ public class CADataHandling {
         }
         return clubAdvisor;
     }
+    //To get total clubadvisor count
+    public int getTotalClubAdvisorCount() {
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM club_advisor";
+        MySqlConnect databaseLink= new MySqlConnect();
+        try (Connection connection = databaseLink.getDatabaseLink();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            // Retrieve the result
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
 }

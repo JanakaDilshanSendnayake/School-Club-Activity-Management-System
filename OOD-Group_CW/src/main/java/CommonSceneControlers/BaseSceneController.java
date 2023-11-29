@@ -11,7 +11,10 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.util.Optional;
-//BY JANAKA DILSHAN SENDANAYAKE RGU ID:2237952=============================================================
+
+/**
+ * BY JANAKA DILSHAN SENDANAYAKE RGU ID:2237952
+ */
 
 public class BaseSceneController {
 

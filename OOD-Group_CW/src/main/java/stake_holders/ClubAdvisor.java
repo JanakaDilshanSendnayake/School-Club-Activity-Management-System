@@ -5,6 +5,11 @@ import utils.CADataHandling;
 
 import java.util.ArrayList;
 
+/**
+ * BY JANAKA DILSHAN SENDANAYAKE RGU ID:2237952
+ */
+
+
 public class ClubAdvisor extends Users {
 
     //REGEX

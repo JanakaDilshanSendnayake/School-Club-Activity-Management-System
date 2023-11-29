@@ -4,6 +4,11 @@ import utils.StudentDataHandling;
 
 import java.util.ArrayList;
 
+/**
+ * BY JANAKA DILSHAN SENDANAYAKE RGU ID:2237952
+ */
+
+
 public class Student extends Users {
     private String studentId;
     private ArrayList<Clubs> joinedClubs;

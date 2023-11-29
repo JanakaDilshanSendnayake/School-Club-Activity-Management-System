@@ -6,6 +6,11 @@ import stake_holders.Student;
 
 import java.sql.*;
 
+/**
+ * BY JANAKA DILSHAN SENDANAYAKE RGU ID:2237952
+ */
+
+
 public class StudentDataHandling {
     //This method will be used for validate the user id and the name provide by student members when login
     //First it checks if there is a field in club_advisor table with the user id and password user entered
@@ -123,6 +128,24 @@ public class StudentDataHandling {
             // Handle database connection or query errors
         }
         return student;
+    }
+    //To get total student count
+    public int getTotalStudentCount() {
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM student";
+        MySqlConnect databaseLink= new MySqlConnect();
+        try (Connection connection = databaseLink.getDatabaseLink();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            // Retrieve the result
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
 

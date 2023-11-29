@@ -1,5 +1,11 @@
 package stake_holders;
 
+/**
+ *Abdul Shahid- RGU ID 2237030
+ *
+ *
+ */
+
 public class Attendance {
 
     private Student student;

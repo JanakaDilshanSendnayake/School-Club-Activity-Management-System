@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
- * Controller class which controls the student event fxml file
+ * Manith Ratnayake RGU ID-2237949
  */
 public class StudentsEvents extends BaseSceneController implements Initializable {
 

@@ -11,6 +11,5 @@ module OOD.Group.CW {
     opens SceneControlersStudents;
     opens CommonSceneControlers;
     opens stake_holders;
-    opens Template;
 
 }

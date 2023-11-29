@@ -22,9 +22,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-//Attendance report-Abdul Shahid RGU:2237030
-//Club Membership Report- Akshith Rajendran RGU: 2236761
-//club activity report-Manith Ratnayake RGU: 2237949
+
+/**
+ * Attendance report-Abdul Shahid RGU:2237030 /
+ * Club Membership Report- Akshith Rajendran RGU: 2236761 /
+ * club activity report-Manith Ratnayake RGU: 2237949 /
+ *
+ */
+
 
 public class CAReport extends BaseSceneController implements Initializable {
 

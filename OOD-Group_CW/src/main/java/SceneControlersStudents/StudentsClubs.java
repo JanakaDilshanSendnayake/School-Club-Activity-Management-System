@@ -19,6 +19,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ *
+ *BY AKSHITH RAJENDRAN RGU ID: 2236761
+ *
+ */
+
 public class StudentsClubs extends BaseSceneController implements Initializable  {
 
     //Club navigate pane javafx elements======================================

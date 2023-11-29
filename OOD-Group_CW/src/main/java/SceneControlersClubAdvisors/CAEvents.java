@@ -21,11 +21,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
-    //Event creation,updating Manith Ratnayake RGU ID-2237949
-    //Attendance tracking Abdul Shahid- RGU ID 2237030
-public class CAEvents extends BaseSceneController implements Initializable {
 
-//===============================================
+
+/**
+ * Event creation,updating Manith Ratnayake RGU ID-2237949
+ * Attendance tracking Abdul Shahid- RGU ID 2237030
+ *
+ */
+
+
+public class CAEvents extends BaseSceneController implements Initializable {
     //Panes
     @FXML private TabPane caEventsTabPane;
     @FXML private Tab eventNaviTab;
@@ -59,22 +64,21 @@ public class CAEvents extends BaseSceneController implements Initializable {
     private Label newEventDatePickerLabel;
 
     //==========================================================
+    //Event listeners for input fields in event creation
     private ChangeListener<String> newEventNameFieldListener;
     private ChangeListener<String> newEventDescriptionTextAreaListener;
     private ChangeListener<String> newEventVenueFieldListener;
     //==============================================================
+    //Event listeners for input fields in event update
     private ChangeListener<String> updateEventNameFieldListener;
     private ChangeListener<String> updateEventDescriptionTextAreaListener;
     private ChangeListener<String> updateEventVenueFieldListener;
     //=============================================================
-
+    //REGEX which are used to validate inputs in event creation and update
     private static final String EVENT_NAME_REGEX = "^[a-zA-Z_]{1,31}$";
     private static final String EVENT_DESCRIPTION_REGEX = "^(?s).{1,200}$";
-
     private static final String EVENT_VENUE_REGEX = "^.+$";
     //================================================================
-
-    //@FXML private ComboBox<String> eventCreatorClubSelector;
     ObservableList<String> clubsSorterData= FXCollections.observableArrayList();
     @FXML private ComboBox<String> navigateEventsPageComboBox;
     @FXML private ComboBox<String> navigateEventsPageComboBox2;
@@ -92,13 +96,14 @@ public class CAEvents extends BaseSceneController implements Initializable {
     @FXML private Label eventOrganizingClubNmaeLabel;
     @FXML private TextArea eventDescriptionTextArea;
 
-    //==============================================
+    //Choice boxes in attendance marking table and their observable lists===================================
 
     @FXML private ComboBox<String> attendanceMarkingClubComboBox ;
     @FXML private ComboBox<String> attendanceMarkingEventComboBox;
     ObservableList<String> clubsDataForAttendanceMarking =FXCollections.observableArrayList();
     ObservableList<String> eventDataForAttendanceMarking =FXCollections.observableArrayList();
     //===============================
+    //These string variables are used to keep the track of the options selected on choice boxes
     private String organizingClubComboBoxSelectedOption;
     private String navigateEventsPageComboBoxSelectedOption;
     private String attendanceMarkingClubComboBoxSelectedOption;

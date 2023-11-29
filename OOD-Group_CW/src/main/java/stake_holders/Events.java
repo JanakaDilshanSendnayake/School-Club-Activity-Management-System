@@ -3,6 +3,12 @@ package stake_holders;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * Manith Ratnayake RGU ID-2237949
+ *
+ *
+ */
+
 public class Events {
     private String eventId;
     private String eventName;

@@ -12,6 +12,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ *
+ *BY AKSHITH RAJENDRAN RGU ID: 2236761
+ *
+ */
+
 public class ClubDataHandling {
     //This will be used to check if the automatically generated club id is already in use
     public boolean clubIdValidation(String userIdToBeValidated){

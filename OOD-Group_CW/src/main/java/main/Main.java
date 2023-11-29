@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class Main extends Application {
     //Current logged in club advisor tracker
     public static ClubAdvisor currentUser;
+    //Current club in use tracker
     public static Clubs currentClub;
     //Current logged in student tracker
     public static Student currentStudentUser;

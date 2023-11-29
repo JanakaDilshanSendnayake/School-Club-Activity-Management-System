@@ -23,7 +23,10 @@ import utils.StudentDataHandling;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
-//BY JANAKA DILSHAN SENDANAYAKE-RGU 2237952
+
+/**
+ * BY JANAKA DILSHAN SENDANAYAKE RGU ID:2237952
+ */
 
 public class LoginAndRegistration extends BaseSceneController implements Initializable {
 

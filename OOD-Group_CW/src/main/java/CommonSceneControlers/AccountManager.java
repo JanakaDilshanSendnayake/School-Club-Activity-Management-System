@@ -14,8 +14,9 @@ import utils.StudentDataHandling;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-//BY JANAKA SENDNAYAKE RGU ID:2237952=============================================================
-
+/**
+ * BY JANAKA SENDANAYAKE RGU ID:2237952
+ */
 public class AccountManager extends BaseSceneController implements Initializable {
 
     //Text fields to get the details from new users who are joining the system
