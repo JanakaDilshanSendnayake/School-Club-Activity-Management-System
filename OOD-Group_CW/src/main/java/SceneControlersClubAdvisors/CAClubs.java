@@ -26,43 +26,32 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Random;
 
+/**
+ * BY AKSHITH RAJENDRAN RGU ID: 2236761
+ *
+ *
+ */
+
+
 public class CAClubs extends BaseSceneController implements Initializable {
 
-    //Buttons - SideBar
-    @FXML private Button caHomeButton;
-    @FXML private Button caClubsButton;
-    @FXML private Button caEventsButton;
-    @FXML private Button caReportsButton;
-    @FXML private Button caAccountButton;
-
-    //Buttons
-    @FXML private Button viewButton;
-    @FXML private Button updateClubButton;
-    @FXML private Button updateClubCancelButton;
     @FXML private Button editClubButton;
-    @FXML private Button suspendClubButton;
     @FXML private Button leaveClubButton;
     @FXML private Button joinClubButton;
-    @FXML private Button backToClubNaviButton;
 
 
-    //Panes
+    //Panes======================================
     @FXML private TabPane caClubsTabPane;
-    @FXML private Tab clubNaviTab;
     @FXML private Tab createNewClubTab;
     @FXML private AnchorPane caNaviClubs;
     @FXML private AnchorPane caViewClubs;
     @FXML private AnchorPane caUpdateClubs;
-    @FXML private AnchorPane caCreateNewClubs;
-
-    //====
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
 
     //Text fields
     @FXML private TextField newClubNameField;
     @FXML private TextArea newClubDescriptionField;
+    @FXML private Label newClubNameLabel;
+    @FXML private Label newClubDescriptionLabel;
     @FXML private ComboBox<String> newClubTypeComboBox=new ComboBox<>();
     ObservableList<String> newClubTypeComboBoxData = FXCollections.observableArrayList(
             "Sports",
@@ -85,8 +74,7 @@ public class CAClubs extends BaseSceneController implements Initializable {
             "Photography"
     );
 
-    @FXML private Label newClubNameLabel;
-    @FXML private Label newClubDescriptionLabel;
+
 
     //Event listeners to monitor user inputs realtime and show messages about the inputs realtime
     private ChangeListener<String> newClubNameFieldListener;
@@ -186,7 +174,6 @@ public class CAClubs extends BaseSceneController implements Initializable {
         clubNavigateTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 isItemSelectedFromTable=true;
-                //System.out.println(newSelection.getClubAdvisorMembers().);
                 viewClubNameLabel.setText(newSelection.getClubName());
                 viewClubDescriptionTextField.setText(newSelection.getClubDescription());
                 viewClubTypeLabel.setText(newSelection.getClubType());
@@ -194,11 +181,10 @@ public class CAClubs extends BaseSceneController implements Initializable {
                 ClubDataHandling obj=new ClubDataHandling();
                 obj.loadClubMembershipData(newSelection);
                 obj.loadClubDataRelevantToCA(Main.currentUser);
-                //Main.currentClub=newSelection;
                 clubUserHasSelectedFromTheTable=newSelection;
 
-
-
+                //objects cannot be compared. So for all the club object related to current user,
+                // their clubId are aquired and stored in arraylists
                 ArrayList<String> clubsWithAdminAccessClubIds=new ArrayList<>();
                 ArrayList<String> clubsWithoutAdminAccessClubIds=new ArrayList<>();
 
@@ -208,23 +194,22 @@ public class CAClubs extends BaseSceneController implements Initializable {
                 for(Clubs club:Main.currentUser.getClubsWithoutAdminAccess()){
                     clubsWithoutAdminAccessClubIds.add(club.getClubId());
                 }
-                //=====================================================
-
+                //Restricting access for club advisors who are entering the club description page===========
+                //Only for club admins the edit, appoint new admin buttons are showed
+                //For club advisors who have joined the club but don't have admin access, only the leave button is showed
+                //For club advisors who haven't joined the club, only the join button is showed
                 if(clubsWithAdminAccessClubIds.contains(newSelection.getClubId())){
                     editClubButton.setVisible(true);
-
                     joinClubButton.setVisible(false);
                     leaveClubButton.setVisible(true);
                     appointNewAdminButton.setVisible(true);
                 } else if (clubsWithoutAdminAccessClubIds.contains(newSelection.getClubId())) {
                     editClubButton.setVisible(false);
-
                     joinClubButton.setVisible(false);
                     leaveClubButton.setVisible(true);
                     appointNewAdminButton.setVisible(false);
                 }else{
                     editClubButton.setVisible(false);
-
                     joinClubButton.setVisible(true);
                     leaveClubButton.setVisible(false);
                     appointNewAdminButton.setVisible(false);
@@ -264,8 +249,8 @@ public class CAClubs extends BaseSceneController implements Initializable {
             updateClubNameLabel.setText(validationMessage);
             setLabelStyle(validationMessage, updateClubNameLabel);
         });
-        //===
 
+        //Club admin
         clubAdvisorMembersNavigateTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 newAdmin=newSelection;
@@ -275,7 +260,7 @@ public class CAClubs extends BaseSceneController implements Initializable {
 
     }
     private ClubAdvisor newAdmin;
-
+    //Electing a new admin
     @FXML
     private void saveNewAdmin(){
         if(!(newAdmin ==null)){
@@ -370,7 +355,6 @@ public class CAClubs extends BaseSceneController implements Initializable {
         // IllegalArgumentException will be thrown.
         try{
             Clubs newClub=new Clubs(newClubId, newClubName,newClubType,newClubDescription,Main.currentUser);
-            //System.out.println(newClub.getClubAdmin().getName());
             //Adding the created club to current user
             Main.currentUser.getClubsWithAdminAccess().add(newClub);//-------------------------
             //saving the created club to the club table and club-advisor_club table
@@ -407,8 +391,6 @@ public class CAClubs extends BaseSceneController implements Initializable {
         }else{
             showErrorAlert("Select a club from the table.");
         }
-
-        //Rest of the function
     }
 //  When the user want to edit the current details of the club and click edit button,
 //  current data should be loaded in the editable text fields in update club details
@@ -417,9 +399,6 @@ public class CAClubs extends BaseSceneController implements Initializable {
     @FXML
     private void updateClubDetails(){
         if(showConfirmationAlert("Are you sure that you want to update club details?")) {
-
-//            ClubDataHandling obj = new ClubDataHandling();
-//            obj.loadClubMembershipData(Main.currentClub);
 
             ArrayList<String> clubAdminIds = new ArrayList<>();
 
@@ -473,6 +452,7 @@ public class CAClubs extends BaseSceneController implements Initializable {
 
 
     }
+    //Switching to appoint new admin page
     @FXML
     private void appointNewAdmin(){
         setUpClubAdvisorMembersNaviTable(clubUserHasSelectedFromTheTable);
@@ -520,10 +500,6 @@ public class CAClubs extends BaseSceneController implements Initializable {
 
     }
 
-
-
-
-
     //===================================================================
 //  When user inputs updated data and press update button, data should be validated and saved
     @FXML
@@ -537,16 +513,12 @@ public class CAClubs extends BaseSceneController implements Initializable {
         ClubDataHandling object=new ClubDataHandling();
         object.updateClubInDatabase(clubObjectWithUpdatedDeatils);
 
-        //Main.currentClub=clubObjectWithUpdatedDetails;
-        //Rest of the function
         updateStatus=false;
         showInfoAlert("Club details updated successfully");
         caNaviClubs.toFront();
     }
     @FXML
     private void cancelUpdate(){
-
-        // Rest of the function
         updateStatus=false;
         showErrorAlert("Update cancelled");
         caViewClubs.toFront();

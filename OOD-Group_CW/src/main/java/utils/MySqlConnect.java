@@ -3,6 +3,11 @@ package utils;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+/**
+ * Abdul Shahid- RGU ID 2237030
+ */
+
+
 
 public class MySqlConnect {
     public Connection databaseLink;

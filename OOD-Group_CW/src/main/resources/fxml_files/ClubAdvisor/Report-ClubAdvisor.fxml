@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="950.0" stylesheets="@../../css/Template.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SceneControlersClubAdvisors.CAReport3">
+<AnchorPane prefHeight="600.0" prefWidth="950.0" stylesheets="@../../css/Template.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SceneControlersClubAdvisors.CAReport">
     <children>
       <AnchorPane layoutX="200.0" prefHeight="600.0" prefWidth="750.0" style="-fx-background-color: #DCDCDC;">
          <children>
@@ -30,12 +30,12 @@
                                     <Label layoutX="46.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
                                  </children>
                               </Group>
-                              <TableView fx:id="studentMembersReportTable" layoutX="74.0" layoutY="173.0" prefHeight="200.0" prefWidth="535.0">
+                              <TableView fx:id="studentMembersReportTable" layoutX="75.0" layoutY="140.0" prefHeight="349.0" prefWidth="600.0">
                                  <columns>
-                                    <TableColumn fx:id="studentIdColumn" prefWidth="116.0" text="Student ID" />
-                                    <TableColumn fx:id="studentNameColumn" minWidth="0.0" prefWidth="196.800048828125" text="Stdent Name" />
-                                    <TableColumn fx:id="studentMobileNumberColumn" minWidth="0.0" prefWidth="112.0" text="Mobile" />
-                                    <TableColumn fx:id="studentEmailColumn" minWidth="0.0" prefWidth="112.0" text="Email" />
+                                    <TableColumn fx:id="studentIdColumn" prefWidth="100.0" text="Student ID" />
+                                    <TableColumn fx:id="studentNameColumn" minWidth="0.0" prefWidth="200.0" text="Stdent Name" />
+                                    <TableColumn fx:id="studentMobileNumberColumn" minWidth="0.0" prefWidth="150.0" text="Mobile" />
+                                    <TableColumn fx:id="studentEmailColumn" minWidth="0.0" prefWidth="150.0" text="Email" />
                                  </columns>
                               </TableView>
                               <Label layoutY="-3.0" prefHeight="34.0" prefWidth="295.0" style="-fx-background-color: #D5D6F2;" text="Generate Club Membership Report" textAlignment="RIGHT">
@@ -43,24 +43,6 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="490.0" layoutY="425.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0">
-                                 <graphic>
-                                    <Group>
-                                       <children>
-                                          <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="PRINT">
-                                             <font>
-                                                <Font name="Times New Roman Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../../Icons/print.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
-                                    </Group>
-                                 </graphic>
-                              </Button>
                            </children></AnchorPane>
                   </content>
                 </Tab>
@@ -79,33 +61,15 @@
                                     <Label layoutX="37.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
                                  </children>
                               </Group>
-                              <TableView fx:id="eventTable" layoutX="99.0" layoutY="146.0" prefHeight="200.0" prefWidth="584.0">
+                              <TableView fx:id="eventTable" layoutX="6.0" layoutY="146.0" prefHeight="329.0" prefWidth="739.0">
                                  <columns>
-                                    <TableColumn fx:id="eventIdColumn" minWidth="0.0" prefWidth="63.199951171875" text="Events" />
-                                    <TableColumn fx:id="eventNameColumn" minWidth="0.0" prefWidth="104.0" text="Event Name" />
-                                    <TableColumn fx:id="eventVenueColumn" minWidth="0.0" text="Venue" />
-                                    <TableColumn fx:id="eventDateColumn" minWidth="0.0" prefWidth="151.20001220703125" text="Date" />
-                                    <TableColumn fx:id="eventDescriptionColumn" minWidth="0.0" prefWidth="183.199951171875" text="Description" />
+                                    <TableColumn fx:id="eventIdColumn" minWidth="0.0" prefWidth="100.0" text="Events" />
+                                    <TableColumn fx:id="eventNameColumn" minWidth="0.0" prefWidth="100.0" text="Event Name" />
+                                    <TableColumn fx:id="eventVenueColumn" minWidth="0.0" prefWidth="100.0" text="Venue" />
+                                    <TableColumn fx:id="eventDateColumn" minWidth="0.0" prefWidth="100.0" text="Date" />
+                                    <TableColumn fx:id="eventDescriptionColumn" minWidth="0.0" prefWidth="340.0" text="Description" />
                                  </columns>
                               </TableView>
-                              <Button layoutX="490.0" layoutY="425.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0">
-                                 <graphic>
-                                    <Group>
-                                       <children>
-                                          <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="PRINT">
-                                             <font>
-                                                <Font name="Times New Roman Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../../Icons/print.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
-                                    </Group>
-                                 </graphic>
-                              </Button>
                            </children></AnchorPane>
                   </content>
                 </Tab>
@@ -132,33 +96,15 @@
                                     <Label layoutX="103.0" layoutY="29.0" prefHeight="18.0" prefWidth="250.0" />
                                  </children>
                               </Group>
-                              <TableView fx:id="attendanceReportTable" layoutX="44.0" layoutY="199.0" prefHeight="200.0" prefWidth="670.0">
+                              <TableView fx:id="attendanceReportTable" layoutX="25.0" layoutY="198.0" prefHeight="340.0" prefWidth="700.0">
                                 <columns>
-                                  <TableColumn fx:id="attendanceReportTableStudentIdColumn" prefWidth="80.80000305175781" text="Student ID" />
-                                  <TableColumn fx:id="attendanceReportTableStudentNameColumn" minWidth="0.0" prefWidth="127.20001220703125" text="Stdent Name" />
-                                    <TableColumn fx:id="attendanceReportTableEventIdColumn" minWidth="0.0" prefWidth="145.5999755859375" text="Event id" />
-                                    <TableColumn fx:id="attendanceReportTableEventNameColumn" minWidth="0.0" prefWidth="139.20001220703125" text="event" />
-                                    <TableColumn fx:id="attendanceReportTableStatusColumn" minWidth="0.0" prefWidth="172.0" text="Attendance" />
+                                  <TableColumn fx:id="attendanceReportTableStudentIdColumn" prefWidth="140.0" text="Student ID" />
+                                  <TableColumn fx:id="attendanceReportTableStudentNameColumn" minWidth="0.0" prefWidth="140.0" text="Stdent Name" />
+                                    <TableColumn fx:id="attendanceReportTableEventIdColumn" minWidth="0.0" prefWidth="140.0" text="Event id" />
+                                    <TableColumn fx:id="attendanceReportTableEventNameColumn" minWidth="0.0" prefWidth="140.0" text="event" />
+                                    <TableColumn fx:id="attendanceReportTableStatusColumn" minWidth="0.0" prefWidth="140.0" text="Attendance" />
                                 </columns>
                               </TableView>
-                              <Button layoutX="490.0" layoutY="425.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0">
-                                 <graphic>
-                                    <Group>
-                                       <children>
-                                          <Label layoutX="26.0" layoutY="1.0" prefHeight="18.0" prefWidth="72.0" text="PRINT">
-                                             <font>
-                                                <Font name="Times New Roman Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../../Icons/print.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
-                                    </Group>
-                                 </graphic>
-                              </Button>
                            </children>
                         </AnchorPane>
                      </content>

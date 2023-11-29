@@ -24,22 +24,11 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class LoginAndRegistration extends BaseSceneController implements Initializable {
+/**
+ * BY JANAKA DILSHAN SENDANAYAKE RGU ID:2237952
+ */
 
-    //REGEX
-    //Username should be a combination letters and numbers
-    private static final String USER_ID_REGEX = "^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z0-9]{1,10}$";
-    //Inputs for first name should be always letters. And there's a character limit of 10
-    private static final String FIRST_NAME_REGEX = "^[a-zA-Z]{1,10}$";
-    //Inputs for last name should be always letters. And there's a character limit of 20
-    private static final String LAST_NAME_REGEX = "^[a-zA-Z]{1,20}$";
-    //Inputs for email should end with "@iit.ac.lk". Example- janaka@iit.ac.lk
-    private static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@iit\\.ac\\.lk$";
-    //Inputs for mobile number should follow ten digit format. Ex- 0712304501
-    private static final String MOBILE_NUMBER_REGEX = "^\\d{10}$";
-    //Inputs for password should contain at least one letter, number and special character. And the inputs should be at-
-    //-least 8 characters long
-    private static final String PASSWORD_REGEX = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=]).{8,}$";
+public class LoginAndRegistration extends BaseSceneController implements Initializable {
 
     //The main anchor pain holding all other elements of user registration page
     @FXML
@@ -89,15 +78,13 @@ public class LoginAndRegistration extends BaseSceneController implements Initial
     private ChangeListener<String> newUserPassword1Listener;
     private ChangeListener<String> newUserPassword2Listener;
 
-    //Button
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //start page will be automatically loaded to front
         startPage.toFront();
         loginPageTextlabel.setVisible(false);
         loginPageTextlabel1.setVisible(false);
-//        Platform.runLater(() -> userRegistrationPane.requestFocus());
 
         // Initializing Event listener for Club Advisor ID
         newUserIdFieldListener=((observable, oldValue, newValue) -> {
@@ -151,6 +138,8 @@ public class LoginAndRegistration extends BaseSceneController implements Initial
             validatePasswordMatch();
         });
     }
+    //This method is to validate the user Id entered by the user. It checks whether user input follows regex, is it less 10-
+    // and most importantly it checks the database constantly to see if there's someone using the same username.
     private String validateUserID(String value) {
         CADataHandling clubAdvisor=new CADataHandling();
         StudentDataHandling student=new StudentDataHandling();
@@ -177,6 +166,9 @@ public class LoginAndRegistration extends BaseSceneController implements Initial
             return false;
         }
     }
+    //These functions assigned to every textfeild. When a user click on textfiled and starts to enter data these methods get
+    // -triggered. Then it adds the relevant event listener to the text filed. The reason we adding the the event litners seperatly
+    //-is we can remove them when ever we want.
     @FXML
     private void handleNewUserIdChange() {
         newUserIdField.textProperty().addListener(newUserIdFieldListener);
@@ -207,6 +199,7 @@ public class LoginAndRegistration extends BaseSceneController implements Initial
     }
     @FXML
     private void register(){
+        //getting the user inputs from the text fields
         String newId=newUserIdField.getText();
         String newName= newUserFirstNameField.getText().toLowerCase()+"_"+newUserLastNameField.getText().toLowerCase();
         String newEmail=newUserEmailField.getText();
@@ -225,13 +218,16 @@ public class LoginAndRegistration extends BaseSceneController implements Initial
                 obj.saveStudentToDatabase(newUser);
                 showInfoAlert("You successfully registered to the system.");
             }
+            loginPage.toFront();
+            clearUserInputsFieldsInRegistrationPage();
         }catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
             showErrorAlert(e.getMessage());
         }
 
     }
-
+    //This method is assigned to clear button. This will set all the textfields and text labels to "" and they will remove-
+    //-event listeners also
     @FXML
     private void clearUserInputsFieldsInRegistrationPage(){
         newUserIdField.textProperty().removeListener(newUserIdFieldListener);
@@ -242,8 +238,10 @@ public class LoginAndRegistration extends BaseSceneController implements Initial
         newUserPasswordField1.textProperty().removeListener(newUserPassword1Listener);
         newUserPasswordField2.textProperty().removeListener(newUserPassword2Listener);
         newUserIdField.setText("");
+        newUserFirstNameField.setText("");
         newUserFirstNameLabel.setText("");
         newUserLastNameField.setText("");
+        newUserLastNameLabel.setText("");
         newUserEmailField.setText("");
         newUserTeleField.setText("");
         newUserPasswordField1.setText("");
@@ -262,6 +260,9 @@ public class LoginAndRegistration extends BaseSceneController implements Initial
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+    //when user enters password and username, this method validates them and identifies whether user is a club advisor-
+    //-or a student and lead the user to their relevant menu.
     @FXML
     private void login(ActionEvent actionEvent){
         CADataHandling object=new CADataHandling();
@@ -292,7 +293,7 @@ public class LoginAndRegistration extends BaseSceneController implements Initial
         }
     }
 
-
+    //***Special-this static variable tracks weather if the current user is a student or a club advisor
     public static String currentUserType;
 
     @FXML
@@ -309,7 +310,7 @@ public class LoginAndRegistration extends BaseSceneController implements Initial
     private AnchorPane loginPage;
     @FXML
     private AnchorPane startPage;
-
+//These methods are to change some ui elements according to the current user type(STUDENT/CLUB-ADVISOR) using the system
     @FXML
     private void selectClubAdvisor(){
         currentUserType="CLUB-ADVISOR";
@@ -334,6 +335,7 @@ public class LoginAndRegistration extends BaseSceneController implements Initial
         loginPage.toFront();
 
     }
+    //To switch between different anchor panes of the same scene
     @FXML
     private void selectRegister(){
         userRegistrationPane.toFront();

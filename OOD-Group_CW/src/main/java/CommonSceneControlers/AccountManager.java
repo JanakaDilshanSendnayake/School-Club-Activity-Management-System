@@ -3,12 +3,8 @@ package CommonSceneControlers;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 import main.Main;
 import stake_holders.ClubAdvisor;
 import stake_holders.Student;
@@ -18,18 +14,10 @@ import utils.StudentDataHandling;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * BY JANAKA SENDANAYAKE RGU ID:2237952
+ */
 public class AccountManager extends BaseSceneController implements Initializable {
-    //Inputs for first name should be always letters. And there's a character limit of 10
-    private static final String FIRST_NAME_REGEX = "^[a-zA-Z]{1,10}$";
-    //Inputs for last name should be always letters. And there's a character limit of 20
-    private static final String LAST_NAME_REGEX = "^[a-zA-Z]{1,20}$";
-    //Inputs for email should end with "@iit.ac.lk". Example- janaka@iit.ac.lk
-    private static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@iit\\.ac\\.lk$";
-    //Inputs for mobile number should follow ten digit format. Ex- 0712304501
-    private static final String MOBILE_NUMBER_REGEX = "^\\d{10}$";
-    //Inputs for password should contain at least one letter, number and special character. And the inputs should be at-
-    //-least 8 characters long
-    private static final String PASSWORD_REGEX = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=]).{8,}$";
 
     //Text fields to get the details from new users who are joining the system
     @FXML
@@ -48,8 +36,7 @@ public class AccountManager extends BaseSceneController implements Initializable
     private TextField userPasswordField2;
 
     //Text labels to show the relevant information about the inputs they have given to above text fields in real time
-    @FXML
-    private Label userIdLabel;
+
     @FXML
     private Label userFirstNameLabel;
     @FXML
@@ -79,6 +66,8 @@ public class AccountManager extends BaseSceneController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        //Locking the text fields when page is being load. Users can just view data but they needs to press unlock button-
+        // -to unlock these fields and start editing
         userIdField.setEditable(false);
         userFirstNameField.setEditable(false);
         userLastNameField.setEditable(false);
@@ -95,14 +84,14 @@ public class AccountManager extends BaseSceneController implements Initializable
 
         onGoingAccountDetailsUpdate=false;
 
-
+        //Setting up the details of current users to textfields. The passwords are not shown until user unlocks the texfields
         if(LoginAndRegistration.currentUserType.equals("CLUB-ADVISOR")){
             userIdField.setText(Main.currentUser.getClubAdvisorId());
             String[] fullName=Main.currentUser.getName().split("_");
             userFirstNameField.setText(fullName[0]);
             userLastNameField.setText(fullName[1]);
             userEmailField.setText(Main.currentUser.getEmail());
-            userTeleField.setText(Main.currentUser.getMobileNum());
+            userTeleField.setText(Main.currentUser.getMobileNumber());
             userPasswordField1.setText("************");
         } else if (LoginAndRegistration.currentUserType.equals("STUDENT")) {
             userIdField.setText(Main.currentStudentUser.getStudentId());
@@ -115,7 +104,7 @@ public class AccountManager extends BaseSceneController implements Initializable
         }
 
 
-        // Initializing Event listener for Club Advisor First Name
+        // Initializing Event listener for User First Name
         userFirstNameFieldListener =((observable, oldValue, newValue) -> {
             String validationMessage = validateTextField(newValue, FIRST_NAME_REGEX,
                     "Name can only contain letters.",10);
@@ -123,7 +112,7 @@ public class AccountManager extends BaseSceneController implements Initializable
             setLabelStyle(validationMessage, userFirstNameLabel);
         });
 
-        // Initializing Event listener for Club Advisor Last Name
+        // Initializing Event listener for User Last Name
         userLastNameFieldListener =((observable, oldValue, newValue) -> {
             String validationMessage = validateTextField(newValue, LAST_NAME_REGEX,
                     "Name can only contain letters.",20);
@@ -131,7 +120,7 @@ public class AccountManager extends BaseSceneController implements Initializable
             setLabelStyle(validationMessage, userLastNameLabel);
         });
 
-        // Initializing Event listener for Club Advisor Email
+        // Initializing Event listener for User Email
         userEmailFieldListener =((observable, oldValue, newValue) -> {
             String validationMessage = validateTextField(newValue,
                     EMAIL_REGEX, "Invalid email format.");
@@ -139,7 +128,7 @@ public class AccountManager extends BaseSceneController implements Initializable
             setLabelStyle(validationMessage, userEmailLabel);
         });
 
-        // Initializing Event listener for Club Advisor Telephone
+        // Initializing Event listener for User Telephone
         userTeleFieldListener =((observable, oldValue, newValue) -> {
             String validationMessage = validateTextField(newValue, MOBILE_NUMBER_REGEX,
                     "Invalid mobile number format.");
@@ -161,7 +150,9 @@ public class AccountManager extends BaseSceneController implements Initializable
         });
 
     }
-
+    //These functions assigned to every text feild. When a user click on text filed and starts to enter data these methods get
+    // -triggered. Then it adds the relevant event listener to the text filed. The reason we are adding the event litners seperatly
+    //-is we can remove them whenever we want
     @FXML
     private void handleNewUserFirstNameChange() {
         userFirstNameField.textProperty().addListener(userFirstNameFieldListener);
@@ -190,9 +181,9 @@ public class AccountManager extends BaseSceneController implements Initializable
     @FXML private Button updateButton;
     @FXML private Button saveButton;
     @FXML private Button cancelTheUpdateButton;
-    @FXML private Button ResetThePassword;
     private boolean onGoingAccountDetailsUpdate;
 
+    //Unlocking the text fields to update
     @FXML
     private void update(){
         if(showConfirmationAlert("Are you sure that you want to start updating account details?")){
@@ -203,12 +194,13 @@ public class AccountManager extends BaseSceneController implements Initializable
                 userPasswordField1.setText(Main.currentStudentUser.getPassword());
                 userPasswordField2.setText(Main.currentStudentUser.getPassword());
             }
+            //Adding the event listeners to the text fields.
             handleNewUserFirstNameChange();
             handleNewUserLastNameChange();
             handleNewUserEmailChange();
             handleNewUserTeleChange();
             onGoingAccountDetailsUpdate=true;
-
+            //Unlocking the text fields and hiding some buttons and setvisible some buttons
             userFirstNameField.setEditable(true);
             userLastNameField.setEditable(true);
             userEmailField.setEditable(true);
@@ -236,6 +228,10 @@ public class AccountManager extends BaseSceneController implements Initializable
             } else {
                 newPassword = "invalid";
             }
+            //To validate users we try to make a student or a ca object inside a try block-
+            // -The validations are done inside the constructors of student or ca class using the validation m
+            //methods implemented in those classes.If user inputs are invalid then those validation methods will throw
+            //IllegalArgumentExceptions.
             try {
                 if (LoginAndRegistration.currentUserType.equals("CLUB-ADVISOR")) {
                     ClubAdvisor updatedUser = new ClubAdvisor(newName, newEmail, newTele, newPassword);
@@ -254,14 +250,12 @@ public class AccountManager extends BaseSceneController implements Initializable
                     loadStudentAccounts(actionEvent);
                     showInfoAlert("Updated details saved successfully");
                 }
-
-
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
                 showErrorAlert(e.getMessage());
             }
         }
     }
+    //Update cancelation method. Gets user's confirmation before doing so.
     @FXML
     private void cancel(ActionEvent actionEvent){
         if(showConfirmationAlert("Are you sure that you want cancel the ongoing update?")) {
@@ -272,7 +266,7 @@ public class AccountManager extends BaseSceneController implements Initializable
             }
         }
     }
-
+    //validating whether passwords in password field and password re enter fields
     private boolean validatePasswordMatch() {
         if (userPasswordField1.getText().equals(userPasswordField2.getText())) {
             userPasswordField2Label.setText("Passwords match");
@@ -284,6 +278,8 @@ public class AccountManager extends BaseSceneController implements Initializable
             return false;
         }
     }
+    //Implemented some new sceneloader methods using scene loader methods in base scene controller to prevent-
+    //-user from switching scenes if there's an on going detail update
     @FXML
     private void loadHomeFromAccountManger(ActionEvent actionEvent){
         if (!onGoingAccountDetailsUpdate || showConfirmationAlert("Are you sure you want to cancel the ongoing update?")) {
