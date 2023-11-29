@@ -39,7 +39,7 @@ public class StudentsHome extends BaseSceneController implements Initializable {
         String formattedDateTime = currentDate.format(formatter);
         // Set the formatted date and time to the Text variable
 
-        greetings.setText("Today is: " + formattedDateTime);
+        greetings.setText("Date: " + formattedDateTime);
         greetings2.setText("Welcome - "+ Main.currentStudentUser.getName());
 
         CADataHandling object=new CADataHandling();
