@@ -26,39 +26,23 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Random;
 
+//BY AKSHITH RAJENDRAN RGU ID: 2236761
+
 public class CAClubs extends BaseSceneController implements Initializable {
 
-    //Buttons - SideBar
-    @FXML private Button caHomeButton;
-    @FXML private Button caClubsButton;
-    @FXML private Button caEventsButton;
-    @FXML private Button caReportsButton;
-    @FXML private Button caAccountButton;
 
-    //Buttons
-    @FXML private Button viewButton;
-    @FXML private Button updateClubButton;
-    @FXML private Button updateClubCancelButton;
     @FXML private Button editClubButton;
-    @FXML private Button suspendClubButton;
     @FXML private Button leaveClubButton;
     @FXML private Button joinClubButton;
-    @FXML private Button backToClubNaviButton;
 
 
     //Panes
     @FXML private TabPane caClubsTabPane;
-    @FXML private Tab clubNaviTab;
+    ;
     @FXML private Tab createNewClubTab;
     @FXML private AnchorPane caNaviClubs;
     @FXML private AnchorPane caViewClubs;
     @FXML private AnchorPane caUpdateClubs;
-    @FXML private AnchorPane caCreateNewClubs;
-
-    //====
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
 
     //Text fields
     @FXML private TextField newClubNameField;

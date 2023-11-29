@@ -23,37 +23,32 @@ public class ClubAdvisor extends Users {
         clubsWithoutAdminAccess = new ArrayList<>();
         clubsWithAdminAccess = new ArrayList<>();
     }
-
+    // Constructor for loading data from the database
     public ClubAdvisor(String name, String email, String mobileNum, String password) {
         super(name, email, mobileNum, password);
-        // Constructor for loading data from the database
+
         clubsWithoutAdminAccess = new ArrayList<>();
         clubsWithAdminAccess = new ArrayList<>();
     }
-    //This setter will be used only
+    //This setter will be used alongside with about method to bypass id validation for already existing ids in database.
     public void setClubAdvisorId(String clubAdvisorId) {
         this.clubAdvisorId = clubAdvisorId;
     }
 
 
     //Validator methods
-    //These methods will be used in constructor to check if the arguments given to constructor, follow the REGEX
+    //These methods will be used in constructor to check if the arguments given to constructor, follow the conditions
     @FXML
     protected void validateUserId(String clubAdvisorId) {
         CADataHandling clubAdvisor=new CADataHandling();
-//        if (!clubAdvisorId.matches(CLUB_ADVISOR_ID_REGEX)&&clubAdvisor.clubAdvisorUserNameValidation(clubAdvisorId)) {
-//            throw new IllegalArgumentException("Invalid Club Advisor ID format: " + clubAdvisorId);
-//        }
-        if(clubAdvisorId.equals("")){
-            throw new IllegalArgumentException("You haven't filled club advisor id. It's mandatory");
-        }else{
-            if(clubAdvisorId.matches(CLUB_ADVISOR_ID_REGEX)){
-                if(clubAdvisor.clubAdvisorUserNameValidation(clubAdvisorId)){
-                    throw new IllegalArgumentException("This username is already being used.");
-                }
-            }else{
-                throw new IllegalArgumentException("Invalid Club Advisor ID format: " + clubAdvisorId);
-            }
+       if (clubAdvisorId.isEmpty()) {
+            throw new IllegalArgumentException("Club advisor ID is mandatory and cannot be empty");
+        }
+        if (!clubAdvisorId.matches(CLUB_ADVISOR_ID_REGEX)) {
+            throw new IllegalArgumentException("Invalid Club Advisor ID format: " + clubAdvisorId);
+        }
+        if (clubAdvisor.clubAdvisorUserNameValidation(clubAdvisorId)) {
+            throw new IllegalArgumentException("This username is already being used.");
         }
     }
 

@@ -64,8 +64,6 @@ public  abstract class Users {
     }
 
     // Getters and setters for common attributes
-    // You can add more methods as needed
-
     public String getName() {
         return name;
     }
