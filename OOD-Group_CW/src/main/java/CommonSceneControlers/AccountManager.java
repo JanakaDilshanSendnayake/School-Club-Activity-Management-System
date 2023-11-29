@@ -14,7 +14,7 @@ import utils.StudentDataHandling;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-//BY JANAKA SENDNAYAKE RGU ID:2237952
+//BY JANAKA SENDNAYAKE RGU ID:2237952=============================================================
 
 public class AccountManager extends BaseSceneController implements Initializable {
 
@@ -149,7 +149,7 @@ public class AccountManager extends BaseSceneController implements Initializable
         });
 
     }
-    //These functions assigned to every textfeild. When a user click on textfiled and starts to enter data these methods get
+    //These functions assigned to every text feild. When a user click on text filed and starts to enter data these methods get
     // -triggered. Then it adds the relevant event listener to the text filed. The reason we are adding the event litners seperatly
     //-is we can remove them whenever we want
     @FXML
@@ -182,7 +182,7 @@ public class AccountManager extends BaseSceneController implements Initializable
     @FXML private Button cancelTheUpdateButton;
     private boolean onGoingAccountDetailsUpdate;
 
-    //Unlocking the text fields to 
+    //Unlocking the text fields to update
     @FXML
     private void update(){
         if(showConfirmationAlert("Are you sure that you want to start updating account details?")){
@@ -193,12 +193,13 @@ public class AccountManager extends BaseSceneController implements Initializable
                 userPasswordField1.setText(Main.currentStudentUser.getPassword());
                 userPasswordField2.setText(Main.currentStudentUser.getPassword());
             }
+            //Adding the event listeners to the text fields.
             handleNewUserFirstNameChange();
             handleNewUserLastNameChange();
             handleNewUserEmailChange();
             handleNewUserTeleChange();
             onGoingAccountDetailsUpdate=true;
-
+            //Unlocking the text fields and hiding some buttons and setvisible some buttons
             userFirstNameField.setEditable(true);
             userLastNameField.setEditable(true);
             userEmailField.setEditable(true);
@@ -226,6 +227,10 @@ public class AccountManager extends BaseSceneController implements Initializable
             } else {
                 newPassword = "invalid";
             }
+            //To validate users we try to make a student or a ca object inside a try block-
+            // -The validations are done inside the constructors of student or ca class using the validation m
+            //methods implemented in those classes.If user inputs are invalid then those validation methods will throw
+            //IllegalArgumentExceptions.
             try {
                 if (LoginAndRegistration.currentUserType.equals("CLUB-ADVISOR")) {
                     ClubAdvisor updatedUser = new ClubAdvisor(newName, newEmail, newTele, newPassword);
@@ -244,14 +249,12 @@ public class AccountManager extends BaseSceneController implements Initializable
                     loadStudentAccounts(actionEvent);
                     showInfoAlert("Updated details saved successfully");
                 }
-
-
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
                 showErrorAlert(e.getMessage());
             }
         }
     }
+    //Update cancelation method. Gets user's confirmation before doing so.
     @FXML
     private void cancel(ActionEvent actionEvent){
         if(showConfirmationAlert("Are you sure that you want cancel the ongoing update?")) {
@@ -262,7 +265,7 @@ public class AccountManager extends BaseSceneController implements Initializable
             }
         }
     }
-
+    //validating whether passwords in password field and password re enter fields
     private boolean validatePasswordMatch() {
         if (userPasswordField1.getText().equals(userPasswordField2.getText())) {
             userPasswordField2Label.setText("Passwords match");
@@ -274,6 +277,8 @@ public class AccountManager extends BaseSceneController implements Initializable
             return false;
         }
     }
+    //Implemented some new sceneloader methods using scene loader methods in base scene controller to prevent-
+    //-user from switching scenes if there's an on going detail update
     @FXML
     private void loadHomeFromAccountManger(ActionEvent actionEvent){
         if (!onGoingAccountDetailsUpdate || showConfirmationAlert("Are you sure you want to cancel the ongoing update?")) {

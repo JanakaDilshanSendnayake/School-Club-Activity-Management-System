@@ -223,7 +223,7 @@ public class LoginAndRegistration extends BaseSceneController implements Initial
         }
 
     }
-    //This method is assigned to clear button. This will set all the textfields and text labels to "" and they will remove=
+    //This method is assigned to clear button. This will set all the textfields and text labels to "" and they will remove-
     //-event listeners also
     @FXML
     private void clearUserInputsFieldsInRegistrationPage(){
@@ -290,7 +290,7 @@ public class LoginAndRegistration extends BaseSceneController implements Initial
         }
     }
 
-
+    //***Special-this static variable tracks weather if the current user is a student or a club advisor
     public static String currentUserType;
 
     @FXML
@@ -332,6 +332,7 @@ public class LoginAndRegistration extends BaseSceneController implements Initial
         loginPage.toFront();
 
     }
+    //To switch between different anchor panes of the same scene
     @FXML
     private void selectRegister(){
         userRegistrationPane.toFront();

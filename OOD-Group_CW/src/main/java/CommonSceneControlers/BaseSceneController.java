@@ -11,10 +11,11 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.util.Optional;
-//BY JANAKA DILSHAN SENDANAYAKE
+//BY JANAKA DILSHAN SENDANAYAKE RGU ID:2237952=============================================================
 
 public class BaseSceneController {
 
+    //REGEX-These will be used throughout the project to validate user inputs
     public static final String USER_ID_REGEX = "^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z0-9]{1,10}$";
     public static final String FIRST_NAME_REGEX = "^[a-zA-Z]{1,10}$";
     //Inputs for last name should be always letters. And there's a character limit of 20
